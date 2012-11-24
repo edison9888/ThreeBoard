@@ -8,7 +8,10 @@
 
 #import "UUAppDelegate.h"
 
-#import "UUViewController.h"
+#import "UUMainVC.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "AFJSONRequestOperation.h"
 
 @implementation UUAppDelegate
 
@@ -16,9 +19,32 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[UUViewController alloc] initWithNibName:@"UUViewController" bundle:nil];
+    self.viewController = [[UUMainVC alloc] init];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.gouqi001.com/jinyuan/app_page.php?page_id=17"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:
+                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    {
+        DDLogInfo(@"IP Address: %@", [JSON valueForKeyPath:@"category"]);
+    }
+                                                                                        failure:
+                            ^( NSURLRequest *request , NSHTTPURLResponse *response , NSError *error , id JSON )
+    {
+        DDLogInfo(@"error: %@",[error localizedDescription]);
+                                                                                            
+    }];
+    
+    [operation start];
+        
+    
     return YES;
 }
 

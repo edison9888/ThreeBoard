@@ -6,13 +6,23 @@
 //  Copyright (c) 2012年 garyliu. All rights reserved.
 //
 
-#import "UUViewController.h"
+#import "UUMainVC.h"
+#import "AFJSONRequestOperation.h"
 
-@interface UUViewController ()
+@interface UUMainVC ()
 
 @end
 
-@implementation UUViewController
+@implementation UUMainVC
+
+- (void)loadView
+{
+    [super loadView];
+    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.view.backgroundColor = [UIColor greenColor];
+    
+    
+}
 
 - (void)viewDidLoad
 {
@@ -25,5 +35,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
+    
+}
+
+
+
 
 @end

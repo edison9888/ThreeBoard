@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class UUViewController;
+@class UUMainVC;
 
 @interface UUAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) UUViewController *viewController;
+@property (strong, nonatomic) UUMainVC *viewController;
 
 @end
