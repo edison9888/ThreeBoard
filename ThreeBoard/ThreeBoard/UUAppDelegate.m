@@ -12,6 +12,9 @@
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 #import "AFJSONRequestOperation.h"
+#import "AFHTTPRequestOperation.h"
+#import "JSONKit.h"
+
 
 @implementation UUAppDelegate
 
@@ -29,21 +32,34 @@
     NSURL *url = [NSURL URLWithString:@"http://www.gouqi001.com/jinyuan/app_page.php?page_id=17"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:
-                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-    {
-        DDLogInfo(@"IP Address: %@", [JSON valueForKeyPath:@"category"]);
-    }
-                                                                                        failure:
-                            ^( NSURLRequest *request , NSHTTPURLResponse *response , NSError *error , id JSON )
-    {
-        DDLogInfo(@"error: %@",[error localizedDescription]);
-                                                                                            
-    }];
+//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+//                                                                                        success:
+//                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+//    {
+//        DDLogInfo(@"page_title: %@", [JSON objectForKey:@"page_title"]);
+//    }
+//                                                                                        failure:
+//                            ^( NSURLRequest *request , NSHTTPURLResponse *response , NSError *error , id JSON )
+//    {
+//        DDLogInfo(@"error: %@",[error localizedDescription]);
+//                                                                                            
+//    }];
+//    
+//    [operation start];
     
-    [operation start];
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject){
+        NSString *jsonString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        id dict = [jsonString objectFromJSONString];
         
+        DDLogInfo(@"%@",dict);
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error){
+                              
+        DDLogInfo(@"error: %@", [error localizedDescription]);
+    
+    }];
+    [op start];
     
     return YES;
 }
