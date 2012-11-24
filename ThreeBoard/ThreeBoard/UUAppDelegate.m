@@ -29,7 +29,7 @@
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://www.gouqi001.com/jinyuan/app_page.php?page_id=17"];
+    NSURL *url = [NSURL URLWithString:@"http://www.gouqi001.com/jinyuan/app_main.php?category=good_policy"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
 //    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
@@ -49,10 +49,11 @@
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject){
-        NSString *jsonString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        id dict = [jsonString objectFromJSONString];
+//        NSString *jsonString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//        id dict = [jsonString objectFromJSONString];
+//        DDLogInfo(@"%@",dict);
         
-        DDLogInfo(@"%@",dict);
+        DDLogInfo(@"%@",[(NSData *)responseObject objectFromJSONData]);
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error){
                               

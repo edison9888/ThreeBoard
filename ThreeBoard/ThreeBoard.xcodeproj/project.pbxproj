@@ -46,6 +46,15 @@
 		EBFDFA961661051100317ACB /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = EBFDFA8E1661051100317ACB /* README.txt */; };
 		EBFDFAA616610F2600317ACB /* UUMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFAA516610F2600317ACB /* UUMainVC.m */; };
 		EBFDFAF71661103800317ACB /* UUPage.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFAF61661103800317ACB /* UUPage.m */; };
+		EBFDFB0616611D6200317ACB /* UUCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB0516611D6200317ACB /* UUCategory.m */; };
+		EBFDFB0916611D7400317ACB /* UUPageDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB0816611D7400317ACB /* UUPageDataProvider.m */; };
+		EBFDFB0C16611D8500317ACB /* UUCategoryDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB0B16611D8500317ACB /* UUCategoryDataProvider.m */; };
+		EBFDFB0F16611DD900317ACB /* UUGoodPolicyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB0E16611DD900317ACB /* UUGoodPolicyVC.m */; };
+		EBFDFB1216611DED00317ACB /* UUNewInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1116611DED00317ACB /* UUNewInfoVC.m */; };
+		EBFDFB1516611E0400317ACB /* UUActivityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1416611E0400317ACB /* UUActivityVC.m */; };
+		EBFDFB1816611E1800317ACB /* UUProjectShowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1716611E1800317ACB /* UUProjectShowVC.m */; };
+		EBFDFB1B16611E4100317ACB /* UUPartnersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1A16611E4100317ACB /* UUPartnersVC.m */; };
+		EBFDFB1E16611E7400317ACB /* UUAboutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1D16611E7300317ACB /* UUAboutVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +134,24 @@
 		EBFDFAF416610FEB00317ACB /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		EBFDFAF51661103800317ACB /* UUPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUPage.h; sourceTree = "<group>"; };
 		EBFDFAF61661103800317ACB /* UUPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUPage.m; sourceTree = "<group>"; };
+		EBFDFB0416611D6200317ACB /* UUCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCategory.h; sourceTree = "<group>"; };
+		EBFDFB0516611D6200317ACB /* UUCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUCategory.m; sourceTree = "<group>"; };
+		EBFDFB0716611D7400317ACB /* UUPageDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUPageDataProvider.h; sourceTree = "<group>"; };
+		EBFDFB0816611D7400317ACB /* UUPageDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUPageDataProvider.m; sourceTree = "<group>"; };
+		EBFDFB0A16611D8500317ACB /* UUCategoryDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCategoryDataProvider.h; sourceTree = "<group>"; };
+		EBFDFB0B16611D8500317ACB /* UUCategoryDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUCategoryDataProvider.m; sourceTree = "<group>"; };
+		EBFDFB0D16611DD900317ACB /* UUGoodPolicyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUGoodPolicyVC.h; sourceTree = "<group>"; };
+		EBFDFB0E16611DD900317ACB /* UUGoodPolicyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUGoodPolicyVC.m; sourceTree = "<group>"; };
+		EBFDFB1016611DED00317ACB /* UUNewInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUNewInfoVC.h; sourceTree = "<group>"; };
+		EBFDFB1116611DED00317ACB /* UUNewInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUNewInfoVC.m; sourceTree = "<group>"; };
+		EBFDFB1316611E0400317ACB /* UUActivityVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUActivityVC.h; sourceTree = "<group>"; };
+		EBFDFB1416611E0400317ACB /* UUActivityVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUActivityVC.m; sourceTree = "<group>"; };
+		EBFDFB1616611E1800317ACB /* UUProjectShowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUProjectShowVC.h; sourceTree = "<group>"; };
+		EBFDFB1716611E1800317ACB /* UUProjectShowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUProjectShowVC.m; sourceTree = "<group>"; };
+		EBFDFB1916611E4100317ACB /* UUPartnersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUPartnersVC.h; sourceTree = "<group>"; };
+		EBFDFB1A16611E4100317ACB /* UUPartnersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUPartnersVC.m; sourceTree = "<group>"; };
+		EBFDFB1C16611E7300317ACB /* UUAboutVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUAboutVC.h; sourceTree = "<group>"; };
+		EBFDFB1D16611E7300317ACB /* UUAboutVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUAboutVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +344,18 @@
 			children = (
 				EBFDFAA416610F2600317ACB /* UUMainVC.h */,
 				EBFDFAA516610F2600317ACB /* UUMainVC.m */,
+				EBFDFB0D16611DD900317ACB /* UUGoodPolicyVC.h */,
+				EBFDFB0E16611DD900317ACB /* UUGoodPolicyVC.m */,
+				EBFDFB1016611DED00317ACB /* UUNewInfoVC.h */,
+				EBFDFB1116611DED00317ACB /* UUNewInfoVC.m */,
+				EBFDFB1316611E0400317ACB /* UUActivityVC.h */,
+				EBFDFB1416611E0400317ACB /* UUActivityVC.m */,
+				EBFDFB1616611E1800317ACB /* UUProjectShowVC.h */,
+				EBFDFB1716611E1800317ACB /* UUProjectShowVC.m */,
+				EBFDFB1916611E4100317ACB /* UUPartnersVC.h */,
+				EBFDFB1A16611E4100317ACB /* UUPartnersVC.m */,
+				EBFDFB1C16611E7300317ACB /* UUAboutVC.h */,
+				EBFDFB1D16611E7300317ACB /* UUAboutVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -333,6 +372,12 @@
 			children = (
 				EBFDFAF51661103800317ACB /* UUPage.h */,
 				EBFDFAF61661103800317ACB /* UUPage.m */,
+				EBFDFB0416611D6200317ACB /* UUCategory.h */,
+				EBFDFB0516611D6200317ACB /* UUCategory.m */,
+				EBFDFB0716611D7400317ACB /* UUPageDataProvider.h */,
+				EBFDFB0816611D7400317ACB /* UUPageDataProvider.m */,
+				EBFDFB0A16611D8500317ACB /* UUCategoryDataProvider.h */,
+				EBFDFB0B16611D8500317ACB /* UUCategoryDataProvider.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -433,6 +478,15 @@
 				EBFDFA951661051100317ACB /* DispatchQueueLogFormatter.m in Sources */,
 				EBFDFAA616610F2600317ACB /* UUMainVC.m in Sources */,
 				EBFDFAF71661103800317ACB /* UUPage.m in Sources */,
+				EBFDFB0616611D6200317ACB /* UUCategory.m in Sources */,
+				EBFDFB0916611D7400317ACB /* UUPageDataProvider.m in Sources */,
+				EBFDFB0C16611D8500317ACB /* UUCategoryDataProvider.m in Sources */,
+				EBFDFB0F16611DD900317ACB /* UUGoodPolicyVC.m in Sources */,
+				EBFDFB1216611DED00317ACB /* UUNewInfoVC.m in Sources */,
+				EBFDFB1516611E0400317ACB /* UUActivityVC.m in Sources */,
+				EBFDFB1816611E1800317ACB /* UUProjectShowVC.m in Sources */,
+				EBFDFB1B16611E4100317ACB /* UUPartnersVC.m in Sources */,
+				EBFDFB1E16611E7400317ACB /* UUAboutVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
