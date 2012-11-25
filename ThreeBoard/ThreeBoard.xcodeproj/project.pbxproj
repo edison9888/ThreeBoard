@@ -55,6 +55,7 @@
 		EBFDFB1816611E1800317ACB /* UUProjectShowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1716611E1800317ACB /* UUProjectShowVC.m */; };
 		EBFDFB1B16611E4100317ACB /* UUPartnersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1A16611E4100317ACB /* UUPartnersVC.m */; };
 		EBFDFB1E16611E7400317ACB /* UUAboutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB1D16611E7300317ACB /* UUAboutVC.m */; };
+		EBFDFB2A1661EEA600317ACB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB291661EEA600317ACB /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +153,8 @@
 		EBFDFB1A16611E4100317ACB /* UUPartnersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUPartnersVC.m; sourceTree = "<group>"; };
 		EBFDFB1C16611E7300317ACB /* UUAboutVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUAboutVC.h; sourceTree = "<group>"; };
 		EBFDFB1D16611E7300317ACB /* UUAboutVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUAboutVC.m; sourceTree = "<group>"; };
+		EBFDFB281661EEA600317ACB /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		EBFDFB291661EEA600317ACB /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +234,7 @@
 		EBFDFA221660F7BB00317ACB /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EBFDFB271661EEA600317ACB /* MBProgressHUD */,
 				EBFDFA7E1661051100317ACB /* Lumberjack */,
 				EBFDFA231660F7BB00317ACB /* AFNetworking */,
 				EBFDFA371660F7BB00317ACB /* JSONKit */,
@@ -382,6 +386,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		EBFDFB271661EEA600317ACB /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				EBFDFB281661EEA600317ACB /* MBProgressHUD.h */,
+				EBFDFB291661EEA600317ACB /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -487,6 +500,7 @@
 				EBFDFB1816611E1800317ACB /* UUProjectShowVC.m in Sources */,
 				EBFDFB1B16611E4100317ACB /* UUPartnersVC.m in Sources */,
 				EBFDFB1E16611E7400317ACB /* UUAboutVC.m in Sources */,
+				EBFDFB2A1661EEA600317ACB /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
