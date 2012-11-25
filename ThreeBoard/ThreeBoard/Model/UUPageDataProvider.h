@@ -7,7 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UUPage.h"
+#import "UUCategory.h"
+
+@protocol UUPageDataProviderDelegate <NSObject>
+
+- (void)pageInfoFetched:(UUPage *)page;
+- (void)pageInfoFailed:(NSError *)error;
+
+@end
+
 
 @interface UUPageDataProvider : NSObject
+
+@property (nonatomic, weak) id<UUPageDataProviderDelegate> delegate;
+
++ (UUPageDataProvider *)sharedInstance;
+- (void)fetchPageInfoWithID:(NSString *)pageID;
 
 @end

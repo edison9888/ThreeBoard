@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UUCategoryDataProvider.h"
 
 @class UUMainVC;
 
-@interface UUAppDelegate : UIResponder <UIApplicationDelegate>
+@interface UUAppDelegate : UIResponder <UIApplicationDelegate, UUCategoryDataProviderDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

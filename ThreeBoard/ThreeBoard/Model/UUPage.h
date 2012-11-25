@@ -12,5 +12,13 @@
 
 @property (nonatomic, copy) NSString *pageID;
 @property (nonatomic, copy) NSString *pageTitle;
+@property (nonatomic, copy) NSString *summary;
+@property (nonatomic, strong) NSMutableArray *contents;
+@property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, copy) NSString *thumbImageURL;
+@property (nonatomic, copy) NSString *publishTime;
+@property (nonatomic, copy) NSString *categoryID;
+
+
 
 @end

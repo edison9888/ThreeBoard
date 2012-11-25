@@ -10,4 +10,23 @@
 
 @implementation UUPage
 
+@synthesize  pageID;
+@synthesize pageTitle;
+@synthesize summary;
+@synthesize contents;
+@synthesize imageURL;
+@synthesize thumbImageURL;
+@synthesize publishTime;
+@synthesize categoryID;
+
+
+- (id)init
+{
+    if(self = [super init]){
+        self.contents = [NSMutableArray array];
+    }
+    return self;
+}
+
+
 @end

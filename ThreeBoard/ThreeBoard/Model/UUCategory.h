@@ -10,4 +10,11 @@
 
 @interface UUCategory : NSObject
 
+@property (nonatomic, copy) NSString *categoryID;
+@property (nonatomic, copy) NSString *categoryTitle;
+@property (nonatomic) NSInteger pageNo;
+@property (nonatomic, strong) NSMutableArray *focusPages;
+@property (nonatomic, strong) NSMutableArray *listPages;
+
+
 @end

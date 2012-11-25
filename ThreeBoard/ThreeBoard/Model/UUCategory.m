@@ -10,4 +10,20 @@
 
 @implementation UUCategory
 
+@synthesize categoryID;
+@synthesize categoryTitle;
+@synthesize pageNo;
+@synthesize focusPages;
+@synthesize listPages;
+
+
+- (id)init
+{
+    if(self = [super init]){
+        self.focusPages = [NSMutableArray array];
+        self.listPages = [NSMutableArray array];
+    }
+    return self;
+}
+
 @end
