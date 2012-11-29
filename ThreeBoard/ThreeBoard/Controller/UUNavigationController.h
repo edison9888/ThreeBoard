@@ -1,5 +1,5 @@
 //
-//  UUAboutVC.h
+//  UUNavigationController.h
 //  ThreeBoard
 //
 //  Created by garyliu on 12-11-29.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UUAboutVC : UITableViewController
+@interface UUNavigationController : UINavigationController
 
 @end

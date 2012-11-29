@@ -16,14 +16,21 @@
 #import "JSONKit.h"
 #import "UUCategoryDataProvider.h"
 #import "UUPageDataProvider.h"
+#import "UUNavigationController.h"
 
+@interface UUAppDelegate()
+
+
+@end
 
 @implementation UUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.viewController = [[UUMainVC alloc] init];
+    UUNavigationController *navController = [[UUNavigationController alloc] initWithRootViewController:[[UUMainVC alloc] init]];
+    navController.delegate = self;
+    self.viewController = navController;
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
@@ -53,16 +60,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [UUCategoryDataProvider sharedInstance].delegate = self;
-//    [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:@"18"];
-//    [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:0];
-//    [[UUCategoryDataProvider sharedInstance] fetchGoodPolicyDetailWithPageIndex:0];
-//    [[UUCategoryDataProvider sharedInstance] fetchNewInfoDetailWithPageIndex:0];
-//    [[UUCategoryDataProvider sharedInstance] fetchProjectShowDetailWithSubID:@"beijing" pageIndex:0];
-//    [[UUCategoryDataProvider sharedInstance] fetchProjectShowDetailWithSubID:@"changsanjiao" pageIndex:0];
-//    [[UUCategoryDataProvider sharedInstance] fetchProjectShowDetailWithSubID:@"zhusanjiao" pageIndex:0];
-//    [[UUCategoryDataProvider sharedInstance] fetchProjectShowDetailWithSubID:@"other" pageIndex:0];
-    [[UUCategoryDataProvider sharedInstance] fetchBeijingAreaDetailWithPageIndex:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -70,24 +67,19 @@
     
 }
 
-- (void)beijingAreaDetailFetched:(UUCategory *)categoryDetail
-{
-    NSArray *sections = [categoryDetail listPages];
-    for(NSDictionary *dic in sections){
-        for(NSString *key in [dic allKeys]){
-            DDLogInfo(@"key: %@ \n",key);
-            NSArray *pages = [dic objectForKey:key];
-            DDLogInfo(@"%d",[pages count]);
-            for(UUPage *page in pages){
-                DDLogInfo(@"%@ %@ %@ \n",page.pageTitle,page.summary,page.thumbImageURL);
-            }
-        }
-    }
-}
 
-- (void)beijingAreaDetailFailed:(NSError *)error
+
+#pragma mark UINavigationControllerDelegate Method
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     
+	if([navigationController.viewControllers count ] > 1)
+    {
+        NSString* buttonTitle = @"返回";
+		viewController.navigationItem.leftBarButtonItem = [UUUIHelper createBackBarItem:viewController.navigationController action:@selector(popViewControllerAnimated:) title:buttonTitle];
+	}
+	
 }
 
 @end

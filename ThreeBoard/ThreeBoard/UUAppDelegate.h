@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UUCategoryDataProvider.h"
 
 @class UUMainVC;
 
-@interface UUAppDelegate : UIResponder <UIApplicationDelegate, UUCategoryDataProviderDelegate>
+@interface UUAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) UUMainVC *viewController;
+@property (strong, nonatomic) UINavigationController *viewController;
 
 @end
