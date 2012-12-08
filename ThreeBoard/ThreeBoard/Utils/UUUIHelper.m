@@ -44,8 +44,8 @@
 	
 	UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(point.x,point.y,titleSize.width+26,31)];
 	btn.titleEdgeInsets = UIEdgeInsetsMake(0, 13, 0, 13);
-	[btn setBackgroundImage:[[UIImage imageNamed:@"common_complete_normal.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateNormal];
-	[btn setBackgroundImage:[[UIImage imageNamed:@"common_complete_press.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateHighlighted];
+	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateNormal];
+	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn_press.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateHighlighted];
 	btn.titleLabel.font = titleFont;
 	[btn setTitle:str forState:UIControlStateNormal];
 	[btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -61,8 +61,8 @@
 	
 	UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(point.x,point.y,titleSize.width+26,31)];
 	btn.titleEdgeInsets = UIEdgeInsetsMake(0, 13, 0, 13);
-	[btn setBackgroundImage:[[UIImage imageNamed:@"common_cancel_black_normal.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateNormal];
-	[btn setBackgroundImage:[[UIImage imageNamed:@"common_cancel_black_press.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateHighlighted];
+	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateNormal];
+	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn_press.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateHighlighted];
 	btn.titleLabel.font = titleFont;
 	[btn setTitle:str forState:UIControlStateNormal];
 	[btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -86,10 +86,10 @@
     }
     btn = [[UIButton alloc] initWithFrame:CGRectMake(0,0,titleSize.width+25,31)];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 16, 1, 9);
-    [btn setBackgroundImage:[[UIImage imageNamed:@"common_return_normal.png"] stretchableImageWithLeftCapWidth:15
+    [btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn_return.png"] stretchableImageWithLeftCapWidth:15
                                                                                                   topCapHeight:15] forState:UIControlStateNormal];
     
-    [btn setBackgroundImage:[[UIImage imageNamed:@"common_return_press.png"] stretchableImageWithLeftCapWidth:15
+    [btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn_return_press.png"] stretchableImageWithLeftCapWidth:15
                                                                                                  topCapHeight:15] forState:UIControlStateHighlighted];
     btn.titleLabel.font = titleFont;
     [btn setTitle:buttonTitle forState:UIControlStateNormal];

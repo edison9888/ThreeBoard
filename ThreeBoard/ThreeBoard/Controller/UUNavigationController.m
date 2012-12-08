@@ -17,7 +17,7 @@
 - (void)loadView
 {
     [super loadView];
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"common_title_bgk.png"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLoad

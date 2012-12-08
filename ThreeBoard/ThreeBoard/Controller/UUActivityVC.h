@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UUCategoryDataProvider.h"
 
-@interface UUActivityVC : UITableViewController
+@interface UUActivityVC : UITableViewController <UUCategoryDataProviderDelegate>
 
 @end

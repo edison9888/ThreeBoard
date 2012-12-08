@@ -7,18 +7,29 @@
 //
 
 #import "UUActivityVC.h"
+#import "UUCategoryDataProvider.h"
+#import "UUImageCell.h"
 
 @interface UUActivityVC ()
+
+@property (nonatomic) int currentPageIndex;
+@property (nonatomic, strong) UUCategory *categoryInfo;
+
+- (void)loadVisibleCellsImage;
 
 @end
 
 @implementation UUActivityVC
 
+@synthesize currentPageIndex;
+@synthesize categoryInfo;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        categoryInfo = [[UUCategory alloc] init];
+        
     }
     return self;
 }
@@ -26,12 +37,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = TING_BG_SLATE_GRAY;
+    self.tableView.backgroundView = nil;
+    
+    self.navigationItem.title = @"活动日历";
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [UUCategoryDataProvider sharedInstance].delegate = self;
+    [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:currentPageIndex];
+    [self loadVisibleCellsImage];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,25 +69,56 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    int sectionCount = [self.categoryInfo.listPages count];
+    return sectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:section];
+    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
+    NSArray *pages = [pagesDic objectForKey:title];
+    if(pages){
+        return [pages count];
+    }else{
+        return 0;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kCommonSectionHeight;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return kCommonHighHeight;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:section];
+    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
+    return title;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UUImageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil){
+        cell = [[UUImageCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    int sectionIndex = indexPath.section;
+    int rowIndex = indexPath.row;
+    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:sectionIndex];
+    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
+    NSArray *pages = [pagesDic objectForKey:title];
+    UUPage *page = [pages objectAtIndex:rowIndex];
+    cell.textLabel.text = page.pageTitle;
+    cell.detailTextLabel.text = page.summary;
+    cell.imageURL = page.thumbImageURL;
+    [cell showImage];
     return cell;
 }
 
@@ -109,6 +165,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -116,6 +174,32 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - UUCategoryDataProvider Delegate
+
+- (void) activityDetailFetched:(UUCategory *)category
+{
+    self.categoryInfo = category;
+    [self.tableView reloadData];
+}
+
+#pragma mark - private methods
+- (void)loadVisibleCellsImage
+{
+    NSArray *cells = [self.tableView visibleCells];
+    for(UUImageCell *cell in cells){
+        if([cell respondsToSelector:@selector(showImage)]){
+            [cell showImage];
+        }
+    }
+}
+
+#pragma mark - uiscrollview delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadVisibleCellsImage];
 }
 
 @end

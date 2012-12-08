@@ -16,75 +16,92 @@
 #import "UUAboutVC.h"
 #import "UUUIHelper.h"
 
+#define kButtonRect @"kButtonRect"
+#define kButtonImageStr @"kButtonImageStr"
+#define kButtonImageHighStr @"kButtonImageHighStr"
+#define kButtonTargetClass @"kButtonTargetClass"
+
 @interface UUMainVC ()
 
+@property (nonatomic, strong) NSMutableArray *buttonInfos;
 
-
-- (void)buttonClicked:(UIButton *)sender;
-- (void)pushGoodPolicyVC;
-- (void)pushActivityVC;
-- (void)pushNewInfoVC;
-- (void)pushProjectShowVC;
-- (void)pushPartnersVC;
-- (void)pushAboutVC;
+- (void)buttonClicked:(id)sender;
 
 @end
 
 @implementation UUMainVC
 
+@synthesize buttonInfos;
+
 - (id)init
 {
     self = [super init];
     if(self){
+        buttonInfos = [NSMutableArray array];
         
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setObject:NSStringFromCGRect(CGRectMake(8, 10, 148, 125)) forKey:kButtonRect];
+        [dic1 setObject:@"icon_Calendar_normal" forKey:kButtonImageStr];
+        [dic1 setObject:@"icon_Calendar_press" forKey:kButtonImageHighStr];
+        [dic1 setObject:UUActivityVC.class forKey:kButtonTargetClass];
+        [buttonInfos addObject:dic1];
+        
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setObject:NSStringFromCGRect(CGRectMake(164, 10, 148, 125)) forKey:kButtonRect];
+        [dic2 setObject:@"icon_zhengce_normal" forKey:kButtonImageStr];
+        [dic2 setObject:@"icon_zhengce_press" forKey:kButtonImageHighStr];
+        [dic2 setObject:UUGoodPolicyVC.class forKey:kButtonTargetClass];
+        [buttonInfos addObject:dic2];
+        
+        NSMutableDictionary *dic3 = [NSMutableDictionary dictionary];
+        [dic3 setObject:NSStringFromCGRect(CGRectMake(8, 145, 148, 125)) forKey:kButtonRect];
+        [dic3 setObject:@"icon_zixun_normal" forKey:kButtonImageStr];
+        [dic3 setObject:@"icon_zixun_press" forKey:kButtonImageHighStr];
+        [dic3 setObject:UUNewInfoVC.class forKey:kButtonTargetClass];
+        [buttonInfos addObject:dic3];
+        
+        NSMutableDictionary *dic4 = [NSMutableDictionary dictionary];
+        [dic4 setObject:NSStringFromCGRect(CGRectMake(164, 145, 148, 125)) forKey:kButtonRect];
+        [dic4 setObject:@"icon_xiangmu_normal" forKey:kButtonImageStr];
+        [dic4 setObject:@"icon_xiangmu_press" forKey:kButtonImageHighStr];
+        [dic4 setObject:UUProjectShowVC.class forKey:kButtonTargetClass];
+        [buttonInfos addObject:dic4];
+        
+        NSMutableDictionary *dic5 = [NSMutableDictionary dictionary];
+        [dic5 setObject:NSStringFromCGRect(CGRectMake(8, 280, 148, 125)) forKey:kButtonRect];
+        [dic5 setObject:@"icon_huoban_normal" forKey:kButtonImageStr];
+        [dic5 setObject:@"icon_huoban_press" forKey:kButtonImageHighStr];
+        [dic5 setObject:UUPartnersVC.class forKey:kButtonTargetClass];
+        [buttonInfos addObject:dic5];
+        
+        NSMutableDictionary *dic6 = [NSMutableDictionary dictionary];
+        [dic6 setObject:NSStringFromCGRect(CGRectMake(164, 280, 148, 125)) forKey:kButtonRect];
+        [dic6 setObject:@"icon_me_normal" forKey:kButtonImageStr];
+        [dic6 setObject:@"icon_me_press" forKey:kButtonImageHighStr];
+        [dic6 setObject:UUAboutVC.class forKey:kButtonTargetClass];
+        [buttonInfos addObject:dic6];
     }
     return self;
 }
+
 
 - (void)loadView
 {
     [super loadView];
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view.backgroundColor = UU_BG_SLATE_GRAY;
-    
-    UIButton *activityButton = [UUUIHelper createButtonWithFrame:CGRectMake(5, 10, 150, 140) normalBgImageStr:@"homepage_big_button_normal" highlightedBgImageStr:@"homepage_big_button_press" target:self selector:@selector(pushActivityVC)];
-    [activityButton setTitle:@"活动日历" forState:UIControlStateNormal];
-    [activityButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:activityButton];
-    
-    UIButton *goodPolicyButton = [UUUIHelper createButtonWithFrame:CGRectMake(160, 10, 150, 140) normalBgImageStr:@"homepage_big_button_normal" highlightedBgImageStr:@"homepage_big_button_press" target:self selector:@selector(pushGoodPolicyVC)];
-    [goodPolicyButton setTitle:@"利好政策" forState:UIControlStateNormal];
-    [goodPolicyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:goodPolicyButton];
-    
-    UIButton *newInfoButton = [UUUIHelper createButtonWithFrame:CGRectMake(5, 160, 150, 140) normalBgImageStr:@"homepage_big_button_normal" highlightedBgImageStr:@"homepage_big_button_press" target:self selector:@selector(pushNewInfoVC)];
-    [newInfoButton setTitle:@"业内资讯" forState:UIControlStateNormal];
-    [newInfoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:newInfoButton];
-    
-    UIButton *projectButton = [UUUIHelper createButtonWithFrame:CGRectMake(160, 160, 150, 140) normalBgImageStr:@"homepage_big_button_normal" highlightedBgImageStr:@"homepage_big_button_press" target:self selector:@selector(pushProjectShowVC)];
-    [projectButton setTitle:@"项目展示" forState:UIControlStateNormal];
-    [projectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:projectButton];
-    
-    UIButton *partnersButton = [UUUIHelper createButtonWithFrame:CGRectMake(5, 310, 150, 140) normalBgImageStr:@"homepage_big_button_normal" highlightedBgImageStr:@"homepage_big_button_press" target:self selector:@selector(pushPartnersVC)];
-    [partnersButton setTitle:@"合作伙伴" forState:UIControlStateNormal];
-    [partnersButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:partnersButton];
-    
-    UIButton *aboutButton = [UUUIHelper createButtonWithFrame:CGRectMake(160, 310, 150, 140) normalBgImageStr:@"homepage_big_button_normal" highlightedBgImageStr:@"homepage_big_button_press" target:self selector:@selector(pushAboutVC)];
-    [aboutButton setTitle:@"关于我们" forState:UIControlStateNormal];
-    [aboutButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:aboutButton];
-
+    self.navigationItem.title = @"首页";
+    for(int i=0; i<6; i++){
+        NSDictionary *dic = [buttonInfos objectAtIndex:i];
+        CGRect rect = CGRectFromString([dic objectForKey:kButtonRect]);
+        NSString *imageStr = [dic objectForKey:kButtonImageStr];
+        NSString *imageHighStr = [dic objectForKey:kButtonImageHighStr];
+        UIButton *button =[UUUIHelper createButtonWithFrame:rect normalBgImageStr:imageStr highlightedBgImageStr:imageHighStr target:self selector:@selector(buttonClicked:)];
+        button.tag = i;
+        [self.view addSubview:button];
+    }
 }
 
-- (void)buttonClicked:(UIButton *)sender
-{
-    UUGoodPolicyVC *goodPolicy = [[UUGoodPolicyVC alloc] init];
-    [self.navigationController pushViewController:goodPolicy animated:YES];
-    
-}
 
 - (void)viewDidLoad
 {
@@ -100,7 +117,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
     
 }
@@ -112,7 +129,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillDisappear:animated];
 }
 
@@ -121,36 +138,16 @@
     [super viewDidDisappear:animated];
 }
 
+
 #pragma mark - private methods
 
-- (void)pushGoodPolicyVC
+- (void)buttonClicked:(id)sender
 {
-    [self.navigationController pushViewController:[[UUGoodPolicyVC alloc] init] animated:YES];
+    int tagIndex = ((UIButton *)sender).tag;
+    NSDictionary *dic = [self.buttonInfos objectAtIndex:tagIndex];
+    Class class = [dic objectForKey:kButtonTargetClass];
+    [self.navigationController pushViewController:[[class alloc] init] animated:YES];
 }
 
-- (void)pushActivityVC
-{
-    [self.navigationController pushViewController:[[UUActivityVC alloc] init] animated:YES];
-}
-
-- (void)pushNewInfoVC
-{
-    [self.navigationController pushViewController:[[UUNewInfoVC alloc] init] animated:YES];
-}
-
-- (void)pushProjectShowVC
-{
-    [self.navigationController pushViewController:[[UUProjectShowVC alloc] init] animated:YES];
-}
-
-- (void)pushPartnersVC
-{
-    [self.navigationController pushViewController:[[UUPartnersVC alloc] init] animated:YES];
-}
-
-- (void)pushAboutVC
-{
-    [self.navigationController pushViewController:[[UUAboutVC alloc] init] animated:YES];
-}
 
 @end
