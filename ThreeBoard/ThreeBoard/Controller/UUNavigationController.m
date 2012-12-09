@@ -17,7 +17,10 @@
 - (void)loadView
 {
     [super loadView];
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forBarMetrics:UIBarMetricsDefault];
+    if ([self.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        UIImage *image = [UIImage imageNamed:@"navigationbar_bg.png"];
+        [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 - (void)viewDidLoad

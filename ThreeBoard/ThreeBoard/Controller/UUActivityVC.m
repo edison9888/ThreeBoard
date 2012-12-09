@@ -9,13 +9,24 @@
 #import "UUActivityVC.h"
 #import "UUCategoryDataProvider.h"
 #import "UUImageCell.h"
+#import "MBProgressHUD.h"
+#import "UUSectionHeaderView.h"
+#import "UIScrollView+SVPullToRefresh.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
+#import "SVPullToRefresh.h"
+#import "AJNotificationView.h"
+#import "UIImageView+WebCache.h"
+#import "UUFocusView.h"
+
 
 @interface UUActivityVC ()
+{
+}
 
 @property (nonatomic) int currentPageIndex;
 @property (nonatomic, strong) UUCategory *categoryInfo;
 
-- (void)loadVisibleCellsImage;
+- (void)loadCategoryInfo;
 
 @end
 
@@ -24,25 +35,55 @@
 @synthesize currentPageIndex;
 @synthesize categoryInfo;
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        categoryInfo = [[UUCategory alloc] init];
-        
+        categoryInfo = [[UUCategory alloc] init];        
     }
     return self;
 }
+
+- (void)loadView
+{
+    [super loadView];
+
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = TING_BG_SLATE_GRAY;
-    self.tableView.backgroundView = nil;
-    
     self.navigationItem.title = @"活动日历";
+    
+    //fetch data when loading view
+    self.currentPageIndex = 0;
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:NO];
+    [MBProgressHUD HUDForView:self.navigationController.view].labelText = @"载入中...";
+    [self loadCategoryInfo];
+    
+    //pull to refresh all pages on top
+    __weak UUActivityVC *weakSelf = self;
+    
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        //restart from first page
+        weakSelf.currentPageIndex = 0;
+        self.tableView.infiniteScrollingView.enabled = YES;
+        self.tableView.showsInfiniteScrolling = YES;
+        [UUCategoryDataProvider sharedInstance].delegate = self;
+        [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:weakSelf.currentPageIndex];
+    }];
+    
+    //load next page on bottom
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        if(self.categoryInfo.hasmore){
+            weakSelf.currentPageIndex ++;
+            [UUCategoryDataProvider sharedInstance].delegate = self;
+            [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:weakSelf.currentPageIndex];
+        }
+    }];    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,15 +95,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [UUCategoryDataProvider sharedInstance].delegate = self;
-    [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:currentPageIndex];
-    [self loadVisibleCellsImage];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -95,11 +132,16 @@
 	return kCommonHighHeight;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    UUSectionHeaderView *sectionHeaderView = [[UUSectionHeaderView alloc] init];
+   
     NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:section];
     NSString *title = [[pagesDic allKeys] objectAtIndex:0];
-    return title;
+    sectionHeaderView.titleLabel.text = title;
+    
+    return sectionHeaderView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -122,44 +164,6 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -167,39 +171,141 @@
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 #pragma mark - UUCategoryDataProvider Delegate
 
 - (void) activityDetailFetched:(UUCategory *)category
 {
-    self.categoryInfo = category;
+
+    DDLogInfo(@"page is loaded with index %d",currentPageIndex);
+
+    //stop loading animating and notify user
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+    self.categoryInfo.hasmore = category.hasmore;
+    if(self.currentPageIndex == 0){
+        [self.tableView.pullToRefreshView stopAnimating];
+        if(!category.hasmore){
+            //there is only one page
+            self.tableView.infiniteScrollingView.enabled = NO;
+            self.tableView.showsInfiniteScrolling = NO;
+        }
+    }else if(self.currentPageIndex > 0 && category.hasmore){
+        //if there are more pages still could load more pages
+        [self.tableView.infiniteScrollingView stopAnimating];
+    }else if(!category.hasmore){
+        //it is the last page
+        [self.tableView.infiniteScrollingView stopAnimating];
+        self.tableView.infiniteScrollingView.enabled = NO;
+        self.tableView.showsInfiniteScrolling = NO;
+        [AJNotificationView showNoticeInView:self.navigationController.view
+                                        type:AJNotificationTypeRed
+                                       title:@"已到达最后一页"
+                             linedBackground:AJLinedBackgroundTypeStatic
+                                   hideAfter:1.0f
+                                      offset:445.0f];
+    }
+    
+    //data fetched
+    if(self.currentPageIndex == 0){
+        //first page
+        if([category.listPages count] > 0){
+            self.categoryInfo = category;
+            if(self.emptyView){
+                [self.emptyView removeFromSuperview];
+            }
+            
+            //load focus pages
+            [self.focusScrollView scrollRectToVisible:CGRectMake(0, 0, 320, 100) animated:YES];
+            NSMutableArray *focusPages = self.categoryInfo.focusPages;
+            for(int i=0; i<[focusPages count];i++){
+                UUPage *focusPage = [focusPages objectAtIndex:i];
+                if(i<[self.focusViews count]){
+                    UUFocusView *focusView = [self.focusViews objectAtIndex:i];
+                    UIImageView *focusImageView = focusView.focusImageView;
+                    NSString *imageURLStr = focusPage.imageURL;
+                    if(imageURLStr && ![imageURLStr isEqualToString:@""]){
+                        [focusImageView setImageWithURL:[NSURL URLWithString:imageURLStr] placeholderImage:nil];
+                    }
+                    UILabel *focusTitleLabel = focusView.focusTitleLabel;
+                    focusTitleLabel.text = focusPage.pageTitle;
+                }
+            }
+            
+        }else{
+            if(self.emptyView){
+                [self.view addSubview:self.emptyView];
+            }
+            return;
+        }
+    }else{
+        //other page, append data to current data
+        NSMutableArray *deltaPageSections = category.listPages;
+        NSMutableArray *pageSections = self.categoryInfo.listPages;
+        for(NSMutableDictionary *deltaSection in deltaPageSections){
+            NSString *deltaSectionTitle = [[deltaSection allKeys] objectAtIndex:0];
+            int lastIndex = ([pageSections count]>0)?[pageSections count] -1 : 0;
+            NSMutableDictionary *lastSection = [pageSections objectAtIndex:lastIndex];
+            NSString *lastSectionTitle = [[lastSection allKeys] objectAtIndex:0];
+            //if section title is equal to last section title of previous page
+            if([deltaSectionTitle isEqualToString:lastSectionTitle]){
+                NSMutableArray *deltaSectionPages = [deltaSection objectForKey:deltaSectionTitle];
+                NSMutableArray *lastSectionPages = [lastSection objectForKey:lastSectionTitle];
+                [lastSectionPages addObjectsFromArray:deltaSectionPages];
+            }else{
+                [pageSections addObject:deltaSection];
+            }
+        }
+    }
     [self.tableView reloadData];
+    [self loadVisibleCellsImage];
+
+}
+
+- (void) activityDetailFailed:(NSError *)error
+{
+    if(self.currentPageIndex > 0){
+        self.currentPageIndex -- ;
+    }
+    
+    //stop loading animating
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+    
+    if(self.currentPageIndex == 0){
+        [self.tableView.pullToRefreshView stopAnimating];
+    }else {
+        [self.tableView.infiniteScrollingView stopAnimating];
+    }
+    
+    //notify user
+    [AJNotificationView showNoticeInView:self.navigationController.view
+                                    type:AJNotificationTypeRed
+                                   title:@"联网失败，请重试"
+                         linedBackground:AJLinedBackgroundTypeStatic
+                               hideAfter:1.0f
+                                  offset:65.0f];
+}
+
+#pragma mark - override methods
+
+- (void)focusViewClicked:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    [AJNotificationView showNoticeInView:self.navigationController.view
+                                    type:AJNotificationTypeRed
+                                   title:[NSString stringWithFormat:@"%d is clicked",button.tag]
+                         linedBackground:AJLinedBackgroundTypeStatic
+                               hideAfter:1.0f
+                                  offset:65.0f];
 }
 
 #pragma mark - private methods
-- (void)loadVisibleCellsImage
+
+- (void)loadCategoryInfo
 {
-    NSArray *cells = [self.tableView visibleCells];
-    for(UUImageCell *cell in cells){
-        if([cell respondsToSelector:@selector(showImage)]){
-            [cell showImage];
-        }
-    }
+    [UUCategoryDataProvider sharedInstance].delegate = self;
+    [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:currentPageIndex];
 }
 
-#pragma mark - uiscrollview delegate
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self loadVisibleCellsImage];
-}
 
 @end

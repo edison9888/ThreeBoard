@@ -15,6 +15,6 @@
 @property (nonatomic) NSInteger pageNo;
 @property (nonatomic, strong) NSMutableArray *focusPages;
 @property (nonatomic, strong) NSMutableArray *listPages;
-
+@property (nonatomic) BOOL hasmore;
 
 @end

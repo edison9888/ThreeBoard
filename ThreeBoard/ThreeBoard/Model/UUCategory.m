@@ -15,7 +15,7 @@
 @synthesize pageNo;
 @synthesize focusPages;
 @synthesize listPages;
-
+@synthesize hasmore;
 
 - (id)init
 {

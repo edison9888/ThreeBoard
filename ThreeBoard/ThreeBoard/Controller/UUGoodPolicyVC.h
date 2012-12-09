@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UUBaseVC.h"
+#import "UUCategoryDataProvider.h"
 
-@interface UUGoodPolicyVC : UITableViewController
+@interface UUGoodPolicyVC : UUBaseVC <UUCategoryDataProviderDelegate>
 
 @end

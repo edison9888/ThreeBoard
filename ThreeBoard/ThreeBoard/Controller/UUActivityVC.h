@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "UUCategoryDataProvider.h"
+#import "UUBaseVC.h"
 
-@interface UUActivityVC : UITableViewController <UUCategoryDataProviderDelegate>
+@interface UUActivityVC : UUBaseVC <UUCategoryDataProviderDelegate>
 
 @end

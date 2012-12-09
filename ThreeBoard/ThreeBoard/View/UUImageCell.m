@@ -18,15 +18,28 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        self.textLabel.backgroundColor = [UIColor clearColor];
+		self.textLabel.textColor = UU_TEXT_BLACK;
+        self.textLabel.font = [UIFont boldSystemFontOfSize:16];
+        self.textLabel.lineBreakMode=UILineBreakModeTailTruncation;
+        
+		self.detailTextLabel.backgroundColor = [UIColor clearColor];
+		self.detailTextLabel.textColor = UU_TEXT_LIGHT_BLACK;
+		self.detailTextLabel.font = [UIFont systemFontOfSize:13];
+        self.detailTextLabel.lineBreakMode=UILineBreakModeTailTruncation;
+        
+        UIImageView* next = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"into_next_normal.png"] highlightedImage:[UIImage imageNamed:@"into_next_press.png"]];
+		self.accessoryView = next;
+        
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageView.clipsToBounds = YES;
         CALayer *layer = [self.imageView layer];
         [layer setCornerRadius:5];
         [layer setMasksToBounds:YES];
         [layer setBorderWidth:1];
-        [layer setBorderColor:[TING_IMAGEVIEW_BORDER_COLOR CGColor]];
+        [layer setBorderColor:[UU_IMAGEVIEW_BORDER_COLOR CGColor]];
+        self.imageView.image = [UIImage imageNamed:@"logo_image_default"];
         
-        if(self.imageView){
-            self.imageView.image = [UIImage imageNamed:@"logo_image_default"];
-        }
     }
     return self;
 }
@@ -35,15 +48,15 @@
 {
 	[super layoutSubviews];
     
-    self.imageView.frame = CGRectMake(kImageViewOffsetX, kImageViewOffsetY, kImageViewWidth, kImageViewHeight);
+    self.imageView.frame = CGRectMake(3, 3, 54, 54);
     
     CGRect tmpFrame = self.textLabel.frame;
-    tmpFrame.origin.x = self.imageView.frame.origin.x + self.imageView.frame.size.width + kTextLabelOffset;
+    tmpFrame.origin.x = self.imageView.frame.origin.x + self.imageView.frame.size.width + 10;
     tmpFrame.size.width = 160;
     self.textLabel.frame = tmpFrame;
     
     tmpFrame = self.detailTextLabel.frame;
-    tmpFrame.origin.x = self.imageView.frame.origin.x + self.imageView.frame.size.width + kTextLabelOffset;
+    tmpFrame.origin.x = self.imageView.frame.origin.x + self.imageView.frame.size.width + 10;
     tmpFrame.size.width = 160;
     self.detailTextLabel.frame = tmpFrame;
     

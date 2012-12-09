@@ -281,6 +281,10 @@
     
     category.categoryID = [jsonDict objectForKey:@"category"];
     category.categoryTitle = [jsonDict objectForKey:@"category_title"];
+    if([jsonDict objectForKey:@"hasmore"]){
+        category.hasmore = [[jsonDict objectForKey:@"hasmore"] boolValue];
+    }
+    
     NSArray *focusPages= [jsonDict objectForKey:@"focus"];
     if(focusPages && ![focusPages isKindOfClass:NSNull.class]){
         for(NSDictionary *pageJson in focusPages){
