@@ -90,7 +90,8 @@
     [super loadView];
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view.backgroundColor = UU_BG_SLATE_GRAY;
-    self.navigationItem.title = @"淘金新三板";
+    self.navigationItem.title = @"首页";
+    
     for(int i=0; i<6; i++){
         NSDictionary *dic = [buttonInfos objectAtIndex:i];
         CGRect rect = CGRectFromString([dic objectForKey:kButtonRect]);

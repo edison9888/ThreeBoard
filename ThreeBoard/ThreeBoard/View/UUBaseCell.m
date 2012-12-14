@@ -36,14 +36,13 @@
 	UIColor* backgroundColour = UU_BG_WHITE;
     
 	UIColor* topColor = [UIColor colorWithHexString:@"ffffff"];
-	UIColor* bottomColor = UU_DEVIDE_LINE_COLOR;
+	UIColor* bottomColor = [UIColor colorWithHexString:@"eaeaea"];
 	
 	[backgroundColour set];
 	CGContextFillRect(context, rect);
 	
     CGContextSetLineWidth(context, 0.5);
     [topColor set];
-    
 	CGContextMoveToPoint(context, 0, 0);
 	CGContextAddLineToPoint(context, 320, 0);
 	CGContextStrokePath(context);

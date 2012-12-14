@@ -28,10 +28,10 @@
         self.frame = CGRectMake(0, 0, 320, kCommonSectionHeight);
         self.backgroundColor = UU_BG_DARK_SLATE_GRAY;
         
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, kCommonSectionHeight)];
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 300, kCommonSectionHeight)];
         titleLabel.backgroundColor = [UIColor clearColor];
-        titleLabel.textColor = UU_TEXT_BLACK;
-        titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        titleLabel.textColor = [UIColor colorWithHexString:@"333333"];
+        titleLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
         [self addSubview:titleLabel];
         
     }

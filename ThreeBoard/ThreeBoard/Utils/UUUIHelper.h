@@ -10,7 +10,7 @@
 
 #define kCommonHighHeight       60
 #define kCommonLowHeight        50
-#define kCommonSectionHeight    26
+#define kCommonSectionHeight    24
 
 //#define kTagFocusImageView 1
 //#define kTagFocusTitleLabel 2

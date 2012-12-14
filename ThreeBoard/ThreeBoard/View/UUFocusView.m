@@ -21,14 +21,14 @@
         self.focusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.frame.size.height)];
         [self addSubview:focusImageView];
         
-        UIImageView *shadowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 80, 320, 20)];
-        shadowImageView.backgroundColor = UU_TEXT_BLACK;
-        shadowImageView.alpha = 0.7;
+        UIImageView *shadowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-36, 320, 36)];
+        shadowImageView.backgroundColor = [UIColor blackColor];
+        shadowImageView.alpha = 0.5;
         [self addSubview:shadowImageView];
         
-        self.focusTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 150, 20)];
-        focusTitleLabel.textColor = [UIColor whiteColor];
-        focusTitleLabel.font = [UIFont systemFontOfSize:12];
+        self.focusTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, self.frame.size.height-36, 200, 36)];
+        focusTitleLabel.textColor = [UIColor colorWithHexString:@"ffffff"];
+        focusTitleLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:14];
         focusTitleLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:focusTitleLabel];
         

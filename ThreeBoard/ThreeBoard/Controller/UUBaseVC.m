@@ -22,6 +22,7 @@ static NSUInteger kNumberOfPages = 6;
 
 @implementation UUBaseVC
 
+@synthesize pullTableView;
 @synthesize emptyView;
 @synthesize focusScrollView;
 @synthesize focusPageControl;
@@ -42,6 +43,12 @@ static NSUInteger kNumberOfPages = 6;
 {
     [super loadView];
     
+    self.pullTableView = [[PullTableView alloc] initWithFrame:self.tableView.frame];
+    self.tableView = self.pullTableView;
+    self.pullTableView.pullDelegate = self;
+    self.pullTableView.delegate = self;
+    self.pullTableView.pullBackgroundColor = UU_BG_SLATE_GRAY;
+    
     //empty view
     self.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
     self.emptyView.backgroundColor = UU_BG_SLATE_GRAY;
@@ -51,32 +58,33 @@ static NSUInteger kNumberOfPages = 6;
     emptyTitleLabel.text = @"暂无数据";
     emptyTitleLabel.textAlignment = UITextAlignmentCenter;
     emptyTitleLabel.textColor = UU_TEXT_BLACK;
-    emptyTitleLabel.font = [UIFont systemFontOfSize:16];
+    emptyTitleLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
     [self.emptyView addSubview:emptyTitleLabel];
     
     //header focus pages
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 148)];
     headerView.backgroundColor = [UIColor clearColor];
     
-    self.focusScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    self.focusScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 148)];
     focusScrollView.pagingEnabled = YES;
     focusScrollView.contentSize = CGSizeMake(focusScrollView.frame.size.width * kNumberOfPages, focusScrollView.frame.size.height);
     focusScrollView.showsHorizontalScrollIndicator = NO;
     focusScrollView.showsVerticalScrollIndicator = NO;
+    focusScrollView.bounces = NO;
     focusScrollView.scrollsToTop = NO;
     focusScrollView.delegate = self;
     [headerView addSubview:focusScrollView];
     
     self.focusViews = [NSMutableArray array];
     for(int i=0; i<kNumberOfPages; i++){
-        UUFocusView *focusView = [[UUFocusView alloc] initWithFrame:CGRectMake(i*320, 0, 320, 100)];
+        UUFocusView *focusView = [[UUFocusView alloc] initWithFrame:CGRectMake(i*320, 0, 320, 148)];
         focusView.focusButton.tag = i;
         [focusView.focusButton addTarget:self action:@selector(focusViewClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.focusViews addObject:focusView];
         [focusScrollView addSubview:focusView];
     }
     
-    self.focusPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(160, 80, 160, 20)];
+    self.focusPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(200, 112, 120, 36)];
     [focusPageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     focusPageControl.numberOfPages = kNumberOfPages;
     focusPageControl.currentPage = 0;
@@ -90,7 +98,6 @@ static NSUInteger kNumberOfPages = 6;
 {
     [super viewDidLoad];
 
-    self.tableView.tableFooterView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = UU_BG_WHITE;
     self.tableView.backgroundView = nil;
@@ -99,32 +106,11 @@ static NSUInteger kNumberOfPages = 6;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
 
 
 
@@ -210,6 +196,18 @@ static NSUInteger kNumberOfPages = 6;
     }else{
         [self loadVisibleCellsImage];
     }
+}
+
+#pragma mark - PullTableViewDelegate
+
+- (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
+{
+    
+}
+
+- (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
+{
+    
 }
 
 

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PullTableView.h"
 
-@interface UUBaseVC : UITableViewController
+@interface UUBaseVC : UITableViewController <PullTableViewDelegate>
 
+@property (nonatomic, strong) PullTableView *pullTableView;
 @property (nonatomic, strong) UIView *emptyView;
 @property (nonatomic, strong) UIScrollView *focusScrollView;
 @property (nonatomic, strong) UIPageControl *focusPageControl;

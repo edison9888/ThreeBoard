@@ -20,12 +20,12 @@
     {
         self.textLabel.backgroundColor = [UIColor clearColor];
 		self.textLabel.textColor = UU_TEXT_BLACK;
-        self.textLabel.font = [UIFont boldSystemFontOfSize:16];
+        self.textLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
         self.textLabel.lineBreakMode=UILineBreakModeTailTruncation;
         
 		self.detailTextLabel.backgroundColor = [UIColor clearColor];
 		self.detailTextLabel.textColor = UU_TEXT_LIGHT_BLACK;
-		self.detailTextLabel.font = [UIFont systemFontOfSize:13];
+		self.detailTextLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:13];
         self.detailTextLabel.lineBreakMode=UILineBreakModeTailTruncation;
         
         UIImageView* next = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"into_next_normal.png"] highlightedImage:[UIImage imageNamed:@"into_next_press.png"]];
@@ -38,7 +38,7 @@
         [layer setMasksToBounds:YES];
         [layer setBorderWidth:1];
         [layer setBorderColor:[UU_IMAGEVIEW_BORDER_COLOR CGColor]];
-        self.imageView.image = [UIImage imageNamed:@"logo_image_default"];
+        self.imageView.image = [UIImage imageNamed:@"logo.png"];
         
     }
     return self;
@@ -48,7 +48,7 @@
 {
 	[super layoutSubviews];
     
-    self.imageView.frame = CGRectMake(3, 3, 54, 54);
+    self.imageView.frame = CGRectMake(8, 3, 54, 54);
     
     CGRect tmpFrame = self.textLabel.frame;
     tmpFrame.origin.x = self.imageView.frame.origin.x + self.imageView.frame.size.width + 10;
@@ -73,7 +73,7 @@
         [manager downloadWithURL:[NSURL URLWithString:self.imageURL] delegate:self];
     }else{
         if(self.imageView){
-            self.imageView.image = [UIImage imageNamed:@"logo_image_default"];
+            self.imageView.image = [UIImage imageNamed:@"logo.png"];
         }
     }
 }
@@ -92,7 +92,7 @@
 - (void)webImageManager:(SDWebImageManager *)imageManager didFailWithError:(NSError *)error forURL:(NSURL *)url
 {
     if(self.imageView){
-        self.imageView.image = [UIImage imageNamed:@"logo_image_default"];
+        self.imageView.image = [UIImage imageNamed:@"logo.png"];
     }
 }
 

@@ -39,7 +39,7 @@
 
 + (UIButton*)completeButtonItemWith:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector
 {
-	UIFont* titleFont = [UIFont boldSystemFontOfSize:12];
+	UIFont* titleFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
 	CGSize titleSize = [str sizeWithFont:titleFont];
 	
 	UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(point.x,point.y,titleSize.width+26,31)];
@@ -56,7 +56,7 @@
 
 + (UIButton*)cancelBlackButtonItemWith:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector
 {
-    UIFont* titleFont = [UIFont boldSystemFontOfSize:12];
+    UIFont* titleFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
 	CGSize titleSize = [str sizeWithFont:titleFont];
 	
 	UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(point.x,point.y,titleSize.width+26,31)];
@@ -75,7 +75,7 @@
                                  title:(NSString *)title
 {
     UIButton* btn;
-    UIFont* titleFont = [UIFont boldSystemFontOfSize:12];
+    UIFont* titleFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
     NSString* buttonTitle = title;
     
     CGSize titleSize = [buttonTitle sizeWithFont:titleFont];

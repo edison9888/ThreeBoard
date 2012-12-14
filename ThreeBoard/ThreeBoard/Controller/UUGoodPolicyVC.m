@@ -11,9 +11,6 @@
 #import "UUImageCell.h"
 #import "MBProgressHUD.h"
 #import "UUSectionHeaderView.h"
-#import "UIScrollView+SVPullToRefresh.h"
-#import "UIScrollView+SVInfiniteScrolling.h"
-#import "SVPullToRefresh.h"
 #import "AJNotificationView.h"
 #import "UIImageView+WebCache.h"
 #import "UUFocusView.h"
@@ -49,30 +46,16 @@
     
     //fetch data when loading view
     self.currentPageIndex = 0;
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:NO];
-    [MBProgressHUD HUDForView:self.navigationController.view].labelText = @"载入中...";
+    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
+    [MBProgressHUD HUDForView:self.view].labelText = @"载入中...";
     [self loadCategoryInfo];
     
-    //pull to refresh all pages on top
-    __weak UUGoodPolicyVC *weakSelf = self;
-    
-    [self.tableView addPullToRefreshWithActionHandler:^{
-        //restart from first page
-        weakSelf.currentPageIndex = 0;
-        self.tableView.infiniteScrollingView.enabled = YES;
-        self.tableView.showsInfiniteScrolling = YES;
-        [UUCategoryDataProvider sharedInstance].delegate = self;
-        [[UUCategoryDataProvider sharedInstance] fetchGoodPolicyDetailWithPageIndex:weakSelf.currentPageIndex];
-    }];
-    
-    //load next page on bottom
-    [self.tableView addInfiniteScrollingWithActionHandler:^{
-        if(self.categoryInfo.hasmore){
-            weakSelf.currentPageIndex ++;
-            [UUCategoryDataProvider sharedInstance].delegate = self;
-            [[UUCategoryDataProvider sharedInstance] fetchGoodPolicyDetailWithPageIndex:weakSelf.currentPageIndex];
-        }
-    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [UUCategoryDataProvider sharedInstance].delegate = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +64,16 @@
 }
 
 #pragma mark - Table view data source
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kCommonSectionHeight;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return kCommonHighHeight;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -98,16 +91,6 @@
     }else{
         return 0;
     }
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return kCommonSectionHeight;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return kCommonHighHeight;
 }
 
 
@@ -159,29 +142,23 @@
     DDLogInfo(@"page is loaded with index %d",currentPageIndex);
     
     //stop loading animating and notify user
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+    [MBProgressHUD hideHUDForView:self.view animated:NO];
     self.categoryInfo.hasmore = category.hasmore;
     if(self.currentPageIndex == 0){
-        [self.tableView.pullToRefreshView stopAnimating];
+        self.pullTableView.pullTableIsRefreshing = NO;
         if(!category.hasmore){
             //there is only one page
-            self.tableView.infiniteScrollingView.enabled = NO;
-            self.tableView.showsInfiniteScrolling = NO;
+            [self.pullTableView removeFooterView];
+        }else{
+            [self.pullTableView addFooterView];
         }
     }else if(self.currentPageIndex > 0 && category.hasmore){
         //if there are more pages still could load more pages
-        [self.tableView.infiniteScrollingView stopAnimating];
+        self.pullTableView.pullTableIsLoadingMore = NO;
     }else if(!category.hasmore){
         //it is the last page
-        [self.tableView.infiniteScrollingView stopAnimating];
-        self.tableView.infiniteScrollingView.enabled = NO;
-        self.tableView.showsInfiniteScrolling = NO;
-        [AJNotificationView showNoticeInView:self.navigationController.view
-                                        type:AJNotificationTypeRed
-                                       title:@"已到达最后一页"
-                             linedBackground:AJLinedBackgroundTypeStatic
-                                   hideAfter:1.0f
-                                      offset:445.0f];
+        self.pullTableView.pullTableIsLoadingMore = NO;
+        [self.pullTableView removeFooterView];
     }
     
     //data fetched
@@ -247,12 +224,12 @@
     }
     
     //stop loading animating
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+    [MBProgressHUD hideHUDForView:self.view animated:NO];
     
     if(self.currentPageIndex == 0){
-        [self.tableView.pullToRefreshView stopAnimating];
+        self.pullTableView.pullTableIsRefreshing = NO;
     }else {
-        [self.tableView.infiniteScrollingView stopAnimating];
+        self.pullTableView.pullTableIsLoadingMore = NO;
     }
     
     //notify user
@@ -269,12 +246,7 @@
 - (void)focusViewClicked:(id)sender
 {
     UIButton *button = (UIButton *)sender;
-    [AJNotificationView showNoticeInView:self.navigationController.view
-                                    type:AJNotificationTypeRed
-                                   title:[NSString stringWithFormat:@"%d is clicked",button.tag]
-                         linedBackground:AJLinedBackgroundTypeStatic
-                               hideAfter:1.0f
-                                  offset:65.0f];
+    
 }
 
 #pragma mark - private methods
@@ -283,6 +255,24 @@
 {
     [UUCategoryDataProvider sharedInstance].delegate = self;
     [[UUCategoryDataProvider sharedInstance] fetchGoodPolicyDetailWithPageIndex:currentPageIndex];
+}
+
+#pragma mark - PullTableViewDelegate
+
+- (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
+{
+    //restart from first page
+    self.currentPageIndex = 0;
+    [self loadCategoryInfo];
+    
+}
+
+- (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
+{
+    if(self.categoryInfo.hasmore){
+        self.currentPageIndex ++;
+        [self loadCategoryInfo];
+    }
 }
 
 @end
