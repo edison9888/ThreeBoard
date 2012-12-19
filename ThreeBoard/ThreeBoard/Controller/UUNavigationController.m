@@ -21,15 +21,6 @@
         [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     }
     
-//    int height = self.navigationBar.frame.size.height;
-//    int width = self.navigationBar.frame.size.width;
-//    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-//    navLabel.backgroundColor = [UIColor clearColor];
-//    navLabel.textColor = [UIColor greenColor];
-//    navLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-//    navLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
-//    navLabel.textAlignment = UITextAlignmentCenter;
-//    self.navigationItem.titleView = navLabel;
 }
 
 - (void)viewDidLoad

@@ -13,6 +13,7 @@
     #import "UUPublicDefines.h"
     #import "UIColor-Expanded.h"
     #import "UUNavigationController.h"
+    #import "UUProgressHUD.h"
 #endif
 
 

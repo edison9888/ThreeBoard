@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PullTableView.h"
+#import "UUPageVC.h"
 
-@interface UUBaseVC : UITableViewController <PullTableViewDelegate>
+@interface UUBaseVC : UIViewController <PullTableViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) PullTableView *pullTableView;
 @property (nonatomic, strong) UIView *emptyView;
@@ -20,5 +21,6 @@
 
 - (void)loadVisibleCellsImage;
 - (void)focusViewClicked:(id)sender;
+- (void)focusViewClickedWithData:(NSArray *)focusPages title:(NSString *)title;
 
 @end

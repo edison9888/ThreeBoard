@@ -134,4 +134,6 @@
  */
 - (int)getDiskCount;
 
+- (NSString *)cachePathForKey:(NSString *)key;
+
 @end

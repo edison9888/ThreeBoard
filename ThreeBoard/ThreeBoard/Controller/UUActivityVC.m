@@ -33,14 +33,6 @@
 @synthesize categoryInfo;
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        categoryInfo = [[UUCategory alloc] init];        
-    }
-    return self;
-}
 
 - (void)loadView
 {
@@ -53,12 +45,11 @@
 {
     [super viewDidLoad];
         
-    self.navigationItem.title = @"活动日历";
+//    self.navigationItem.title = @"活动日历";
     
     //fetch data when loading view
     self.currentPageIndex = 0;
-    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
-    [MBProgressHUD HUDForView:self.view].labelText = @"载入中...";
+    [UUProgressHUD showProgressHUDForView:self.view];
     [self loadCategoryInfo];
     
 }
@@ -153,6 +144,15 @@
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    int sectionIndex = indexPath.section;
+    int rowIndex = indexPath.row;
+    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:sectionIndex];
+    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
+    NSArray *pages = [pagesDic objectForKey:title];
+    UUPage *page = [pages objectAtIndex:rowIndex];
+    UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
+    [self.navigationController pushViewController:pageVC animated:YES];
+    pageVC.navigationItem.title = kPageTitleActivity;
 }
 
 #pragma mark - UUCategoryDataProvider Delegate
@@ -161,7 +161,7 @@
 {
 
     //stop loading animating and notify user
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
+    [UUProgressHUD hideProgressHUDForView:self.view];
     self.categoryInfo.hasmore = category.hasmore;
     if(self.currentPageIndex == 0){
         self.pullTableView.pullTableIsRefreshing = NO;
@@ -230,8 +230,10 @@
                 [pageSections addObject:deltaSection];
             }
         }
+        CGFloat offsetY = [UIScreen mainScreen].bounds.origin.y+[UIScreen mainScreen].bounds.size.height + kCommonHighHeight;
+        [self.pullTableView setContentOffset:CGPointMake(0, offsetY) animated:YES];
     }
-    [self.tableView reloadData];
+    [self.pullTableView reloadData];
     [self loadVisibleCellsImage];
 
 }
@@ -243,7 +245,7 @@
     }
     
     //stop loading animating
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
+    [UUProgressHUD hideProgressHUDForView:self.view];
     
     if(self.currentPageIndex == 0){
         self.pullTableView.pullTableIsRefreshing = NO;
@@ -264,8 +266,12 @@
 
 - (void)focusViewClicked:(id)sender
 {
-    UIButton *button = (UIButton *)sender;
-    
+    [self focusViewClickedWithData:self.categoryInfo.focusPages title:kPageTitleActivity];
+//    int currenFocusIndex = self.focusPageControl.currentPage;
+//    UUPage *page = [self.categoryInfo.focusPages objectAtIndex:currenFocusIndex];
+//    UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
+//    [self.navigationController pushViewController:pageVC animated:YES];
+//    pageVC.navigationItem.title = @"活动日历";
 }
 
 #pragma mark - private methods

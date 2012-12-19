@@ -20,6 +20,7 @@
 #define kButtonImageStr @"kButtonImageStr"
 #define kButtonImageHighStr @"kButtonImageHighStr"
 #define kButtonTargetClass @"kButtonTargetClass"
+#define kButtonPageTitle @"kButtonPageTitle"
 
 @interface UUMainVC ()
 
@@ -44,6 +45,7 @@
         [dic1 setObject:@"icon_Calendar_normal" forKey:kButtonImageStr];
         [dic1 setObject:@"icon_Calendar_press" forKey:kButtonImageHighStr];
         [dic1 setObject:UUActivityVC.class forKey:kButtonTargetClass];
+        [dic1 setObject:kPageTitleActivity forKey:kButtonPageTitle];
         [buttonInfos addObject:dic1];
         
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
@@ -51,6 +53,7 @@
         [dic2 setObject:@"icon_zhengce_normal" forKey:kButtonImageStr];
         [dic2 setObject:@"icon_zhengce_press" forKey:kButtonImageHighStr];
         [dic2 setObject:UUGoodPolicyVC.class forKey:kButtonTargetClass];
+        [dic2 setObject:kPageTitleGoodPolicy forKey:kButtonPageTitle];
         [buttonInfos addObject:dic2];
         
         NSMutableDictionary *dic3 = [NSMutableDictionary dictionary];
@@ -58,6 +61,7 @@
         [dic3 setObject:@"icon_zixun_normal" forKey:kButtonImageStr];
         [dic3 setObject:@"icon_zixun_press" forKey:kButtonImageHighStr];
         [dic3 setObject:UUNewInfoVC.class forKey:kButtonTargetClass];
+        [dic3 setObject:kPageTitleNewInfo forKey:kButtonPageTitle];
         [buttonInfos addObject:dic3];
         
         NSMutableDictionary *dic4 = [NSMutableDictionary dictionary];
@@ -65,6 +69,7 @@
         [dic4 setObject:@"icon_xiangmu_normal" forKey:kButtonImageStr];
         [dic4 setObject:@"icon_xiangmu_press" forKey:kButtonImageHighStr];
         [dic4 setObject:UUProjectShowVC.class forKey:kButtonTargetClass];
+        [dic4 setObject:kPageTitleProjectShow forKey:kButtonPageTitle];
         [buttonInfos addObject:dic4];
         
         NSMutableDictionary *dic5 = [NSMutableDictionary dictionary];
@@ -72,6 +77,7 @@
         [dic5 setObject:@"icon_huoban_normal" forKey:kButtonImageStr];
         [dic5 setObject:@"icon_huoban_press" forKey:kButtonImageHighStr];
         [dic5 setObject:UUPartnersVC.class forKey:kButtonTargetClass];
+        [dic5 setObject:kPageTitlePartners forKey:kButtonPageTitle];
         [buttonInfos addObject:dic5];
         
         NSMutableDictionary *dic6 = [NSMutableDictionary dictionary];
@@ -79,6 +85,7 @@
         [dic6 setObject:@"icon_me_normal" forKey:kButtonImageStr];
         [dic6 setObject:@"icon_me_press" forKey:kButtonImageHighStr];
         [dic6 setObject:UUAboutVC.class forKey:kButtonTargetClass];
+        [dic6 setObject:kPageTitleAbout forKey:kButtonPageTitle];
         [buttonInfos addObject:dic6];
     }
     return self;
@@ -147,7 +154,9 @@
     int tagIndex = ((UIButton *)sender).tag;
     NSDictionary *dic = [self.buttonInfos objectAtIndex:tagIndex];
     Class class = [dic objectForKey:kButtonTargetClass];
-    [self.navigationController pushViewController:[[class alloc] init] animated:YES];
+    UIViewController *vc = [[class alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    vc.navigationItem.title = [dic objectForKey:kButtonPageTitle];
 }
 
 

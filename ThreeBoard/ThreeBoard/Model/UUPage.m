@@ -24,6 +24,12 @@
 {
     if(self = [super init]){
         self.contents = [NSMutableArray array];
+        self.pageID = @"";
+        self.pageTitle = @"";
+        self.summary = @"";
+        self.imageURL = @"";
+        self.thumbImageURL = @"";
+        self.publishTime = @"";
     }
     return self;
 }

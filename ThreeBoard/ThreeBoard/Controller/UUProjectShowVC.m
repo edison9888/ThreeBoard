@@ -19,10 +19,13 @@
 @interface UUProjectShowVC ()
 
 @property (nonatomic) int currentPageIndex;
+@property (nonatomic) int currentArea;
 @property (nonatomic, strong) UUCategory *categoryInfo;
 @property (nonatomic, strong) SDSegmentedControl *segmentControl;
 
 - (void)loadCategoryInfo;
+- (void)categoryInfoFetched:(UUCategory *)category;
+- (void)categoryInfoFetchedFailed:(NSError *)error;
 - (void)segmentValueChanged:(id)sender;
 
 @end
@@ -30,17 +33,10 @@
 @implementation UUProjectShowVC
 
 @synthesize currentPageIndex;
+@synthesize currentArea;
 @synthesize categoryInfo;
 @synthesize segmentControl;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        categoryInfo = [[UUCategory alloc] init];
-    }
-    return self;
-}
 
 - (void)loadView
 {
@@ -53,30 +49,29 @@
 {
     [super viewDidLoad];
     
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
     
     self.pullTableView.tableHeaderView = nil;
-    
-    self.navigationItem.title = @"项目展示";
+//    self.navigationItem.title = @"项目展示";
     
     self.segmentControl = [[SDSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"北京地区",@"长三角",@"珠三角",@"其他地区", nil]];
     self.segmentControl.frame = CGRectMake(0, 0, 320, 44);
     self.segmentControl.interItemSpace = 20;
     [self.segmentControl addTarget:self action:@selector(segmentValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.segmentControl];
-//    self.pullTableView.tableHeaderView = self.segmentControl;
     
     CGRect tableViewFrame = self.pullTableView.frame;
     tableViewFrame.origin.y = tableViewFrame.origin.y + 44;
-//    tableViewFrame.size.height = tableViewFrame.size.height - 44;
+    tableViewFrame.size.height = tableViewFrame.size.height - 44;
     self.pullTableView.frame = tableViewFrame;
-    [self.view addSubview:self.pullTableView];
+    self.emptyView.frame = tableViewFrame;
     
     //fetch data when loading view
     self.currentPageIndex = 0;
-    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
-    [MBProgressHUD HUDForView:self.view].labelText = @"载入中...";
+    self.currentArea = ProjectShowAreaBeijing;
+    self.segmentControl.selectedSegmentIndex = ProjectShowAreaBeijing;
     [self loadCategoryInfo];
+    
+    [UUProgressHUD showProgressHUDForView:self.view];
     
 }
 
@@ -170,15 +165,95 @@
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    int sectionIndex = indexPath.section;
+    int rowIndex = indexPath.row;
+    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:sectionIndex];
+    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
+    NSArray *pages = [pagesDic objectForKey:title];
+    UUPage *page = [pages objectAtIndex:rowIndex];
+    UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
+    [self.navigationController pushViewController:pageVC animated:YES];
+    pageVC.navigationItem.title = kPageTitleProjectShow;
 }
 
 #pragma mark - UUCategoryDataProvider Delegate
 
-- (void) activityDetailFetched:(UUCategory *)category
+- (void)beijingAreaDetailFetched:(UUCategory *)category
 {
+    if(self.currentArea == ProjectShowAreaBeijing){
+        [self categoryInfoFetched:category];
+    }
+}
+
+- (void)changjiangAreaDetailFetched:(UUCategory *)category
+{
+    if(self.currentArea == ProjectShowAreaChangjiang){
+        [self categoryInfoFetched:category];
+    }
+}
+
+- (void)zhujiangAreaDetailFetched:(UUCategory *)category
+{
+    if(self.currentArea == ProjectShowAreaZhujiang){
+        [self categoryInfoFetched:category];
+    }
+}
+
+- (void)otherAreaDetailFetched:(UUCategory *)category
+{
+    if(self.currentArea == ProjectShowAreaOther){
+        [self categoryInfoFetched:category];
+    }
+}
+
+- (void)beijingAreaDetailFailed:(NSError *)error
+{
+    [self categoryInfoFetchedFailed:error];
+}
+
+- (void)changjiangAreaDetailFailed:(NSError *)error
+{
+    [self categoryInfoFetchedFailed:error];
+}
+
+- (void)zhujiangAreaDetailFailed:(NSError *)error
+{
+    [self categoryInfoFetchedFailed:error];
+}
+
+- (void)otherAreaDetailFailed:(NSError *)error
+{
+    [self categoryInfoFetchedFailed:error];
+}
+
+#pragma mark - private methods
+
+- (void)loadCategoryInfo
+{
+    [UUCategoryDataProvider sharedInstance].delegate = self;
+    switch (self.currentArea) {
+        case ProjectShowAreaBeijing:
+            [[UUCategoryDataProvider sharedInstance] fetchBeijingAreaDetailWithPageIndex:currentPageIndex];
+            break;
+        case ProjectShowAreaChangjiang:
+            [[UUCategoryDataProvider sharedInstance] fetchChangjiangAreaDetailWithPageIndex:currentPageIndex];
+            break;
+        case ProjectShowAreaZhujiang:
+            [[UUCategoryDataProvider sharedInstance] fetchZhujiangAreaDetailWithPageIndex:currentPageIndex];
+            break;
+        case ProjectShowAreaOther:
+            [[UUCategoryDataProvider sharedInstance] fetchOtherAreaDetailWithPageIndex:currentPageIndex];
+            break;
+        default:
+            break;
+    }
     
+}
+
+- (void)categoryInfoFetched:(UUCategory *)category
+{
     //stop loading animating and notify user
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
+    [UUProgressHUD hideProgressHUDForView:self.view];
     self.categoryInfo.hasmore = category.hasmore;
     if(self.currentPageIndex == 0){
         self.pullTableView.pullTableIsRefreshing = NO;
@@ -230,21 +305,22 @@
                 [pageSections addObject:deltaSection];
             }
         }
+        CGFloat offsetY = [UIScreen mainScreen].bounds.origin.y+[UIScreen mainScreen].bounds.size.height + kCommonHighHeight;
+        [self.pullTableView setContentOffset:CGPointMake(0, offsetY) animated:YES];
     }
-    [self.tableView reloadData];
+    [self.pullTableView reloadData];
     [self loadVisibleCellsImage];
-    
 }
 
-- (void) activityDetailFailed:(NSError *)error
+
+- (void)categoryInfoFetchedFailed:(NSError *)error
 {
     if(self.currentPageIndex > 0){
         self.currentPageIndex -- ;
     }
     
     //stop loading animating
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
-    
+    [UUProgressHUD hideProgressHUDForView:self.view];
     if(self.currentPageIndex == 0){
         self.pullTableView.pullTableIsRefreshing = NO;
     }else {
@@ -254,27 +330,22 @@
     //notify user
     [AJNotificationView showNoticeInView:self.navigationController.view
                                     type:AJNotificationTypeRed
-                                   title:@"联网失败，请重试"
+                                   title:@"出错了，请重试"
                          linedBackground:AJLinedBackgroundTypeStatic
                                hideAfter:1.0f
                                   offset:65.0f];
 }
 
-
-
-#pragma mark - private methods
-
-- (void)loadCategoryInfo
-{
-    [UUCategoryDataProvider sharedInstance].delegate = self;
-    [[UUCategoryDataProvider sharedInstance] fetchActivityDetailWithPageIndex:currentPageIndex];
-}
-
 - (void)segmentValueChanged:(id)sender
 {
-    SDSegmentedControl *segment = (SDSegmentedControl *)sender;
-    DDLogInfo(@"select index %d",segment.selectedSegmentIndex);
-    
+    int selectedArea = self.segmentControl.selectedSegmentIndex;
+    if(selectedArea != self.currentArea){
+        [UUCategoryDataProvider sharedInstance].delegate = nil;
+        self.currentArea = self.segmentControl.selectedSegmentIndex;
+        self.currentPageIndex = 0;
+        self.pullTableView.pullTableIsRefreshing = YES;
+        [self loadCategoryInfo];
+    }
 }
 
 #pragma mark - PullTableViewDelegate

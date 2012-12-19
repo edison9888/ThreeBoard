@@ -18,7 +18,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        
         self.focusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.frame.size.height)];
+        self.focusImageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.focusImageView.backgroundColor = [UIColor whiteColor];
         [self addSubview:focusImageView];
         
         UIImageView *shadowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-36, 320, 36)];

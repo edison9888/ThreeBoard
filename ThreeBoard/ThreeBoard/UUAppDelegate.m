@@ -17,6 +17,7 @@
 #import "UUCategoryDataProvider.h"
 #import "UUPageDataProvider.h"
 #import "UUNavigationController.h"
+#import "BaiduMobStat.h"
 
 @interface UUAppDelegate()
 
@@ -36,7 +37,18 @@
     
     //add logger
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-        
+    
+#if(TARGET_IPHONE_SIMULATOR)
+
+#else
+    //add baidu statistics
+    if(BaiduStatisticsSDK){
+        BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+        statTracker.channelId = @"appStore";
+        statTracker.enableExceptionLog = YES;
+        [statTracker startWithAppId:@"516cf31176"];
+    }
+#endif
     
     return YES;
 }

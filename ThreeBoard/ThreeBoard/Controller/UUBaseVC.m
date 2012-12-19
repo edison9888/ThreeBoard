@@ -30,30 +30,30 @@ static NSUInteger kNumberOfPages = 6;
 @synthesize pageControlUsed;
 @synthesize numberOfFocusPages;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)loadView
 {
     [super loadView];
     
-    self.pullTableView = [[PullTableView alloc] initWithFrame:self.tableView.frame];
-    self.tableView = self.pullTableView;
+    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    self.view.backgroundColor = UU_BG_WHITE;
+    
+    self.pullTableView = [[PullTableView alloc] initWithFrame:self.view.frame];
     self.pullTableView.pullDelegate = self;
     self.pullTableView.delegate = self;
-    self.pullTableView.pullBackgroundColor = UU_BG_SLATE_GRAY;
+    self.pullTableView.dataSource = self;
+    self.pullTableView.pullBackgroundColor = UU_BG_WHITE;
+    self.pullTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.pullTableView.backgroundColor = UU_BG_WHITE;
+    self.pullTableView.backgroundView = nil;
+    [self.view addSubview:self.pullTableView];
     
     //empty view
-    self.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
-    self.emptyView.backgroundColor = UU_BG_SLATE_GRAY;
+    self.emptyView = [[UIView alloc] initWithFrame:self.pullTableView.frame];
+    self.emptyView.backgroundColor = UU_BG_WHITE;
     UILabel *emptyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     emptyTitleLabel.center = self.emptyView.center;
+    emptyTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
     emptyTitleLabel.backgroundColor = [UIColor clearColor];
     emptyTitleLabel.text = @"暂无数据";
     emptyTitleLabel.textAlignment = UITextAlignmentCenter;
@@ -91,16 +91,14 @@ static NSUInteger kNumberOfPages = 6;
     focusPageControl.backgroundColor = [UIColor clearColor];
     [headerView addSubview:focusPageControl];
     
-    self.tableView.tableHeaderView = headerView;
+    self.pullTableView.tableHeaderView = headerView;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = UU_BG_WHITE;
-    self.tableView.backgroundView = nil;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,7 +139,7 @@ static NSUInteger kNumberOfPages = 6;
 
 - (void)loadVisibleCellsImage
 {
-    NSArray *cells = [self.tableView visibleCells];
+    NSArray *cells = [self.pullTableView visibleCells];
     for(UUImageCell *cell in cells){
         if([cell respondsToSelector:@selector(showImage)]){
             [cell showImage];
@@ -155,6 +153,17 @@ static NSUInteger kNumberOfPages = 6;
     
 }
 
+
+- (void)focusViewClickedWithData:(NSArray *)focusPages title:(NSString *)title
+{
+    int currenFocusIndex = self.focusPageControl.currentPage;
+    if(focusPages && [focusPages count] > 0 && currenFocusIndex < [focusPages count]){
+        UUPage *page = [focusPages objectAtIndex:currenFocusIndex];
+        UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
+        [self.navigationController pushViewController:pageVC animated:YES];
+        pageVC.navigationItem.title = title;
+    }
+}
 
 #pragma mark - uiscrollview delegate
 
