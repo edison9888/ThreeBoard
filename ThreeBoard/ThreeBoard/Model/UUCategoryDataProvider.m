@@ -178,7 +178,7 @@
         
         NSDictionary *jsonDict = [(NSData *)responseObject objectFromJSONData];
         
-//        DDLogInfo(@"%@",jsonDict);
+        DDLogInfo(@"%@",jsonDict);
         
         UUCategory *category = [self getCategoryFromJson:jsonDict];
         
@@ -249,7 +249,7 @@
         
         NSDictionary *jsonDict = [(NSData *)responseObject objectFromJSONData];
         
-//        DDLogInfo(@"%@",jsonDict);
+        DDLogInfo(@"%@",jsonDict);
         
         UUCategory *category = [self getCategoryFromJson:jsonDict];
         

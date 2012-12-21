@@ -18,6 +18,9 @@
 
 @property (nonatomic, strong) SNWebView *webview;
 @property (nonatomic, strong) NSString *pageID;
+@property (nonatomic, strong) UUPage *uuPage;
+
+- (void)imageCacheFinished:(NSNotification *)notification;
 
 @end
 
@@ -25,13 +28,14 @@
 
 @synthesize webview;
 @synthesize pageID;
-
+@synthesize uuPage;
 
 - (id)initWithPageID:(NSString *)_pageID
 {
     self = [super init];
     if(self){
         self.pageID = _pageID;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCacheFinished:) name:SDWebImageCacheFinishedNotification object:nil];
     }
     return self;
 }
@@ -54,8 +58,7 @@
     [UUPageDataProvider sharedInstance].delegate = self;
     [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:self.pageID];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
-    [MBProgressHUD HUDForView:self.view].labelText = @"载入中...";
+    [UUProgressHUD showProgressHUDForView:self.view];
     
 }
 
@@ -63,20 +66,43 @@
 {
     [super viewWillDisappear:animated];
     [UUPageDataProvider sharedInstance].delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SDWebImageCacheFinishedNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+
 }
 
+#pragma mark - private methods
+
+- (void)imageCacheFinished:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *imageURLStr = [userInfo objectForKey:@"key"];
+    
+    if([self.uuPage.imageURL isEqualToString:imageURLStr]){
+        
+        NSString *cachedImagePath = [[SDImageCache sharedImageCache] cachePathForKey:imageURLStr];
+        
+        if([[NSFileManager defaultManager] fileExistsAtPath:cachedImagePath]){
+            NSDictionary *imageDic = [NSDictionary dictionaryWithObjectsAndKeys:cachedImagePath,@"localPath",imageURLStr,@"imageUrl", nil];
+            NSArray *imageArray = [NSArray arrayWithObjects:imageDic, nil];
+            [self.webview notifyImages:[imageArray JSONString]];
+        }
+        
+    }
+}
 
 #pragma mark - UUPageDataProvider delegate methods
 - (void)pageInfoFetched:(UUPage *)page
 {
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
+    [UUProgressHUD hideProgressHUDForView:self.view];
     
     if([page.pageID isEqualToString:self.pageID]){
+        self.uuPage = page;
+        
         NSMutableDictionary *jsonDict = [NSMutableDictionary dictionary];
         
         [jsonDict setObject:page.publishTime forKey:@"ts"];
@@ -130,7 +156,7 @@
 
 - (void)pageInfoFailed:(NSError *)error
 {
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
+    [UUProgressHUD hideProgressHUDForView:self.view];
     
     //notify user
     [AJNotificationView showNoticeInView:self.navigationController.view
@@ -144,14 +170,20 @@
 #pragma mark  SDWebImageDownloaderDelegate
 - (void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image forURL:(NSURL *)url
 {
-    NSString *imageURLStr = [url absoluteString];
-    NSString *cachedImagePath = [[SDImageCache sharedImageCache] cachePathForKey:imageURLStr];
+//    NSString *imageURLStr = [url absoluteString];
+//    if([self.uuPage.imageURL isEqualToString:imageURLStr]){
+//        
+//        NSString *cachedImagePath = [[SDImageCache sharedImageCache] cachePathForKey:imageURLStr];
+//        DDLogInfo(@"cachedPath 1=%@",cachedImagePath);
+//        
+//        if([[NSFileManager defaultManager] fileExistsAtPath:cachedImagePath]){
+//            NSDictionary *imageDic = [NSDictionary dictionaryWithObjectsAndKeys:cachedImagePath,@"localPath",imageURLStr,@"imageUrl", nil];
+//            NSArray *imageArray = [NSArray arrayWithObjects:imageDic, nil];
+//            [self.webview notifyImages:[imageArray JSONString]];
+//        }
+//        
+//    }
     
-//    cachedImagePath = [[NSURL fileURLWithPath:cachedImagePath] absoluteString];
-    
-    NSDictionary *imageDic = [NSDictionary dictionaryWithObjectsAndKeys:cachedImagePath,@"localPath",imageURLStr,@"imageUrl", nil];
-    NSArray *imageArray = [NSArray arrayWithObjects:imageDic, nil];
-    [self.webview notifyImages:[imageArray JSONString]];
 }
 
 - (void)webImageManager:(SDWebImageManager *)imageManager didFailWithError:(NSError *)error forURL:(NSURL *)url

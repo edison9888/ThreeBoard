@@ -1,11 +1,4 @@
-/**
- * @author lizhuhong
- * modified on 2012-09-06, for IOS only
- * image header is added, as well as the following random headers,
- * title below or above the horizontal seperator header,
- * meanwhile, checkSingleTap interface is added
- * all image can be set successfully, and should be clickable
- */
+
 (function() {		
 	var wrapperDiv = document.getElementById("wrapper");
 	var imageBoxArr, viewMode, fontSize;
@@ -63,52 +56,9 @@
 		if (originalNews != undefined) {
 			originalNews.parentElement.removeChild(originalNews);
 		}
-				
-//		originalNews = document.createElement("div");					
-//		originalNews.setAttribute("id", "view_original_news");
-//		originalNews.setAttribute("data-url", newsUrl);
-//		originalNews.setAttribute("data-action", "open_original");
-//		originalNews.appendChild(document.createTextNode("\u6d4f\u89c8\u539f\u6587"));
-//		document.getElementById("content").appendChild(originalNews);
- 
-//        originalNews.addEventListener("touchstart", handleTouchStart, false);
-//        originalNews.addEventListener("touchmove", handleTouchMove, false);
-//        originalNews.addEventListener("touchend", handleTouchEnd, false);
 	
         setContentFinish();
 	}
-	
-//    window.checkSingleTap = function(x, y) {
-//        var targetElm, scrolledY = window.scrollY;
-//        var prefix = "bdapi://hybrid?info=";
-//        var action = "";
-//        var args ="";
-//        if (scrolledY > 0) {
-//            if (document.elementFromPoint(0, scrolledY + window.innerHeight - 1) != null) {
-//                y += scrolledY;
-//            }
-//        }
-// 
-//        targetElm = document.elementFromPoint(x, y);
-// 
-//        if (targetElm.tagName === "IMG") {
-//            action = "image";
-//            args = '{"imageUrl" : "' + targetElm.getAttribute("data-url") + '"}';    
-//        }
-//
-//        else if (targetElm.getAttribute("class") === "imgBox") {
-//            action = "image";
-//            args = '{"imageUrl" : "' + targetElm.firstChild.getAttribute("data-url") + '"}';  
-//        }
-//
-//        else if (targetElm.getAttribute("id") !== "view_original_news") {
-//            action = "single_tap";
-//            args = "{}";
-//        }
-// 
-//        window.location.href = prefix + '{"action": "' + action + '", "args":' + args + '}';
-// 
-//    }
 
 	
 	window.setImage = function(imageArray) {	
@@ -121,15 +71,16 @@
 			for (var j = 0; j < imageNum; j++) {
 				tempImage = imageBoxes[j].firstChild;
 				if (tempImage.getAttribute("data-url") == imageArray[i].imageUrl) {
-					tempImage.setAttribute("src", imageArray[i].localPath);
-                    tempImage.style.visibility = "visible";
+                    tempImage.setAttribute("src", imageArray[i].localPath);
+//                    tempImage.style.visibility = "visible";
                     tempImage.parentElement.style.background = "none";
 				}
 			}
 		}
 	}
+ 
 	
-	window.setViewMode = function(mode) {		
+	window.setViewMode = function(mode) {
 		viewMode = mode;
 		
 		if (mode == 0) {
@@ -183,12 +134,6 @@
 		return elm;
 	}
 	
-//	function fillDescriptionDiv(parent, firstElm, sencondElm, lastElm) {		
-//		parent.appendChild(firstElm);
-//		parent.appendChild(sencondElm);
-//		parent.appendChild(lastElm);
-//		return parent;
-//	}
  
     function fillDescriptionDiv(parent, childElem)
     {
@@ -214,8 +159,6 @@
 		}
 		
 		titleDiv.appendChild(titleElm);
- 
-//        descriptionDiv = fillDescriptionDiv(descriptionDiv, siteSpan, categorySpan, timeSpan);
         descriptionDiv = fillDescriptionDiv(descriptionDiv, timeSpan);
         header.appendChild(titleDiv);
         header.appendChild(descriptionDiv);
@@ -239,11 +182,11 @@
         var documentWidth = 320;
 		var arrLength = content.length;
 		var paragraph = [], url, width, height, imageHeight, imageWidth;
-        var defaultImage = "../image/text_page_pic.png";
- 
-        if (hasClass(document.body, "nightMode") != -1) {
-            defaultImage = "../image/night_mode_text_page_pic.png";
-        }
+//        var defaultImage = "../image/text_page_pic.png";
+// 
+//        if (hasClass(document.body, "nightMode") != -1) {
+//            defaultImage = "../image/night_mode_text_page_pic.png";
+//        }
  
 		for (var i = 0; i < arrLength; i++) {			
 			if (content[i].type == "text") {
@@ -264,23 +207,14 @@
                     imageHeight = Math.floor(height * documentWidth / width);
                     imageWidth = documentWidth;
                 }
-			
+	
 				paragraph.push('<div class="imgBox" style="width: ' + imageWidth + 'px; height: ' + imageHeight + 'px;"><img width="' + imageWidth + '" height="' + imageHeight + '" data-url="' + url + '" data-action="image" src="" style="border: none; "/></div>');
-//                paragraph.push('<div class="imgBox" style="width: ' + imageWidth + 'px; height: ' + imageHeight + 'px;"><img width="' + imageWidth + '" height="' + imageHeight + '" data-url="' + url + '" data-action="image" src="'+url+'" style="border: none; "/></div>');
 			}
 		}
 			
 		return paragraph.join('');			
 	}
 		
-//	function getLocalTime(timestamp) {
-//		var date = new Date(parseInt(timestamp));
-//		var year = date.getFullYear();
-//		var month = date.getMonth() + 1;
-//		var day = date.getDate();
-//		
-//		return (year + "-" + formatNum(month) + "-" + formatNum(day));
-//	}
 	
 	function formatNum(num) {	
 		if (num < 10) {
@@ -323,35 +257,7 @@
 	    elm.className = classes.join(' ');	 		
 	}	
 	
-//    function handleTouchStart(event) {	
-//		var srcElm = event.srcElmment || event.target;
-//		isMove = false;
-//		addClass(srcElm, "pressed");
-//	}
-//	
-//	function handleTouchMove(event) {
-//		var srcElm = event.srcElmment || event.target;	
-//		isMove = true;
-//		removeClass(srcElm, "pressed");
-//    }
-//	
-//	function handleTouchEnd(event) {		
-//		var srcElm = event.srcElmment || event.target;			
-//		var action = "";
-//		var args = "";
-//		var prefix = "bdapi://hybrid?info=";
-//		
-//		setTimeout(function() {
-//			removeClass(srcElm, "pressed");
-//		}, 200);
-//			
-//		if (!isMove) {
-//            action = "open_original";
-//            args = '{"url" : "' + srcElm.getAttribute("data-url") + '"}';             
-//
-//			window.location.href = prefix + '{"action": "' + action + '", "args":' + args + '}';
-//		}													
-//    }
+
 	
 	function isAndroid() {
 		return navigator.userAgent.match(/android/i);

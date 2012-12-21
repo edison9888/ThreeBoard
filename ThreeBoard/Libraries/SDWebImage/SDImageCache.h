@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "SDImageCacheDelegate.h"
 
+//added by GaryLiu 2012/12/20
+#define SDWebImageCacheFinishedNotification @"SDWebImageCacheFinishedNotification"
+
+
 /**
  * SDImageCache maintains a memory cache and an optional disk cache. Disk cache write operations are performed
  * asynchronous so it doesn’t add unnecessary latency to the UI.

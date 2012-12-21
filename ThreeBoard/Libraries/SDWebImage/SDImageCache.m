@@ -104,6 +104,13 @@ static NSInteger cacheMaxCacheAge = 60*60*24*7; // 1 week
     cacheMaxCacheAge = maxCacheAge;
 }
 
+#pragma mark Private methods
+
+- (void)postCacheFinishedNotification:(NSDictionary *)userInfo
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDWebImageCacheFinishedNotification object:nil userInfo:userInfo];
+}
+
 #pragma mark SDImageCache (private)
 
 - (NSString *)cachePathForKey:(NSString *)key
@@ -128,6 +135,10 @@ static NSInteger cacheMaxCacheAge = 60*60*24*7; // 1 week
     if (data)
     {
         [fileManager createFileAtPath:[self cachePathForKey:key] contents:data attributes:nil];
+        
+        //added by GaryLiu 2012/12/20
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:key forKey:@"key"];
+        [self performSelectorOnMainThread:@selector(postCacheFinishedNotification:) withObject:userInfo waitUntilDone:YES];
     }
     else
     {
@@ -144,8 +155,14 @@ static NSInteger cacheMaxCacheAge = 60*60*24*7; // 1 week
             [fileManager createFileAtPath:[self cachePathForKey:key] contents:jpegData attributes:nil];
 #endif
             SDWIRelease(image);
+            
+            //added by GaryLiu 2012/12/20
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:key forKey:@"key"];
+            [self performSelectorOnMainThread:@selector(postCacheFinishedNotification:) withObject:userInfo waitUntilDone:YES];
         }
     }
+    
+    
 
     SDWIRelease(fileManager);
 }

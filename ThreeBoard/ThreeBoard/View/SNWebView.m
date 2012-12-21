@@ -147,6 +147,12 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 {
     NSString* urlString = [[[request URL] absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlString = [self htmlEntityDecode:urlString];
+//    DDLogInfo(@"url=%@",urlString);
+    if([urlString hasPrefix:@"uu://"]){
+        return NO;
+    }
+    
     return YES;
 }
 
