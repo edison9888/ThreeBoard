@@ -26,10 +26,11 @@ static const int ddLogLevel = LOG_LEVEL_WARN;
 #define UU_BG_SLATE_GRAY     [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f]
 #define UU_BG_DARK_SLATE_GRAY [UIColor colorWithRed:235/255.0f green:235/255.0f blue:235/255.0f alpha:1.0f]
 #define UU_TEXT_GRAY  [UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1]
-#define UU_SELECTED_BLUE      [UIColor colorWithRed:39/255.0f green:156/255.0f blue:231/255.0f alpha:1.0f]
 #define UU_TEXT_GRAY_MIDDLE   [UIColor colorWithRed:102/255.0f green:102/255.0f blue:102/255.0f alpha:1.0f]
 #define UU_TEXT_GRAY_113      [UIColor colorWithRed:113/255.0f green:113/255.0f blue:113/255.0f alpha:1.0f]
 #define UU_TEXT_GRAY_DARK     [UIColor colorWithRed:127/255.0f green:127/255.0f blue:127/255.0f alpha:1.0f]
+#define UU_SELECTED_BG_COLOR [UIColor colorWithRed:(CGFloat)0xed/255 green:(CGFloat)0xef/255 blue:(CGFloat)0xf2/255 alpha:1]
+
 
 typedef enum{
     ProjectShowAreaBeijing = 0,
@@ -43,6 +44,7 @@ typedef enum{
     AboutSectionTeamWeibo,
     AboutSectionContact,
     AboutSectionVersionInfo,
+    ShareSettings,
     AboutSectionNumber
 }AboutSection;
 
@@ -54,6 +56,25 @@ typedef enum{
 #define kPageTitleAbout @"关于我们"
 
 
+#define kBWXSinaWeiboAppKey @"2129806721"
+#define kBWXSinaWeiboAppSecret @"f28ffd032c8c4461222b315675128346"
+#define kBWXSinaWeiboRedirectUrl @"http://"
+//#define kBWXSinaWeiboAppKey @"1623815163"
+//#define kBWXSinaWeiboAppSecret @"14ecc37aef18451992187ac3cd49eeda"
+//#define kBWXSinaWeiboRedirectUrl @"http://"
+
+
+#define kBWXTencentWeiboAppKey @"801228592"
+#define kBWXTencentWeiboAppSecret @"9231f75dead5131755159329ebb23d50"
+#define kBWXTencentWeiboRedirectUrl @"http://b.dlkingx.net"
+
+#define kBWXRenrenAppKey @"209894"
+#define kBWXRenrenAPIKey @"e37f5a44e1eb4e6f9694ade69fb2c862"
+#define kBWXRenrenAppSecret @"7f122148de274c768e33d8085ce6ebb8"
+
+
+#define kBWXQZoneAppKey @"100266567"
+#define kBWXQZoneRedirectUrl @"http://www.qq.com"
 
 
 #endif

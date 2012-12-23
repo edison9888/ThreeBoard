@@ -37,7 +37,7 @@
 }
 
 
-+ (UIButton*)completeButtonItemWith:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector
++ (UIBarButtonItem*)createNormalBarButtonItemWithTitle:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector
 {
 	UIFont* titleFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
 	CGSize titleSize = [str sizeWithFont:titleFont];
@@ -51,25 +51,12 @@
 	[btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	
 	[btn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
-	return btn;
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+	return barButtonItem;
 }
 
-+ (UIButton*)cancelBlackButtonItemWith:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector
-{
-    UIFont* titleFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
-	CGSize titleSize = [str sizeWithFont:titleFont];
-	
-	UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(point.x,point.y,titleSize.width+26,31)];
-	btn.titleEdgeInsets = UIEdgeInsetsMake(0, 13, 0, 13);
-	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateNormal];
-	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn_press.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateHighlighted];
-	btn.titleLabel.font = titleFont;
-	[btn setTitle:str forState:UIControlStateNormal];
-	[btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	
-	[btn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
-	return btn;
-}
+
 
 + (UIBarButtonItem *)createBackBarItem:(id)target action:(SEL)selector
                                  title:(NSString *)title

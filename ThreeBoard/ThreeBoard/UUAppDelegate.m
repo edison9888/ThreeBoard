@@ -18,6 +18,8 @@
 #import "UUPageDataProvider.h"
 #import "UUNavigationController.h"
 #import "BaiduMobStat.h"
+#import "BWXShareCenter.h"
+#import "BWXShareServiceModel.h"
 
 @interface UUAppDelegate()
 
@@ -49,6 +51,9 @@
         [statTracker startWithAppId:@"516cf31176"];
     }
 #endif
+    
+    //init share service
+    BWXShareCenterInstance.serviceTypes = [BWXShareServiceModel availableServiceTypes];
     
     return YES;
 }

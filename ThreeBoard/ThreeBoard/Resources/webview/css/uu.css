@@ -235,7 +235,7 @@ img{
 }
 
 #news_details p:last-child{	
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 }
 
 #view_original_news{	
@@ -320,7 +320,7 @@ img{
 }
 
 .bigFont #news_details p:last-child{
-	margin-bottom: 14px;
+	margin-bottom: 5px;
 }
 
 /* night mode */

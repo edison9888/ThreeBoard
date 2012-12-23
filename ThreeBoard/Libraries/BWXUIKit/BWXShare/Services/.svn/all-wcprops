@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/app/search/ns-mobile/!svn/ver/25803/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services
+END
+BWXShareRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareRequest.h
+END
+BWXShareWeixinService.m
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/app/search/ns-mobile/!svn/ver/25803/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareWeixinService.m
+END
+BWXShareAuthWebView.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareAuthWebView.h
+END
+BWXShareBaseService.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/app/search/ns-mobile/!svn/ver/25354/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareBaseService.h
+END
+BWXShareRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareRequest.m
+END
+BWXShareAuthWebView.m
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/app/search/ns-mobile/!svn/ver/25638/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareAuthWebView.m
+END
+BWXShareUserModel.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareUserModel.h
+END
+BWXShareBaseService.m
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/app/search/ns-mobile/!svn/ver/25638/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareBaseService.m
+END
+BWXShareSinaWeiboService.h
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareSinaWeiboService.h
+END
+BWXShareUserModel.m
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/app/search/ns-mobile/!svn/ver/25638/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareUserModel.m
+END
+BWXShareSinaWeiboService.m
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/app/search/ns-mobile/!svn/ver/25137/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareSinaWeiboService.m
+END
+BWXShareTencentWeiboService.h
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareTencentWeiboService.h
+END
+BWXShareRenrenService.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/app/search/ns-mobile/!svn/ver/23058/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareRenrenService.h
+END
+BWXShareTencentWeiboService.m
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/app/search/ns-mobile/!svn/ver/24734/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareTencentWeiboService.m
+END
+BWXShareQZoneService.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/app/search/ns-mobile/!svn/ver/24734/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareQZoneService.h
+END
+BWXShareRenrenService.m
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/app/search/ns-mobile/!svn/ver/25638/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareRenrenService.m
+END
+BWXShareQZoneService.m
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/app/search/ns-mobile/!svn/ver/24734/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareQZoneService.m
+END
+BWXShareWeixinService.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/app/search/ns-mobile/!svn/ver/25354/trunk/bwxuikit-ios/LibBWXUIKit/BWXUIKit/BWXShare/Services/BWXShareWeixinService.h
+END

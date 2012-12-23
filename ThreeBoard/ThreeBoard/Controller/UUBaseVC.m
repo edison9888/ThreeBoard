@@ -35,7 +35,7 @@ static NSUInteger kNumberOfPages = 6;
 {
     [super loadView];
     
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, [UIScreen mainScreen].bounds.size.height - 64)];
     self.view.backgroundColor = UU_BG_WHITE;
     
     self.pullTableView = [[PullTableView alloc] initWithFrame:self.view.frame];

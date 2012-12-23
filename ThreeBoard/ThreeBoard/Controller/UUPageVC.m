@@ -13,14 +13,19 @@
 #import "AJNotificationView.h"
 #import "SDWebImageManager.h"
 #import "SDImageCache.h"
+#import "BWXShareCenter.h"
+
 
 @interface UUPageVC ()
 
 @property (nonatomic, strong) SNWebView *webview;
 @property (nonatomic, strong) NSString *pageID;
 @property (nonatomic, strong) UUPage *uuPage;
+@property (nonatomic, strong) UIBarButtonItem *shareButton;
 
 - (void)imageCacheFinished:(NSNotification *)notification;
+- (void)shareButtonClicked:(id)sender;
+-(UIImage *)addText:(UIImage *)img text:(NSString *)text1;
 
 @end
 
@@ -29,6 +34,7 @@
 @synthesize webview;
 @synthesize pageID;
 @synthesize uuPage;
+@synthesize shareButton;
 
 - (id)initWithPageID:(NSString *)_pageID
 {
@@ -44,7 +50,7 @@
 {
     [super loadView];
     
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, [UIScreen mainScreen].bounds.size.height - 64)];
     self.view.backgroundColor = UU_BG_WHITE;
     self.webview = [[SNWebView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.webview];
@@ -55,6 +61,8 @@
 {
     [super viewDidLoad];
     
+    self.shareButton = [UUUIHelper createNormalBarButtonItemWithTitle:@"分享" position:CGPointMake(0, 0) target:self selector:@selector(shareButtonClicked:)];
+    
     [UUPageDataProvider sharedInstance].delegate = self;
     [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:self.pageID];
     
@@ -62,11 +70,20 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationItem setRightBarButtonItem:self.shareButton];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [UUPageDataProvider sharedInstance].delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SDWebImageCacheFinishedNotification object:nil];
+    self.navigationItem.rightBarButtonItem = nil;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +93,35 @@
 }
 
 #pragma mark - private methods
+
+-(UIImage *)addText:(UIImage *)img text:(NSString *)text1{
+    int w = img.size.width;
+    int h = img.size.height;
+    //lon = h - lon;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, kCGImageAlphaPremultipliedFirst);
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, w, h), img.CGImage);
+    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 1);
+	
+    char* text	= (char *)[text1 cStringUsingEncoding:NSASCIIStringEncoding];// "05/05/09";
+    CGContextSelectFont(context, "Arial", 18, kCGEncodingMacRoman);
+    CGContextSetTextDrawingMode(context, kCGTextFill);
+    CGContextSetRGBFillColor(context, 255, 255, 255, 1);
+	
+    
+    //rotate text
+    CGContextSetTextMatrix(context, CGAffineTransformMakeRotation( -M_PI/4 ));
+	
+    CGContextShowTextAtPoint(context, 4, 52, text, strlen(text));
+	
+	
+    CGImageRef imageMasked = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+	
+    return [UIImage imageWithCGImage:imageMasked];
+}
 
 - (void)imageCacheFinished:(NSNotification *)notification
 {
@@ -93,6 +139,48 @@
         }
         
     }
+}
+
+-(UIImage *)imageFromText:(NSString *)text
+{
+    // set the font type and size
+    UIFont *font = [UIFont systemFontOfSize:20.0];
+    CGSize size  = [text sizeWithFont:font];
+    
+    // check if UIGraphicsBeginImageContextWithOptions is available (iOS is 4.0+)
+    if (UIGraphicsBeginImageContextWithOptions != NULL)
+        UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
+    else
+        // iOS is < 4.0
+        UIGraphicsBeginImageContext(size);
+    
+    // optional: add a shadow, to avoid clipping the shadow you should make the context size bigger
+    //
+    // CGContextRef ctx = UIGraphicsGetCurrentContext();
+    // CGContextSetShadowWithColor(ctx, CGSizeMake(1.0, 1.0), 5.0, [[UIColor grayColor] CGColor]);
+    
+    // draw in context, you can use also drawInRect:withFont:
+    [text drawAtPoint:CGPointMake(0.0, 0.0) withFont:font];
+    
+    // transfer image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+- (void)shareButtonClicked:(id)sender
+{
+
+//    NSString *cachedImagePath = [[SDImageCache sharedImageCache] cachePathForKey:self.uuPage.imageURL];
+//    UIImage *sharedImage = [UIImage imageWithContentsOfFile:cachedImagePath];
+    
+//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(36, 36), NO, 0.0);
+//    UIImage *sharedImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    [self addText:sharedImage text:@"Hello world"];
+    
+    [BWXShareCenterInstance singleShareImage:[NSArray arrayWithObject:[self imageFromText:@"44332211"]] content:@"123123123123123" withController:self.navigationController];
 }
 
 #pragma mark - UUPageDataProvider delegate methods
@@ -158,6 +246,7 @@
 {
     [UUProgressHUD hideProgressHUDForView:self.view];
     
+    
     //notify user
     [AJNotificationView showNoticeInView:self.navigationController.view
                                     type:AJNotificationTypeRed
@@ -170,19 +259,7 @@
 #pragma mark  SDWebImageDownloaderDelegate
 - (void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image forURL:(NSURL *)url
 {
-//    NSString *imageURLStr = [url absoluteString];
-//    if([self.uuPage.imageURL isEqualToString:imageURLStr]){
-//        
-//        NSString *cachedImagePath = [[SDImageCache sharedImageCache] cachePathForKey:imageURLStr];
-//        DDLogInfo(@"cachedPath 1=%@",cachedImagePath);
-//        
-//        if([[NSFileManager defaultManager] fileExistsAtPath:cachedImagePath]){
-//            NSDictionary *imageDic = [NSDictionary dictionaryWithObjectsAndKeys:cachedImagePath,@"localPath",imageURLStr,@"imageUrl", nil];
-//            NSArray *imageArray = [NSArray arrayWithObjects:imageDic, nil];
-//            [self.webview notifyImages:[imageArray JSONString]];
-//        }
-//        
-//    }
+
     
 }
 

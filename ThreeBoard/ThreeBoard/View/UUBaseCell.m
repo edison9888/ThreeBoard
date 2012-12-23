@@ -15,11 +15,11 @@
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	if (self) {
 
-//		UIImageView* backView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"finger_press.png"]] ;
-//		backView.frame = self.frame;
+//		UIImageView* backView = [[UIImageView alloc] initWithFrame:self.frame] ;
+//		backView.backgroundColor = UU_SELECTED_BG_COLOR;
 //		self.selectedBackgroundView = backView;
-        
-	}
+	
+    }
 	return self;
 }
 

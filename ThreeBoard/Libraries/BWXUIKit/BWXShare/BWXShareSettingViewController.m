@@ -1,0 +1,182 @@
+//
+//  BWXShareSettingViewController.m
+//  BWXUIKit
+//
+//  Created by easy on 12-10-18.
+//  Copyright (c) 2012年 baidu. All rights reserved.
+//
+
+#import "BWXShareSettingViewController.h"
+#import "UITableView+BWXShare.h"
+#import "BWXShareServiceModel.h"
+#import "BWXShareCenter.h"
+#import "BWXShareProgress.h"
+
+#import "UIBarHelper.h"
+#import "BWXUIKit.h"
+
+@interface BWXShareSettingViewController () <UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,BWXShareBaseServiceDelegate>{
+    UITableView *_tableView;    //noretain
+    
+    NSArray *_serviceModels;
+    NSArray *_services;
+    
+    
+    
+    CGFloat _heightOfRow;
+}
+
+@end
+
+@implementation BWXShareSettingViewController
+
+- (void)dealloc
+{
+    [_serviceModels release],_serviceModels = nil;
+    [_services release],_services = nil;
+    [super dealloc];
+}
+
+-(id) init {
+    return [self initWithServiceTypes:[BWXShareServiceModel availableServiceTypes]];
+}
+-(id) initWithServiceTypes:(NSArray *) serviceTypes {
+    self = [super init];
+    if (self) {
+        NSMutableArray *serviceModels = [NSMutableArray array];
+        NSMutableArray *services = [NSMutableArray array];
+        for (NSNumber *serviceType in serviceTypes) {
+            id serviceModel = [BWXShareServiceModel modelForServiceType:[serviceType intValue]];
+            BWXShareBaseService *service = [BWXShareBaseServiceFactory makeShareServiceByType:[serviceType intValue]];
+            if (serviceModel && service) {
+                [serviceModels addObject:serviceModel];
+                [services addObject:service];
+                service.delegate = self;
+            }
+        }
+        if ([serviceModels count] > 0) {
+            _serviceModels = [serviceModels retain];
+            _services = [services retain];
+        } else {
+            [self release],self = nil;
+        }
+    }
+    return self;
+}
+
+-(void)loadView {
+    [super loadView];
+    _tableView = [[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped] autorelease];
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.backgroundView = [[[UIView alloc] init] autorelease];
+    _tableView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_tableView];
+    
+//    self.navigationItem.leftBarButtonItem = [UIBarHelper leftBarButtonItemWithTitle:@"返回" font:BWXFontWithSize(14) target:self action:@selector(leftBarButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = [UUUIHelper createBackBarItem:self action:@selector(leftBarButtonPressed:) title:@"返回"];
+        
+    _heightOfRow = 45.0f;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - actions
+-(void) leftBarButtonPressed:(id) sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Table View Delegate
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSUInteger row = [indexPath row];
+//    BWXShareServiceModel *serviceModel = [_serviceModels objectAtIndex:row];
+    BWXShareBaseService *service = [_services objectAtIndex:row];
+    if ([service isLoggedIn]) {
+        //logout
+//        [serviceModel.service logout];
+        NSString *title = [NSString stringWithFormat:@"注销绑定"];
+        NSString *message = [NSString stringWithFormat:@"是否注销绑定到%@?",service.typeName];
+        UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] autorelease];
+        
+        alertView.tag = row + 80000;
+        [alertView show];
+    } else {
+        service.rootViewController = self.navigationController;
+        [service login];
+    }
+}
+
+#pragma mark - Table View Data Source
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    BWXShareServiceBindingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[[BWXShareServiceBindingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"] autorelease];
+    }
+    
+    NSUInteger row = [indexPath row];
+    BWXShareServiceModel *serviceModel = [_serviceModels objectAtIndex:row];
+    BWXShareBaseService *service = [_services objectAtIndex:row];
+    cell.serviceName = service.typeName;
+    cell.serviceImage = serviceModel.icon;
+    cell.serviceBinding = [service isLoggedIn];
+    
+    UIImage *backgroundImage = [tableView shareServiceBackgroundImageAtIndexPath:indexPath];
+    cell.backgroundView = [[[UIImageView alloc] initWithImage:backgroundImage] autorelease];
+    
+    UIImage *selectedBackgroundImage = [tableView shareServiceSelectedBackgroundImageAtIndexPath:indexPath];
+    cell.selectedBackgroundView = [[[UIImageView alloc] initWithImage:selectedBackgroundImage] autorelease];
+    return cell;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_services count];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return _heightOfRow;
+}
+
+#pragma mark - Alert View
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    int index = alertView.tag - 80000;
+    if (buttonIndex == 1) {
+//        BWXShareServiceModel *model = [_serviceModels objectAtIndex:index];
+        BWXShareBaseService *service = [_services objectAtIndex:index];
+        [service logout];
+    }
+}
+
+- (void)loginFail:(BWXShareBaseService*)service error:(NSError*)error {
+    
+    [[BWXShareProgress shareProgress] showMessage:@"登陆失败"];
+}
+
+
+- (void)loginSuccess:(BWXShareBaseService*)service {
+    [_tableView reloadData];
+        [[BWXShareProgress shareProgress] showMessage:@"登陆成功"];
+}
+- (void)logoutSuccess:(BWXShareBaseService*)service {
+    [_tableView reloadData];
+    [[BWXShareProgress shareProgress] showMessage:@"注销成功"];
+}
+- (void)logoutFail:(BWXShareBaseService*)service error:(NSError*)error
+{
+    [[BWXShareProgress shareProgress] showMessage:@"注销失败"];    
+    //do nothing!
+    
+}
+@end

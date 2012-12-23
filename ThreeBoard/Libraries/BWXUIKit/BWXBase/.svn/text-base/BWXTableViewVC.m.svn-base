@@ -1,0 +1,302 @@
+//
+//  WXTableViewViewController.m
+//  WXUIKit
+//
+//  Created by Daly Dai on 12-7-14.
+//  Copyright (c) 2012年 baidu. All rights reserved.
+//
+
+#define TableViewFrameWithoutKeyboard CGRectMake(0, 0, 320,IsIphone5?368+88:368)
+#define TableViewFrameWithKeyboard    CGRectMake(0, 0, 320, IsIphone5?200+88:200)
+
+#import "BWXTableViewVC.h"
+@interface BWXTableViewVC ()
+{
+	
+	EGORefreshTableFooterView *refreshFooterView;
+	EGORefreshTableHeaderView *refreshHeaderView;
+	NSString *loadingUpText, *loadingReleaseText, *loadingText;
+	MBProgressHUD *HUD;
+
+}
+@end
+
+@implementation BWXTableViewVC
+@synthesize waitingLoadDataView;
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+     
+
+
+    }
+    return self;
+}
+
+- (void)initTableView {
+	tableView = [[UITableView alloc] initWithFrame:TableViewFrameWithoutKeyboard style:UITableViewStylePlain];
+	tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	tableView.delegate = self;
+	tableView.dataSource = self;
+	tableView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)showLoading
+{
+    if (!self.waitingLoadDataView) {
+        [self.view bringSubviewToFront:HUD];
+        [HUD show:YES];
+    } else {
+        self.waitingLoadDataView.hidden = NO;
+    }
+}
+
+- (void)hiddenLoading
+{
+    isLoading = NO;
+    if (!self.waitingLoadDataView) {
+        [HUD hide:YES];
+    } else {
+        self.waitingLoadDataView.hidden = YES;
+    }
+}
+
+
+
+- (void)loadView
+{
+	[super loadView];
+    
+    HUD = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
+    HUD.labelText = @"加载中...";
+    [self.view addSubview:HUD];
+    
+	if (!tableView) {
+		[self initTableView];
+	}
+
+	[super.view addSubview:tableView];
+}
+
+
+- (void)dealloc
+{
+    [tableView release]; 
+    tableView = nil;
+    [super dealloc];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    tableView = nil;
+    HUD = nil;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+#pragma mark EGO
+- (void)addPullRefresh
+{
+	CGRect rect = CGRectMake(0, -tableView.frame.size.height, tableView.frame.size.width, tableView.bounds.size.height);
+    if (!refreshHeaderView) {
+        refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:rect];
+        refreshHeaderView.delegate = self;
+        refreshHeaderView.downText = @"下拉刷新";
+        refreshHeaderView.releaseText = @"松开刷新数据";
+        refreshHeaderView.loadingText = @"正在载入…";
+    }
+	
+	if (![refreshHeaderView superview]) {		
+		[tableView addSubview:refreshHeaderView];
+	}
+	refreshHeaderView.frame = rect;
+}
+
+- (void)addPullLoadMore {
+	CGRect rect = CGRectMake(0, tableView.frame.size.height, tableView.frame.size.width, tableView.bounds.size.height);
+	if (isPullLoadMore) {	// Load More View
+		if (refreshFooterView == nil) {
+			refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:rect];
+			refreshFooterView.delegate = self;
+			refreshFooterView.upText = loadingUpText ? loadingUpText : @"上拉载入更多";
+			refreshFooterView.releaseText = loadingReleaseText ? loadingReleaseText : @"松开载入更多";
+			refreshFooterView.loadingText = loadingText ? loadingText : @"正在载入…";
+		}
+	}
+	
+	// tableView在|viewDidUnload|中被释放后，需要重新添加
+	if (![refreshFooterView superview]) {
+		[tableView addSubview:refreshFooterView];
+	}
+	refreshFooterView.frame = rect;
+}
+
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	NSAssert(NO, @"Must be implemented by subclass");
+    // Return the number of sections.
+    return 0;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	NSAssert(NO, @"Must be implemented by subclass");
+    // Return the number of rows in the section.
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [table dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    // Configure the cell...
+    
+    return cell;
+}
+
+
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSAssert(NO, @"Must be implemented by subclass");
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	[refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+	
+	if (isPullLoadMore) {
+		[refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+	}
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+	if (isPullLoadMore) {
+		[refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+	}
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableFooterDelegate
+- (void)egoRefreshTableFooterDidTriggerRefresh:(EGORefreshTableFooterView*)v{
+	isLoading = YES;
+	[self loadMoreData];
+}
+
+- (BOOL)egoRefreshTableFooterDataSourceIsLoading:(EGORefreshTableFooterView *)v {
+	return isLoading; // should return if data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableFooterDataSourceLastUpdated:(EGORefreshTableFooterView *)v {
+	return [NSDate date]; // should return date data source was last changed
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)v {
+	isLoading = YES;
+	[self refreshData];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)v {
+	return isLoading; // should return if data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)v {
+	return [NSDate date]; // should return date data source was last changed
+}
+
+#pragma mark -
+#pragma mark showloadingView
+
+//为了提高扩展性，删除原有requstDataList接口，子类必须实现loadMoreData和refreshData方法.
+- (void)loadMoreData {
+	NSAssert(NO, @"Must be implemented by subclass，为了保证扩展性，tableview需要子类必须实现loadMoreData和refreshData方法");
+}
+
+- (void)refreshData
+{
+	NSAssert(NO, @"Must be implemented by subclass，为了保证扩展性，tableview需要子类必须实现loadMoreData和refreshData方法");
+}
+
+
+- (void)finishLoadMoreData
+{
+    [self hiddenLoading];	
+    [tableView reloadData];
+	// Move the loading view Y position
+	CGRect frame = refreshFooterView.frame;
+	refreshFooterView.frame = CGRectMake(frame.origin.x, tableView.contentSize.height, frame.size.width, frame.size.height);
+	[refreshFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:tableView];
+}
+
+
+- (void)finishRefreshingData 
+{
+    [self hiddenLoading];
+    [tableView reloadData];
+	[refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tableView];
+	refreshFooterView.frame = CGRectMake(0.0f, tableView.contentSize.height, tableView.frame.size.width, tableView.bounds.size.height);
+}
+
+
+- (void)removeFooterView 
+{
+    [refreshFooterView removeFromSuperview];
+    [refreshFooterView release];
+    refreshFooterView = nil;
+}
+
+- (void)noMoreData 
+{
+	isPullLoadMore = NO;
+    [self performSelectorOnMainThread: @selector(removeFooterView) withObject: nil waitUntilDone: NO];
+}
+
+
+#pragma mark --
+- (void)setTableHeaderView:(UIView*)headerView
+{
+    tableView.tableHeaderView = headerView;
+    CGRect rect = CGRectMake(0, tableView.contentSize.height, tableView.frame.size.width, tableView.bounds.size.height);
+	refreshFooterView.frame = rect;
+
+}
+
+@end

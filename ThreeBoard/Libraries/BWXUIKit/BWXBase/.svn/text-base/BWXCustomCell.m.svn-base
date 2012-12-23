@@ -1,0 +1,85 @@
+//
+//  WXCustomCell.m
+//  shenbian
+//
+//  Created by Daly Dai on 12-7-14.
+//  Copyright (c) 2012年 baidu. All rights reserved.
+//
+
+#import "BWXCustomCell.h"
+#import "BWXCustomCellView.h"
+//#import "Utility.h"
+
+
+@implementation BWXCustomCell {
+    UIColor *_myBackgroundColor;
+    BOOL _isCustomSelectionStyle;
+    UITableViewCellSelectionStyle _mySelectionStyle;
+    BOOL isSettingHighLightBGColor;
+}
+
+@synthesize cellView;
+@synthesize selectColor;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
+		[self.contentView addSubview:cellView];
+		self.backgroundColor = [UIColor whiteColor];
+		self.contentView.frame = self.frame;
+        isSettingHighLightBGColor = NO;
+        [self setSelectionStyle:[super selectionStyle]];
+    }
+	return self;
+}
+
+- (void)setCellView:(BWXCustomCellView *)view {
+	if ([cellView isEqual:view])
+		return;
+	
+	[cellView removeFromSuperview];
+	[cellView release];
+	cellView = [view retain];
+	
+	cellView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[self.contentView addSubview:cellView];
+}
+
+
+//  selectionStyle为Gray或Blue时，将背景色换为指定色；为None时不改变背景色
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    if (_isCustomSelectionStyle) {
+        if (highlighted) {
+            isSettingHighLightBGColor = YES;
+            self.backgroundColor = selectColor ? selectColor : [UIColor clearColor];
+            isSettingHighLightBGColor = NO;
+        } else {
+            isSettingHighLightBGColor = NO;
+            self.backgroundColor = _myBackgroundColor;
+        }
+    }
+    [cellView setHighlighted:highlighted animated:animated];
+}
+
+- (void)setSelectionStyle:(UITableViewCellSelectionStyle)selectionStyle {
+    _isCustomSelectionStyle = UITableViewCellSelectionStyleNone != selectionStyle;
+    [super setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+}
+
+- (void)setBackgroundColor:(UIColor *)aBackgroundColor {
+    [super setBackgroundColor:aBackgroundColor];
+    
+    if (!isSettingHighLightBGColor) {
+        [_myBackgroundColor release];
+        _myBackgroundColor = [aBackgroundColor retain];
+    }
+}
+
+- (void)dealloc {
+	[cellView release];
+    [_myBackgroundColor release];
+    
+    [super dealloc];
+}
+
+@end

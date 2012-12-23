@@ -40,8 +40,11 @@
     if(self){
         buttonInfos = [NSMutableArray array];
         
+        CGFloat viewHeight = [UIScreen mainScreen].bounds.size.height - 64;
+        CGFloat padding = (viewHeight-375)/4;
+        
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
-        [dic1 setObject:NSStringFromCGRect(CGRectMake(8, 10, 148, 125)) forKey:kButtonRect];
+        [dic1 setObject:NSStringFromCGRect(CGRectMake(8, padding, 148, 125)) forKey:kButtonRect];
         [dic1 setObject:@"icon_Calendar_normal" forKey:kButtonImageStr];
         [dic1 setObject:@"icon_Calendar_press" forKey:kButtonImageHighStr];
         [dic1 setObject:UUActivityVC.class forKey:kButtonTargetClass];
@@ -49,7 +52,7 @@
         [buttonInfos addObject:dic1];
         
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
-        [dic2 setObject:NSStringFromCGRect(CGRectMake(164, 10, 148, 125)) forKey:kButtonRect];
+        [dic2 setObject:NSStringFromCGRect(CGRectMake(164, padding, 148, 125)) forKey:kButtonRect];
         [dic2 setObject:@"icon_zhengce_normal" forKey:kButtonImageStr];
         [dic2 setObject:@"icon_zhengce_press" forKey:kButtonImageHighStr];
         [dic2 setObject:UUGoodPolicyVC.class forKey:kButtonTargetClass];
@@ -57,7 +60,7 @@
         [buttonInfos addObject:dic2];
         
         NSMutableDictionary *dic3 = [NSMutableDictionary dictionary];
-        [dic3 setObject:NSStringFromCGRect(CGRectMake(8, 145, 148, 125)) forKey:kButtonRect];
+        [dic3 setObject:NSStringFromCGRect(CGRectMake(8, padding*2+125, 148, 125)) forKey:kButtonRect];
         [dic3 setObject:@"icon_zixun_normal" forKey:kButtonImageStr];
         [dic3 setObject:@"icon_zixun_press" forKey:kButtonImageHighStr];
         [dic3 setObject:UUNewInfoVC.class forKey:kButtonTargetClass];
@@ -65,7 +68,7 @@
         [buttonInfos addObject:dic3];
         
         NSMutableDictionary *dic4 = [NSMutableDictionary dictionary];
-        [dic4 setObject:NSStringFromCGRect(CGRectMake(164, 145, 148, 125)) forKey:kButtonRect];
+        [dic4 setObject:NSStringFromCGRect(CGRectMake(164, padding*2+125, 148, 125)) forKey:kButtonRect];
         [dic4 setObject:@"icon_xiangmu_normal" forKey:kButtonImageStr];
         [dic4 setObject:@"icon_xiangmu_press" forKey:kButtonImageHighStr];
         [dic4 setObject:UUProjectShowVC.class forKey:kButtonTargetClass];
@@ -73,7 +76,7 @@
         [buttonInfos addObject:dic4];
         
         NSMutableDictionary *dic5 = [NSMutableDictionary dictionary];
-        [dic5 setObject:NSStringFromCGRect(CGRectMake(8, 280, 148, 125)) forKey:kButtonRect];
+        [dic5 setObject:NSStringFromCGRect(CGRectMake(8, padding*3+250, 148, 125)) forKey:kButtonRect];
         [dic5 setObject:@"icon_huoban_normal" forKey:kButtonImageStr];
         [dic5 setObject:@"icon_huoban_press" forKey:kButtonImageHighStr];
         [dic5 setObject:UUPartnersVC.class forKey:kButtonTargetClass];
@@ -81,7 +84,7 @@
         [buttonInfos addObject:dic5];
         
         NSMutableDictionary *dic6 = [NSMutableDictionary dictionary];
-        [dic6 setObject:NSStringFromCGRect(CGRectMake(164, 280, 148, 125)) forKey:kButtonRect];
+        [dic6 setObject:NSStringFromCGRect(CGRectMake(164, padding*3+250, 148, 125)) forKey:kButtonRect];
         [dic6 setObject:@"icon_me_normal" forKey:kButtonImageStr];
         [dic6 setObject:@"icon_me_press" forKey:kButtonImageHighStr];
         [dic6 setObject:UUAboutVC.class forKey:kButtonTargetClass];

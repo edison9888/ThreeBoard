@@ -10,6 +10,7 @@
 #import "UUAboutCell.h"
 #import "SVWebViewController.h"
 #import "UUTeamTwitterListVC.h"
+#import "BWXShareCenter.h"
 
 @interface UUAboutVC ()
 
@@ -29,8 +30,8 @@
 {
     self = [super init];
     if(self){
-        self.arrTitle = [NSArray arrayWithObjects:@"关于金元证券",@"团队微博",@"联系方式",@"版本信息", nil];
-        self.arrImageStr = [NSArray arrayWithObjects:@"about_icon_jinyuan.png",@"about_icon_weibo.png",@"about_icon_contact.png",@"about_icon_version.png", nil];
+        self.arrTitle = [NSArray arrayWithObjects:@"关于金元证券",@"团队微博",@"联系方式",@"版本信息",@"分享设置", nil];
+        self.arrImageStr = [NSArray arrayWithObjects:@"about_icon_jinyuan.png",@"about_icon_weibo.png",@"about_icon_contact.png",@"about_icon_version.png",@"about_icon_weibo.png", nil];
         
     }
     return self;
@@ -86,7 +87,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return AboutSectionNumber;
 }
 
 
@@ -145,6 +146,10 @@
         webViewController.view.backgroundColor = UU_BG_WHITE;
         webViewController.navigationItem.title = @"版本信息";
         [self.navigationController pushViewController:webViewController animated:YES];
+    }else if(indexPath.row == ShareSettings){
+        UIViewController *shareSettingVC = [BWXShareCenterInstance settingViewController];
+        shareSettingVC.navigationItem.title = @"分享设置";
+        [self.navigationController pushViewController:shareSettingVC animated:YES];
     }
     
 }

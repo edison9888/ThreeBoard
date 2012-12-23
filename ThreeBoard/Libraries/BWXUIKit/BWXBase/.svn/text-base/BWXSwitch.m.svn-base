@@ -1,0 +1,242 @@
+//
+//  BWXSwitch.m
+//  BWXUIKit
+//
+//  Created by easy on 12-10-30.
+//  Copyright (c) 2012年 baidu. All rights reserved.
+//
+
+#import "BWXSwitch.h"
+#import <QuartzCore/QuartzCore.h>
+#import "BWXUIKit.h"
+
+#define kBWXSwitchAllocOnImage [BWXPNGImage(@"switch/image-on",@"BWXBase.bundle") retain]
+#define kBWXSwitchAllocOffImage [BWXPNGImage(@"switch/image-off",@"BWXBase.bundle") retain]
+
+#define kBWXSwitchDefaultSize CGSizeMake(77,30)
+@interface BWXSwitch () {
+    
+    BOOL _on;
+    
+    CGPoint _lastStartTouchPoint;
+    CGPoint _currentTouchPoint;
+    CGPoint _lastEndTouchPoint;
+    
+    
+
+    UIImageView *_onView;                           //noretain
+    UIImageView *_offView;                          //noretain
+    UIImageView *_sliderBlockImageView;             //noretain
+    
+    UIImageView *_contentView;                      //noretain
+    
+    UIImageView *_onImageView;                      //noretain
+    UIImageView *_offImageView;                     //noretain
+    
+    
+    UIImage *_sliderImage;
+    UIImage *_sliderPressedImage;
+    
+}
+
+@end
+
+@implementation BWXSwitch
+@synthesize on = _on;
+
+
+- (void)dealloc {
+    [_sliderImage release];
+    [_sliderPressedImage release];
+    [super dealloc];
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    CGSize size = kBWXSwitchDefaultSize;
+    self = [super initWithFrame:CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), size.width, size.height)];//default!!!
+    if (self) {
+        
+        _contentView = [[[UIImageView alloc] initWithFrame:self.bounds] autorelease];
+        _contentView.autoresizesSubviews = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _contentView.clipsToBounds = YES;
+        _contentView.layer.cornerRadius = 2;
+        [self addSubview:_contentView];
+        
+        _sliderImage = [BWXPNGImage(@"switch/button-slider",@"BWXBase.bundle") retain];
+        _sliderPressedImage = [BWXPNGImage(@"switch/button-slider-select",@"BWXBase.bundle") retain];
+        _sliderBlockImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, floorf(CGRectGetMidY(self.bounds)-_sliderImage.size.height/2), _sliderImage.size.width, _sliderImage.size.height)] autorelease];
+        _sliderBlockImageView.layer.cornerRadius = 2;
+        _sliderBlockImageView.image = _sliderImage;
+        [_contentView addSubview:_sliderBlockImageView];
+
+        CGFloat width = CGRectGetWidth(_contentView.bounds);
+        CGFloat height = CGRectGetHeight(_contentView.bounds);
+        CGFloat sliderWidth = CGRectGetWidth(_sliderBlockImageView.bounds);
+
+        CGFloat widthOfBackground = width;
+        
+        _onView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, widthOfBackground, height)] autorelease];
+        [_contentView addSubview:_onView];
+        
+        _offView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, sliderWidth, widthOfBackground, height)] autorelease];
+        [_contentView addSubview:_offView];
+
+
+        
+        _onImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width - sliderWidth, height)] autorelease];
+        _onImageView.contentMode = UIViewContentModeCenter;
+        [_onView addSubview:_onImageView];
+        
+        _offImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(sliderWidth, 0, width - sliderWidth, height)] autorelease];
+        _offImageView.contentMode = UIViewContentModeCenter;
+        [_offView addSubview:_offImageView];
+        
+        
+        [_contentView bringSubviewToFront:_sliderBlockImageView];
+        
+        UIImageView *borderImageView = [[[UIImageView alloc] initWithFrame:_contentView.bounds] autorelease];
+        [_contentView addSubview:borderImageView];
+        
+        
+        
+        borderImageView.image = BWXPNGImage(@"switch/image-border-background",@"BWXBase.bundle");
+        _offView.image = BWXPNGImage(@"switch/image-off-background",@"BWXBase.bundle");
+        _onView.image = BWXPNGImage(@"switch/image-on-background",@"BWXBase.bundle");
+        _offImageView.image = BWXPNGImage(@"switch/image-off",@"BWXBase.bundle");
+        _onImageView.image = BWXPNGImage(@"switch/image-on",@"BWXBase.bundle");
+        
+
+        
+        
+        [self setOn:_on animated:NO changed:NO];
+        
+    }
+    return self;
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
+{
+    // Drawing code
+}
+*/
+
+-(void) setOn:(BOOL) on animated:(BOOL) animated changed:(BOOL) changed{
+    void (^animations)() = ^{
+        
+        CGFloat widthOfSlider = CGRectGetWidth(_sliderBlockImageView.bounds);
+        CGFloat width = CGRectGetWidth(_contentView.frame);
+
+        CGFloat backgroundWidth = width - widthOfSlider;
+        if (on) {
+            _sliderBlockImageView.frame = CGRectOffset(_sliderBlockImageView.bounds,width - widthOfSlider, 0);
+            
+            _onView.frame = CGRectOffset(_onView.bounds, 0, 0);
+            _offView.frame = CGRectOffset(_offView.bounds, backgroundWidth, 0);
+        } else {
+            _sliderBlockImageView.frame = _sliderBlockImageView.bounds;
+            
+            _onView.frame = CGRectOffset(_onView.bounds, -backgroundWidth, 0);
+            _offView.frame = CGRectOffset(_offView.bounds, 0, 0);
+        }
+    };
+    
+    void (^completion)(BOOL) = ^(BOOL finished) {
+        if (animated && !finished) {
+            animations();
+        }
+        
+        if (_on != on) {
+            if (changed) {
+                [self willChangeValueForKey:@"on"];
+                _on = on;
+                [self didChangeValueForKey:@"on"];
+                [self sendActionsForControlEvents:UIControlEventValueChanged];
+            } else {
+                _on = on;
+            }
+        }
+        
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.2f animations:animations completion:completion];
+    }else {
+        animations();
+        completion(YES);
+    }
+}
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeTouches) {// && touch.tapCount == 1
+        _lastStartTouchPoint = [touch locationInView:_contentView];
+        _currentTouchPoint = _lastStartTouchPoint;
+        
+        _sliderBlockImageView.image = _sliderPressedImage;
+    }
+    return YES;
+}
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeTouches) {
+        CGPoint currentPoint = [touch locationInView:_contentView];
+        CGPoint offsetPoint = CGPointMake(currentPoint.x - _currentTouchPoint.x, currentPoint.y - _currentTouchPoint.y);
+        CGRect targetRect = CGRectOffset(_sliderBlockImageView.frame, offsetPoint.x, 0);
+
+        if (CGRectGetMinX(targetRect) <= 0 && offsetPoint.x <= 0) {//左边不离屏
+            targetRect.origin.x = 0;
+        } else if (CGRectGetMaxX(targetRect) >= CGRectGetMaxX(_contentView.bounds) && offsetPoint.x >= 0) {//右边不离屏
+            targetRect.origin.x = CGRectGetMaxX(_contentView.bounds) - CGRectGetWidth(targetRect);
+        } else if (offsetPoint.x > 0 && CGRectGetMinX(targetRect) < CGRectGetWidth(targetRect)/2 && currentPoint.x < CGRectGetMidX(_sliderBlockImageView.bounds)) {
+            targetRect.origin.x = 0;//左边向右超过滑块一半才移动
+        } else if (offsetPoint.x < 0 && CGRectGetMaxX(targetRect) > CGRectGetMaxX(_contentView.bounds) - CGRectGetWidth(targetRect)/2 && currentPoint.x > CGRectGetMaxX(_contentView.bounds) - CGRectGetMidX(_sliderBlockImageView.bounds)) {
+            targetRect.origin.x = CGRectGetMaxX(_contentView.bounds) - CGRectGetWidth(targetRect);//右边向左超过滑块一半才移动
+        }
+        
+        _sliderBlockImageView.frame = targetRect;
+
+        
+        _onView.frame = CGRectOffset(_onView.bounds, -(CGRectGetWidth(_contentView.frame)-CGRectGetMaxX(_sliderBlockImageView.frame)), 0);
+        _offView.frame = CGRectOffset(_offView.bounds, CGRectGetMinX(_sliderBlockImageView.frame), 0);
+    
+        _currentTouchPoint = currentPoint;
+    }
+    return YES;
+}
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeTouches) {
+        
+        _lastEndTouchPoint = [touch locationInView:_contentView];
+        
+        
+        BOOL on = NO;
+        if (CGPointEqualToPoint(_currentTouchPoint, _lastStartTouchPoint)) {//没有中间过程？！
+            on = !_on;
+        } else {
+            if (CGRectGetMidX(_sliderBlockImageView.frame) > CGRectGetMidX(_contentView.bounds)) {
+                on = YES;
+            }
+        }
+        
+        
+        [self setOn:on animated:YES changed:YES];
+        
+        _currentTouchPoint = _lastEndTouchPoint;
+        
+        _sliderBlockImageView.image = _sliderImage;
+    }
+}
+
+-(void)setOn:(BOOL)on {
+    if (_on != on) {
+        [self setOn:on animated:NO changed:YES];
+    }
+}
+
+- (void)setOn:(BOOL)on animated:(BOOL)animated {
+    [self setOn:on animated:animated changed:NO];
+}
+
+@end

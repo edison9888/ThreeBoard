@@ -1,0 +1,151 @@
+//
+//  BWXRadio.m
+//  BWXUIKit
+//
+//  Created by easy on 12-11-2.
+//  Copyright (c) 2012年 baidu. All rights reserved.
+//
+
+#import "BWXRadio.h"
+#define kBWXRadioDefaultSize CGSizeMake(30,30)
+
+NSString *const BWXRadioValueChangedNotification = @"BWXRadioValueChangedNotification";
+NSString *const BWXRadioKey = @"BWXRadioKey";
+
+@interface BWXRadio () {
+    UIImageView *_imageView;        //noretain
+    UIImage *_onImage;
+    UIImage *_onHighlightedImage;
+    UIImage *_onDisabledImage;
+    
+    UIImage *_offImage;
+    UIImage *_offHighlightedImage;
+    UIImage *_offDisabledImage;
+    
+    id _group;
+}
+
+@end
+
+@implementation BWXRadio
+@synthesize on = _on;
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_group release];
+    [_onImage release];
+    [_onHighlightedImage release];
+    [_onDisabledImage release];
+    [_offImage release];
+    [_offHighlightedImage release];
+    [_offDisabledImage release];
+    [super dealloc];
+}
+
+-(id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _imageView = [[[UIImageView alloc] initWithFrame:self.bounds] autorelease];
+        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _imageView.contentMode = UIViewContentModeCenter;
+        [self addSubview:_imageView];
+        
+        _onImage = [BWXPNGImage(@"radio/button-radio-on", @"BWXBase.bundle") retain];
+        _onHighlightedImage = [BWXPNGImage(@"radio/button-radio-on-select", @"BWXBase.bundle") retain];
+        _onDisabledImage = [BWXPNGImage(@"radio/button-radio-on-disable", @"BWXBase.bundle") retain];
+        
+        _offImage = [BWXPNGImage(@"radio/button-radio-off", @"BWXBase.bundle") retain];
+        _offHighlightedImage = [BWXPNGImage(@"radio/button-radio-off-select", @"BWXBase.bundle") retain];
+        _offDisabledImage = [BWXPNGImage(@"radio/button-radio-off-disable", @"BWXBase.bundle") retain];
+        
+        _imageView.image = _offImage;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(valueChangedNotify:) name:BWXRadioValueChangedNotification object:nil];
+    }
+    return self;
+}
+
+-(void) valueChangedNotify:(NSNotification *) notify {
+    BWXRadio *radio = [notify.userInfo objectForKey:BWXRadioKey];
+    if (radio != self && radio.on) {
+        if ((_group == nil && radio->_group == nil) || [_group isEqual:radio->_group]) {
+            self.on = NO;
+        }
+    }
+}
+
+-(void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    if (highlighted) {
+        if (_on) {
+            _imageView.image = _onHighlightedImage;
+        } else {
+            _imageView.image = _offHighlightedImage;
+        }
+    } else {
+        if (_on) {
+            _imageView.image = _onImage;
+        } else {
+            _imageView.image = _offImage;
+        }
+    }
+}
+
+-(void)setEnabled:(BOOL)enabled {
+    [super setEnabled:enabled];
+    if (!enabled) {
+        if (_on) {
+            _imageView.image = _onDisabledImage;
+        } else {
+            _imageView.image = _offDisabledImage;
+        }
+    } else {
+        if (_on) {
+            _imageView.image = _onImage;
+        } else {
+            _imageView.image = _offImage;
+        }
+    }
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeTouches) {
+        CGPoint pt = [touch locationInView:self];
+        if (CGRectContainsPoint(self.bounds, pt)) {
+            //touch up in side
+            if (!_on) {//加入不可点击取消选择
+                [self setOn:!_on changed:YES];
+            }
+        }
+    }
+}
+
+-(void)setOn:(BOOL)on {
+    [self setOn:on changed:YES];
+}
+
+
+-(void) setOn:(BOOL)on changed:(BOOL) changed {
+    if (_on != on) {
+        if (changed) {
+            [self willChangeValueForKey:@"on"];
+            _on = on;
+            [self didChangeValueForKey:@"on"];
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            [userInfo setObject:self forKey:BWXRadioKey];
+            NSNotification *notify = [NSNotification notificationWithName:BWXRadioValueChangedNotification object:nil userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotification:notify];
+            [self sendActionsForControlEvents:UIControlEventValueChanged];
+        } else {
+            _on = on;
+        }
+        if (_on) {
+            _imageView.image = _onImage;
+        } else {
+            _imageView.image = _offImage;
+        }
+    }
+}
+
+@end

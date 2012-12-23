@@ -16,9 +16,7 @@
 
 +(UIButton *)createButtonWithFrame:(CGRect)frame normalBgImageStr:(NSString *)normalBgImageStr highlightedBgImageStr:(NSString *)highlightedBgImageStr target:(id)target selector:(SEL)selector;
 
-+ (UIButton*)completeButtonItemWith:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector;
-
-+ (UIButton*)cancelBlackButtonItemWith:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector;
++ (UIBarButtonItem*)createNormalBarButtonItemWithTitle:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector;
 
 + (UIBarButtonItem *)createBackBarItem:(id)target action:(SEL)selector
                                  title:(NSString *)title;
