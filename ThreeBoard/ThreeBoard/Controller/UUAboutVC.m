@@ -125,7 +125,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if(indexPath.row == AboutSectionJinyuan){
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"about" ofType:@"html"]isDirectory:NO];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:url];
         webViewController.availableActions = SVWebViewControllerAvailableActionsNone;
         webViewController.view.backgroundColor = UU_BG_WHITE;
         webViewController.navigationItem.title = @"关于金元证券";
@@ -133,14 +134,14 @@
     }else if(indexPath.row == AboutSectionTeamWeibo){
         [self.navigationController pushViewController:[[UUTeamTwitterListVC alloc] init] animated:YES];
     }else if(indexPath.row == AboutSectionContact){
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://www.gouqi001.com/jinyuan/contact.html"]];
         webViewController.availableActions = SVWebViewControllerAvailableActionsNone;
         webViewController.view.backgroundColor = UU_BG_WHITE;
         webViewController.navigationItem.title = @"联系方式";
         [self.navigationController pushViewController:webViewController animated:YES];
     }else if(indexPath.row == AboutSectionVersionInfo){
 //        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smartnews" ofType:@"html"]isDirectory:NO];
-        NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+        NSURL *url = [NSURL URLWithString:@"http://www.gouqi001.com/jinyuan/version.html"];
         SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:url];
         webViewController.availableActions = SVWebViewControllerAvailableActionsNone;
         webViewController.view.backgroundColor = UU_BG_WHITE;

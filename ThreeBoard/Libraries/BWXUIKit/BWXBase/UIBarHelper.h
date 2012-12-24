@@ -12,5 +12,6 @@
 @interface UIBarHelper : NSObject
 +(UIBarButtonItem *) leftBarButtonItemWithTitle:(NSString *) title font:(UIFont *) font target:(id) target action:(SEL) action;
 +(UIBarButtonItem *) rightBarButtonItemWithTitle:(NSString *) title font:(UIFont *) font target:(id) target action:(SEL) action;
++ (UIBarButtonItem*)createNormalBarButtonItemWithTitle:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector;
 +(UILabel *) titleLabelWithTitle:(NSString *) title font:(UIFont *) font;
 @end

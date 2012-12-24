@@ -24,7 +24,7 @@
 		EB056DC9167CAE5300B61F9A /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB056DC6167CAE5300B61F9A /* SVWebViewController.m */; };
 		EB056DCB167CAF2800B61F9A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB056DCA167CAF2700B61F9A /* MessageUI.framework */; };
 		EB056DCE167CB48300B61F9A /* UUTeamTwitterListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EB056DCD167CB48300B61F9A /* UUTeamTwitterListVC.m */; };
-		EB056F2F167CC6A700B61F9A /* SNWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB056F2E167CC6A600B61F9A /* SNWebView.m */; };
+		EB056F2F167CC6A700B61F9A /* UUWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB056F2E167CC6A600B61F9A /* UUWebView.m */; };
 		EB056F35167CCA8600B61F9A /* UUPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EB056F34167CCA8500B61F9A /* UUPageVC.m */; };
 		EB056F88167E104900B61F9A /* css in Resources */ = {isa = PBXBuildFile; fileRef = EB056F84167E104900B61F9A /* css */; };
 		EB056F89167E104900B61F9A /* image in Resources */ = {isa = PBXBuildFile; fileRef = EB056F85167E104900B61F9A /* image */; };
@@ -46,6 +46,7 @@
 		EB68CC8A1660F31A00083770 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB68CC881660F31A00083770 /* InfoPlist.strings */; };
 		EB68CC8C1660F31A00083770 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB68CC8B1660F31A00083770 /* main.m */; };
 		EB68CC901660F31A00083770 /* UUAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB68CC8F1660F31A00083770 /* UUAppDelegate.m */; };
+		EB6B64F116874DE000EE05BE /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EB6B64F016874DE000EE05BE /* about.html */; };
 		EBC7D2DD1679FC9000A9BF92 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC7D2CC1679FC9000A9BF92 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EBC7D2DE1679FC9000A9BF92 /* LoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC7D2CE1679FC9000A9BF92 /* LoadMoreTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EBC7D2DF1679FC9000A9BF92 /* MessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC7D2D01679FC9000A9BF92 /* MessageInterceptor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -230,8 +231,8 @@
 		EB056DCA167CAF2700B61F9A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		EB056DCC167CB48200B61F9A /* UUTeamTwitterListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUTeamTwitterListVC.h; sourceTree = "<group>"; };
 		EB056DCD167CB48300B61F9A /* UUTeamTwitterListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUTeamTwitterListVC.m; sourceTree = "<group>"; };
-		EB056F2D167CC6A600B61F9A /* SNWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNWebView.h; sourceTree = "<group>"; };
-		EB056F2E167CC6A600B61F9A /* SNWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNWebView.m; sourceTree = "<group>"; };
+		EB056F2D167CC6A600B61F9A /* UUWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUWebView.h; sourceTree = "<group>"; };
+		EB056F2E167CC6A600B61F9A /* UUWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUWebView.m; sourceTree = "<group>"; };
 		EB056F33167CCA8400B61F9A /* UUPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUPageVC.h; sourceTree = "<group>"; };
 		EB056F34167CCA8500B61F9A /* UUPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUPageVC.m; sourceTree = "<group>"; };
 		EB056F84167E104900B61F9A /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
@@ -268,6 +269,7 @@
 		EB68CC8D1660F31A00083770 /* ThreeBoard-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ThreeBoard-Prefix.pch"; sourceTree = "<group>"; };
 		EB68CC8E1660F31A00083770 /* UUAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUAppDelegate.h; sourceTree = "<group>"; };
 		EB68CC8F1660F31A00083770 /* UUAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUAppDelegate.m; sourceTree = "<group>"; };
+		EB6B64F016874DE000EE05BE /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		EBC7D2CB1679FC9000A9BF92 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		EBC7D2CC1679FC9000A9BF92 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		EBC7D2CD1679FC9000A9BF92 /* LoadMoreTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreTableFooterView.h; sourceTree = "<group>"; };
@@ -587,6 +589,7 @@
 				EB056F85167E104900B61F9A /* image */,
 				EB056F86167E104900B61F9A /* js */,
 				EB056F87167E104900B61F9A /* uu.html */,
+				EB6B64F016874DE000EE05BE /* about.html */,
 			);
 			path = webview;
 			sourceTree = "<group>";
@@ -896,6 +899,7 @@
 		EBEE56151685F9EE007683AD /* BWXShare */ = {
 			isa = PBXGroup;
 			children = (
+				EBEE56221685F9EE007683AD /* Services */,
 				EBEE56161685F9EE007683AD /* BWXShareActionSheet.h */,
 				EBEE56171685F9EE007683AD /* BWXShareActionSheet.m */,
 				EBEE56181685F9EE007683AD /* BWXShareCenter.h */,
@@ -908,7 +912,6 @@
 				EBEE561F1685F9EE007683AD /* BWXShareSettingViewController.m */,
 				EBEE56201685F9EE007683AD /* BWXShareViewController.h */,
 				EBEE56211685F9EE007683AD /* BWXShareViewController.m */,
-				EBEE56221685F9EE007683AD /* Services */,
 				EBEE56351685F9EE007683AD /* UITableView+BWXShare.h */,
 				EBEE56361685F9EE007683AD /* UITableView+BWXShare.m */,
 			);
@@ -1096,8 +1099,8 @@
 		EBFDFA9916610D8A00317ACB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EB056F2D167CC6A600B61F9A /* SNWebView.h */,
-				EB056F2E167CC6A600B61F9A /* SNWebView.m */,
+				EB056F2D167CC6A600B61F9A /* UUWebView.h */,
+				EB056F2E167CC6A600B61F9A /* UUWebView.m */,
 				EBC836ED16736E0900EFBAEB /* UUBaseCell.h */,
 				EBC836EE16736E0900EFBAEB /* UUBaseCell.m */,
 				EBC836FB1673727D00EFBAEB /* UUImageCell.h */,
@@ -1341,6 +1344,7 @@
 				EB056F8B167E104900B61F9A /* uu.html in Resources */,
 				EBEE55CD1685F665007683AD /* BWXBase.bundle in Resources */,
 				EBEE55DE1685F665007683AD /* BWXShare.bundle in Resources */,
+				EB6B64F116874DE000EE05BE /* about.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1411,7 +1415,7 @@
 				EB056DC7167CAE5300B61F9A /* SVModalWebViewController.m in Sources */,
 				EB056DC9167CAE5300B61F9A /* SVWebViewController.m in Sources */,
 				EB056DCE167CB48300B61F9A /* UUTeamTwitterListVC.m in Sources */,
-				EB056F2F167CC6A700B61F9A /* SNWebView.m in Sources */,
+				EB056F2F167CC6A700B61F9A /* UUWebView.m in Sources */,
 				EB056F35167CCA8600B61F9A /* UUPageVC.m in Sources */,
 				EBFF727D168075B100BC8761 /* CDataScanner.m in Sources */,
 				EBFF727E168075B100BC8761 /* CFilteringJSONSerializer.m in Sources */,

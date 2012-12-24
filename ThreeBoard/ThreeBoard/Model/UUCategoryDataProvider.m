@@ -9,10 +9,12 @@
 #import "UUCategoryDataProvider.h"
 
 #define FETCH_CATEGORY_DETAIL @"http://www.gouqi001.com/jinyuan/app_main.php?category=%@&area=%@&pn=%d"
+#define FETCH_PARTNER_DETAIL @"http://www.gouqi001.com/jinyuan/app_main.php?category=%@&partnertype=%@&pn=%d"
 
 @interface UUCategoryDataProvider()
 
 - (UUCategory *)getCategoryFromJson:(NSDictionary *)jsonDict;
+- (UUCategory *)getPartnerInfoFromJson:(NSDictionary *)jsonDict;
 
 @end
 
@@ -274,6 +276,58 @@
 }
 
 
+- (void)fetchPartnersDetailWithType:(NSInteger)type pageIndex:(NSInteger)index
+{
+    NSString *partnerType = @"";
+    switch (type) {
+        case PartnersTypePartnerEnterprise:
+            partnerType = kPartnersTypePartnerEnterprise;
+            break;
+        case PartnersTypeInvestmentCompany:
+            partnerType = kPartnersTypeInvestmentCompany;
+            break;
+        case PartnersTypeMembers:
+            partnerType = kPartnersTypeMembers;
+            break;
+        case PartnersTypeStrategicPartner:
+            partnerType = kPartnersTypeStrategicPartner;
+            break;
+        default:
+            break;
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:FETCH_PARTNER_DETAIL,@"partner",partnerType,index];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    void (^successBlock) (AFHTTPRequestOperation *, id ) = ^(AFHTTPRequestOperation *operation, id responseObject){
+        
+        NSDictionary *jsonDict = [(NSData *)responseObject objectFromJSONData];
+        
+        DDLogInfo(@"%@",jsonDict);
+        
+        UUCategory *category = [self getPartnerInfoFromJson:jsonDict];
+        
+        if([delegate respondsToSelector:@selector(partnerDetailFetched:)]){
+            [delegate partnerDetailFetched:category];
+        }
+        
+    };
+    
+    void (^failedBlock) (AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
+        
+        DDLogInfo(@"error: %@ \n userinfo: %@", [error localizedDescription], error.userInfo);
+        
+        if([delegate respondsToSelector:@selector(partnerDetailFailed:)]){
+            [delegate partnerDetailFailed:error];
+        }
+    };
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:successBlock failure:failedBlock];
+    [op start];
+}
+
 
 - (UUCategory *)getCategoryFromJson:(NSDictionary *)jsonDict
 {
@@ -318,6 +372,44 @@
         }
     }
     
+    return category;
+}
+
+- (UUCategory *)getPartnerInfoFromJson:(NSDictionary *)jsonDict
+{
+    UUCategory *category = [[UUCategory alloc] init];
+    
+    category.categoryID = [jsonDict objectForKey:@"category"];
+    category.categoryTitle = [jsonDict objectForKey:@"category_title"];
+    if([jsonDict objectForKey:@"hasmore"]){
+        category.hasmore = [[jsonDict objectForKey:@"hasmore"] boolValue];
+    }
+    
+    NSArray *focusPages= [jsonDict objectForKey:@"focus"];
+    if(focusPages && ![focusPages isKindOfClass:NSNull.class]){
+        for(NSDictionary *pageJson in focusPages){
+            UUPage *page = [[UUPage alloc] init];
+            page.pageID = [pageJson objectForKey:@"id"];
+            page.pageTitle = [pageJson objectForKey:@"page_title"];
+            page.imageURL = [pageJson objectForKey:@"image_url"];
+            [category.focusPages addObject:page];
+        }
+    }
+    NSArray *listPgaesJson = [jsonDict objectForKey:@"block"];
+    if(listPgaesJson && ![listPgaesJson isKindOfClass:NSNull.class]){
+        for(NSDictionary *pageSectionJson in listPgaesJson){
+            NSDictionary *pageJson = [pageSectionJson objectForKey:@"lines"];
+            if(pageJson && ![pageJson isKindOfClass:NSNull.class] ){
+                UUPage *page = [[UUPage alloc] init];
+                page.pageID = [pageJson objectForKey:@"id"];
+                page.pageTitle = [pageJson objectForKey:@"page_title"];
+                page.summary = [pageJson objectForKey:@"summary"];
+                page.thumbImageURL = [pageJson objectForKey:@"log_image_url"];
+                [category.listPages addObject:page];
+            }
+        }
+    }
+
     return category;
 }
 

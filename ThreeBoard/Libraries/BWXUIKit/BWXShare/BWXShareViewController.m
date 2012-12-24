@@ -78,7 +78,8 @@
 -(void)loadView {
     [super loadView];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = UU_BG_SLATE_GRAY;
+    
     
     //分享栏
     UIImage *serviceBackgroundImage = BWXPNGImage(@"image-bar-background",@"BWXShare.bundle");
@@ -140,6 +141,7 @@
     _bottomView = [[[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.view.frame), CGRectGetWidth(self.view.frame), _bottomViewHeight)] autorelease];
     _bottomView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _bottomView.clipsToBounds = YES;
+    _bottomView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_bottomView];
 //    _contentTextView.inputAccessoryView = _bottomView;
     
@@ -148,6 +150,7 @@
     
     _countLabel = [[[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(_bottomView.frame)-60, CGRectGetHeight(_bottomView.frame) - 12 - 10, 48, 12)] autorelease];
     _countLabel.textAlignment = UITextAlignmentRight;
+    _countLabel.backgroundColor = [UIColor clearColor];
     _countLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     _countLabel.textColor = [UIColor colorWithRed:(CGFloat)0x75/255 green:(CGFloat)0x75/255 blue:(CGFloat)0x75/255 alpha:1];
     _countLabel.font = BWXFontWithSize(12);
@@ -159,8 +162,8 @@
 //    
 //    self.navigationItem.rightBarButtonItem = [UIBarHelper rightBarButtonItemWithTitle:@"分享" font:BWXFontWithSize(14) target:self action:@selector(rightBarButtonPressed:)];
     
-    self.navigationItem.leftBarButtonItem = [UUUIHelper createNormalBarButtonItemWithTitle:@"返回" position:CGPointMake(0, 0) target:self selector:@selector(leftBarButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = [UUUIHelper createNormalBarButtonItemWithTitle:@"分享" position:CGPointMake(0, 0) target:self selector:@selector(rightBarButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = [UIBarHelper createNormalBarButtonItemWithTitle:@"返回" position:CGPointMake(0, 0) target:self selector:@selector(leftBarButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = [UIBarHelper createNormalBarButtonItemWithTitle:@"分享" position:CGPointMake(0, 0) target:self selector:@selector(rightBarButtonPressed:)];
 }
 
 - (void)viewDidLoad
@@ -180,9 +183,7 @@
     [_contentTextView becomeFirstResponder];
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
-}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -291,6 +292,17 @@
     return _images;
 }
 
+#pragma mark -UIResponder methods
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    UITouch *touch = [[event allTouches] anyObject];
+    if ([_contentTextView isFirstResponder] && [touch view] != _contentTextView) {
+        [_contentTextView resignFirstResponder];
+    }
+    [super touchesBegan:touches withEvent:event];
+}
+
 #pragma mark - actions
 -(void) leftBarButtonPressed:(id) sender {
 //    [self.navigationController popViewControllerAnimated:YES];
@@ -321,7 +333,16 @@
         image = [_images objectAtIndex:_currentSelectImageIndex];
     }
     
-    [[BWXShareProgress shareProgress] showLoadingWithMessage:@"分享中..."];
+    //hide keyboard
+    [_contentTextView resignFirstResponder];
+    
+//    [[BWXShareProgress shareProgress] showLoadingWithMessage:@"分享中..."];
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:NO];
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+    hud.labelText = @"分享中...";
+    hud.opacity = 0.6;
+    hud.labelFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
+    
     [self.service shareImage:image withText:_content];
 }
 

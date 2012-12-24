@@ -54,7 +54,7 @@
 {
 
     [shareTextRequest clearDelegatesAndCancel];
-    [shareTextRequest release],shareImageRequest = nil;
+    [shareTextRequest release],shareTextRequest = nil;
     [userInfoRequest clearDelegatesAndCancel];
     [userInfoRequest release],userInfoRequest = nil;
     [shareImageRequest clearDelegatesAndCancel];

@@ -31,6 +31,8 @@
 - (void)zhujiangAreaDetailFailed:(NSError *)error;
 - (void)otherAreaDetailFetched:(UUCategory *)category;
 - (void)otherAreaDetailFailed:(NSError *)error;
+- (void)partnerDetailFetched:(UUCategory *)category;
+- (void)partnerDetailFailed:(NSError *)error;
 
 @end
 
@@ -47,6 +49,7 @@
 - (void)fetchGoodPolicyDetailWithPageIndex:(NSInteger)index;
 - (void)fetchNewInfoDetailWithPageIndex:(NSInteger)index;
 - (void)fetchActivityDetailWithPageIndex:(NSInteger)index;
+- (void)fetchPartnersDetailWithType:(NSInteger)type pageIndex:(NSInteger)index;
 
 @end
 

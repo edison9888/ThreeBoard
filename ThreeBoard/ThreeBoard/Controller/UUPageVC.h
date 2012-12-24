@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "UUPageDataProvider.h"
 #import "SDWebImageManagerDelegate.h"
+#import "UUWebView.h"
 
-@interface UUPageVC : UIViewController <UUPageDataProviderDelegate,SDWebImageManagerDelegate>
+@interface UUPageVC : UIViewController <UUPageDataProviderDelegate,SDWebImageManagerDelegate,UUWebViewDelegate>
 
 - (id)initWithPageID:(NSString *)_pageID;
 

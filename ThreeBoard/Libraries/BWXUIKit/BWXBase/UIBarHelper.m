@@ -72,6 +72,28 @@
     return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
 }
 
+
++ (UIBarButtonItem*)createNormalBarButtonItemWithTitle:(NSString*)str position:(CGPoint)point target:(id)target selector:(SEL)selector
+{
+	UIFont* titleFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:12];
+	CGSize titleSize = [str sizeWithFont:titleFont];
+	
+	UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(point.x,point.y,titleSize.width+26,31)];
+	btn.titleEdgeInsets = UIEdgeInsetsMake(0, 13, 0, 13);
+	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateNormal];
+	[btn setBackgroundImage:[[UIImage imageNamed:@"navigationbar_btn_press.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:15] forState:UIControlStateHighlighted];
+	btn.titleLabel.font = titleFont;
+	[btn setTitle:str forState:UIControlStateNormal];
+	[btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	
+	[btn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
+    [btn release];
+    
+	return barButtonItem;
+}
+
 +(UILabel *) titleLabelWithTitle:(NSString *) title font:(UIFont *) font {
     CGSize size = [title sizeWithFont:font];
     UILabel *titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)] autorelease];

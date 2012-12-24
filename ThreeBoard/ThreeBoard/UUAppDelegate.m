@@ -53,7 +53,7 @@
 #endif
     
     //init share service
-    BWXShareCenterInstance.serviceTypes = [BWXShareServiceModel availableServiceTypes];
+    BWXShareCenterInstance.serviceTypes = [NSArray arrayWithObjects:[NSNumber numberWithInt:BWXShareTypeSinaWeibo], nil];
     
     return YES;
 }

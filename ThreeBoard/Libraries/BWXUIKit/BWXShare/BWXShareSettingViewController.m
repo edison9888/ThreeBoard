@@ -75,9 +75,7 @@
     _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
     
-//    self.navigationItem.leftBarButtonItem = [UIBarHelper leftBarButtonItemWithTitle:@"返回" font:BWXFontWithSize(14) target:self action:@selector(leftBarButtonPressed:)];
-    self.navigationItem.leftBarButtonItem = [UUUIHelper createBackBarItem:self action:@selector(leftBarButtonPressed:) title:@"返回"];
-        
+    
     _heightOfRow = 45.0f;
 }
 

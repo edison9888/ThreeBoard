@@ -40,6 +40,18 @@ typedef enum{
 }ProjectShowArea;
 
 typedef enum{
+    PartnersTypePartnerEnterprise,//企业伙伴
+    PartnersTypeInvestmentCompany,//投资公司
+    PartnersTypeMembers,//专家会员
+    PartnersTypeStrategicPartner//战略伙伴
+}PartnersType;
+
+#define kPartnersTypePartnerEnterprise @"qiyehuoban"
+#define kPartnersTypeInvestmentCompany @"touzigongsi"
+#define kPartnersTypeMembers @"zhuanjiahuiyuan"
+#define kPartnersTypeStrategicPartner @"zhanluehuoban"
+
+typedef enum{
     AboutSectionJinyuan = 0,
     AboutSectionTeamWeibo,
     AboutSectionContact,

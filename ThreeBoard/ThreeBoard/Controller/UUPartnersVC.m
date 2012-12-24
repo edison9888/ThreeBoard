@@ -24,8 +24,6 @@
 @property (nonatomic, strong) SDSegmentedControl *segmentControl;
 
 - (void)loadCategoryInfo;
-- (void)categoryInfoFetched:(UUCategory *)category;
-- (void)categoryInfoFetchedFailed:(NSError *)error;
 - (void)segmentValueChanged:(id)sender;
 
 @end
@@ -48,9 +46,7 @@
 {
     [super viewDidLoad];
     
-    
     self.pullTableView.tableHeaderView = nil;
-//    self.navigationItem.title = @"合作伙伴";
     
     self.segmentControl = [[SDSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"企业伙伴",@"投资公司",@"专家会员",@"战略伙伴", nil]];
     
@@ -67,8 +63,8 @@
     
     //fetch data when loading view
     self.currentPageIndex = 0;
-    self.currentArea = ProjectShowAreaBeijing;
-    self.segmentControl.selectedSegmentIndex = ProjectShowAreaBeijing;
+    self.currentArea = PartnersTypePartnerEnterprise;
+    self.segmentControl.selectedSegmentIndex = PartnersTypePartnerEnterprise;
     [self loadCategoryInfo];
     
     [UUProgressHUD showProgressHUDForView:self.view];
@@ -100,7 +96,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return kCommonSectionHeight;
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,32 +106,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    int sectionCount = [self.categoryInfo.listPages count];
-    return sectionCount;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:section];
-    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
-    NSArray *pages = [pagesDic objectForKey:title];
-    if(pages){
-        return [pages count];
-    }else{
-        return 0;
-    }
-}
-
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UUSectionHeaderView *sectionHeaderView = [[UUSectionHeaderView alloc] init];
-    
-    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:section];
-    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
-    sectionHeaderView.titleLabel.text = title;
-    
-    return sectionHeaderView;
+    NSArray *pages = self.categoryInfo.listPages;
+    return [pages count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,12 +122,9 @@
     if(cell == nil){
         cell = [[UUImageCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    int sectionIndex = indexPath.section;
     int rowIndex = indexPath.row;
-    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:sectionIndex];
-    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
-    NSArray *pages = [pagesDic objectForKey:title];
-    UUPage *page = [pages objectAtIndex:rowIndex];
+    
+    UUPage *page = [self.categoryInfo.listPages objectAtIndex:rowIndex];
     cell.textLabel.text = page.pageTitle;
     cell.detailTextLabel.text = page.summary;
     cell.imageURL = page.thumbImageURL;
@@ -165,12 +139,8 @@
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    int sectionIndex = indexPath.section;
     int rowIndex = indexPath.row;
-    NSDictionary *pagesDic = [self.categoryInfo.listPages objectAtIndex:sectionIndex];
-    NSString *title = [[pagesDic allKeys] objectAtIndex:0];
-    NSArray *pages = [pagesDic objectForKey:title];
-    UUPage *page = [pages objectAtIndex:rowIndex];
+    UUPage *page = [self.categoryInfo.listPages objectAtIndex:rowIndex];
     UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
     [self.navigationController pushViewController:pageVC animated:YES];
     pageVC.navigationItem.title = kPageTitlePartners;
@@ -178,79 +148,7 @@
 
 #pragma mark - UUCategoryDataProvider Delegate
 
-- (void)beijingAreaDetailFetched:(UUCategory *)category
-{
-    if(self.currentArea == ProjectShowAreaBeijing){
-        [self categoryInfoFetched:category];
-    }
-}
-
-- (void)changjiangAreaDetailFetched:(UUCategory *)category
-{
-    if(self.currentArea == ProjectShowAreaChangjiang){
-        [self categoryInfoFetched:category];
-    }
-}
-
-- (void)zhujiangAreaDetailFetched:(UUCategory *)category
-{
-    if(self.currentArea == ProjectShowAreaZhujiang){
-        [self categoryInfoFetched:category];
-    }
-}
-
-- (void)otherAreaDetailFetched:(UUCategory *)category
-{
-    if(self.currentArea == ProjectShowAreaOther){
-        [self categoryInfoFetched:category];
-    }
-}
-
-- (void)beijingAreaDetailFailed:(NSError *)error
-{
-    [self categoryInfoFetchedFailed:error];
-}
-
-- (void)changjiangAreaDetailFailed:(NSError *)error
-{
-    [self categoryInfoFetchedFailed:error];
-}
-
-- (void)zhujiangAreaDetailFailed:(NSError *)error
-{
-    [self categoryInfoFetchedFailed:error];
-}
-
-- (void)otherAreaDetailFailed:(NSError *)error
-{
-    [self categoryInfoFetchedFailed:error];
-}
-
-#pragma mark - private methods
-
-- (void)loadCategoryInfo
-{
-    [UUCategoryDataProvider sharedInstance].delegate = self;
-    switch (self.currentArea) {
-        case ProjectShowAreaBeijing:
-            [[UUCategoryDataProvider sharedInstance] fetchBeijingAreaDetailWithPageIndex:currentPageIndex];
-            break;
-        case ProjectShowAreaChangjiang:
-            [[UUCategoryDataProvider sharedInstance] fetchChangjiangAreaDetailWithPageIndex:currentPageIndex];
-            break;
-        case ProjectShowAreaZhujiang:
-            [[UUCategoryDataProvider sharedInstance] fetchZhujiangAreaDetailWithPageIndex:currentPageIndex];
-            break;
-        case ProjectShowAreaOther:
-            [[UUCategoryDataProvider sharedInstance] fetchOtherAreaDetailWithPageIndex:currentPageIndex];
-            break;
-        default:
-            break;
-    }
-    
-}
-
-- (void)categoryInfoFetched:(UUCategory *)category
+- (void)partnerDetailFetched:(UUCategory *)category
 {
     //stop loading animating and notify user
     [UUProgressHUD hideProgressHUDForView:self.view];
@@ -280,7 +178,6 @@
             if(self.emptyView){
                 [self.emptyView removeFromSuperview];
             }
-            
         }else{
             if(self.emptyView){
                 [self.view addSubview:self.emptyView];
@@ -289,22 +186,15 @@
         }
     }else{
         //other page, append data to current data
-        NSMutableArray *deltaPageSections = category.listPages;
-        NSMutableArray *pageSections = self.categoryInfo.listPages;
-        for(NSMutableDictionary *deltaSection in deltaPageSections){
-            NSString *deltaSectionTitle = [[deltaSection allKeys] objectAtIndex:0];
-            int lastIndex = ([pageSections count]>0)?[pageSections count] -1 : 0;
-            NSMutableDictionary *lastSection = [pageSections objectAtIndex:lastIndex];
-            NSString *lastSectionTitle = [[lastSection allKeys] objectAtIndex:0];
-            //if section title is equal to last section title of previous page
-            if([deltaSectionTitle isEqualToString:lastSectionTitle]){
-                NSMutableArray *deltaSectionPages = [deltaSection objectForKey:deltaSectionTitle];
-                NSMutableArray *lastSectionPages = [lastSection objectForKey:lastSectionTitle];
-                [lastSectionPages addObjectsFromArray:deltaSectionPages];
-            }else{
-                [pageSections addObject:deltaSection];
+        NSArray *deltaPages = category.listPages;
+        if([self.categoryInfo.listPages count] > 0){
+            for(UUPage *page in deltaPages){
+                [self.categoryInfo.listPages addObject:page];
             }
+        }else{
+            self.categoryInfo = category;
         }
+        
         CGFloat offsetY = [UIScreen mainScreen].bounds.origin.y+[UIScreen mainScreen].bounds.size.height + kCommonHighHeight;
         [self.pullTableView setContentOffset:CGPointMake(0, offsetY) animated:YES];
     }
@@ -313,7 +203,7 @@
 }
 
 
-- (void)categoryInfoFetchedFailed:(NSError *)error
+- (void)partnerDetailFailed:(NSError *)error
 {
     if(self.currentPageIndex > 0){
         self.currentPageIndex -- ;
@@ -335,6 +225,16 @@
                                hideAfter:1.0f
                                   offset:65.0f];
 }
+
+#pragma mark - private methods
+
+- (void)loadCategoryInfo
+{
+    [UUCategoryDataProvider sharedInstance].delegate = self;
+    [[UUCategoryDataProvider sharedInstance] fetchPartnersDetailWithType:self.currentArea pageIndex:currentPageIndex];
+}
+
+
 
 - (void)segmentValueChanged:(id)sender
 {

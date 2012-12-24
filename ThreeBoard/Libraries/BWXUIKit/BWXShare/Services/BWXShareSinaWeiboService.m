@@ -48,8 +48,8 @@
 
 @implementation BWXShareSinaWeiboService
 - (void)dealloc {
-    [shareImageRequest clearDelegatesAndCancel];
-    [shareImageRequest release],shareImageRequest = nil;
+    [shareTextRequest clearDelegatesAndCancel];
+    [shareTextRequest release],shareTextRequest = nil;
     [userInfoRequest clearDelegatesAndCancel];
     [userInfoRequest release],userInfoRequest = nil;
     [shareImageRequest clearDelegatesAndCancel];

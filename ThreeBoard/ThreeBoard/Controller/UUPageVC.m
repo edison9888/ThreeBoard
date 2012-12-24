@@ -7,7 +7,7 @@
 //
 
 #import "UUPageVC.h"
-#import "SNWebView.h"
+#import "UUWebView.h"
 #import "JSONKit.h"
 #import "MBProgressHUD.h"
 #import "AJNotificationView.h"
@@ -17,15 +17,19 @@
 
 
 @interface UUPageVC ()
+{
+    BOOL pageDidFinishLoad;
+}
 
-@property (nonatomic, strong) SNWebView *webview;
-@property (nonatomic, strong) NSString *pageID;
+@property (nonatomic, strong) UUWebView *webview;
+@property (nonatomic, copy) NSString *pageID;
 @property (nonatomic, strong) UUPage *uuPage;
 @property (nonatomic, strong) UIBarButtonItem *shareButton;
+@property (nonatomic, copy) NSString *sharedContent;
 
 - (void)imageCacheFinished:(NSNotification *)notification;
 - (void)shareButtonClicked:(id)sender;
--(UIImage *)addText:(UIImage *)img text:(NSString *)text1;
+- (UIImage *)imageFromText:(NSString *)text;
 
 @end
 
@@ -35,6 +39,7 @@
 @synthesize pageID;
 @synthesize uuPage;
 @synthesize shareButton;
+@synthesize sharedContent;
 
 - (id)initWithPageID:(NSString *)_pageID
 {
@@ -52,19 +57,20 @@
     
     self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, [UIScreen mainScreen].bounds.size.height - 64)];
     self.view.backgroundColor = UU_BG_WHITE;
-    self.webview = [[SNWebView alloc] initWithFrame:self.view.frame];
+    self.webview = [[UUWebView alloc] initWithFrame:self.view.frame];
+    self.webview.delegate = self;
     [self.view addSubview:self.webview];
+    pageDidFinishLoad = NO;
     
+    self.shareButton = [UUUIHelper createNormalBarButtonItemWithTitle:@"分享" position:CGPointMake(0, 0) target:self selector:@selector(shareButtonClicked:)];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.shareButton = [UUUIHelper createNormalBarButtonItemWithTitle:@"分享" position:CGPointMake(0, 0) target:self selector:@selector(shareButtonClicked:)];
-    
-    [UUPageDataProvider sharedInstance].delegate = self;
-    [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:self.pageID];
+        
+//    [UUPageDataProvider sharedInstance].delegate = self;
+//    [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:self.pageID];
     
     [UUProgressHUD showProgressHUDForView:self.view];
     
@@ -94,34 +100,7 @@
 
 #pragma mark - private methods
 
--(UIImage *)addText:(UIImage *)img text:(NSString *)text1{
-    int w = img.size.width;
-    int h = img.size.height;
-    //lon = h - lon;
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, kCGImageAlphaPremultipliedFirst);
-    
-    CGContextDrawImage(context, CGRectMake(0, 0, w, h), img.CGImage);
-    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 1);
-	
-    char* text	= (char *)[text1 cStringUsingEncoding:NSASCIIStringEncoding];// "05/05/09";
-    CGContextSelectFont(context, "Arial", 18, kCGEncodingMacRoman);
-    CGContextSetTextDrawingMode(context, kCGTextFill);
-    CGContextSetRGBFillColor(context, 255, 255, 255, 1);
-	
-    
-    //rotate text
-    CGContextSetTextMatrix(context, CGAffineTransformMakeRotation( -M_PI/4 ));
-	
-    CGContextShowTextAtPoint(context, 4, 52, text, strlen(text));
-	
-	
-    CGImageRef imageMasked = CGBitmapContextCreateImage(context);
-    CGContextRelease(context);
-    CGColorSpaceRelease(colorSpace);
-	
-    return [UIImage imageWithCGImage:imageMasked];
-}
+
 
 - (void)imageCacheFinished:(NSNotification *)notification
 {
@@ -144,8 +123,9 @@
 -(UIImage *)imageFromText:(NSString *)text
 {
     // set the font type and size
-    UIFont *font = [UIFont systemFontOfSize:20.0];
-    CGSize size  = [text sizeWithFont:font];
+//    UIFont *font = [UIFont systemFontOfSize:10.0];
+    UIFont *font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:11];
+    CGSize size  = [text sizeWithFont:font constrainedToSize:CGSizeMake(320, 5000) lineBreakMode:NSLineBreakByTruncatingTail];
     
     // check if UIGraphicsBeginImageContextWithOptions is available (iOS is 4.0+)
     if (UIGraphicsBeginImageContextWithOptions != NULL)
@@ -154,13 +134,14 @@
         // iOS is < 4.0
         UIGraphicsBeginImageContext(size);
     
+    CGContextSetFillColor(UIGraphicsGetCurrentContext(), CGColorGetComponents([UIColor colorWithHexString:@"f1f1f1"].CGColor));
+    CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, size.width,size.height));
     // optional: add a shadow, to avoid clipping the shadow you should make the context size bigger
     //
     // CGContextRef ctx = UIGraphicsGetCurrentContext();
-    // CGContextSetShadowWithColor(ctx, CGSizeMake(1.0, 1.0), 5.0, [[UIColor grayColor] CGColor]);
-    
-    // draw in context, you can use also drawInRect:withFont:
-    [text drawAtPoint:CGPointMake(0.0, 0.0) withFont:font];
+    // CGContextSetShadowWithColor(ctx, CGSizeMake(1.0, 1.0), 5.0, [[UIColor redColor] CGColor]);
+    CGContextSetFillColor(UIGraphicsGetCurrentContext(), CGColorGetComponents([UIColor blackColor].CGColor));
+    [text drawInRect:CGRectMake(0, 0, size.width, size.height) withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:NSTextAlignmentLeft];
     
     // transfer image
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -172,16 +153,27 @@
 - (void)shareButtonClicked:(id)sender
 {
 
-//    NSString *cachedImagePath = [[SDImageCache sharedImageCache] cachePathForKey:self.uuPage.imageURL];
-//    UIImage *sharedImage = [UIImage imageWithContentsOfFile:cachedImagePath];
+
+    if(pageDidFinishLoad){
+        NSString *sharedText = [NSString stringWithFormat:@"好文分享：\"%@\"。来自淘金新三板iPhone客户端。",self.uuPage.pageTitle];
+        [BWXShareCenterInstance singleShareImage:[NSArray arrayWithObject:[self imageFromText:self.sharedContent]] content:sharedText withController:self.navigationController];
+    }
     
-//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(36, 36), NO, 0.0);
-//    UIImage *sharedImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    [self addText:sharedImage text:@"Hello world"];
-    
-    [BWXShareCenterInstance singleShareImage:[NSArray arrayWithObject:[self imageFromText:@"44332211"]] content:@"123123123123123" withController:self.navigationController];
 }
+
+#pragma mark - UUWebViewDelegate methods
+
+- (void)webViewDidFinishLoad:(UUWebView *)webView
+{
+    [UUPageDataProvider sharedInstance].delegate = self;
+    [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:self.pageID];
+}
+
+- (void)webView:(UUWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    
+}
+
 
 #pragma mark - UUPageDataProvider delegate methods
 - (void)pageInfoFetched:(UUPage *)page
@@ -195,6 +187,7 @@
         
         [jsonDict setObject:page.publishTime forKey:@"ts"];
         [jsonDict setObject:page.pageTitle forKey:@"title"];
+        self.sharedContent = [NSString stringWithFormat:@"    %@\n",page.pageTitle];
         [jsonDict setObject:@"www.baidu.com" forKey:@"url"];
         [jsonDict setObject:page.pageID forKey:@"nid"];
 //        [jsonDict setObject:@"这里是摘要" forKey:@"abs"];
@@ -218,6 +211,8 @@
             if(![alteredContent isEqualToString:@""]){
                 NSDictionary *dicContent = [NSDictionary dictionaryWithObjectsAndKeys:@"text",@"type",content,@"data", nil];
                 [arrContent addObject:dicContent];
+                
+                self.sharedContent = [self.sharedContent stringByAppendingFormat:@"    %@\n",alteredContent];
             }
         }
         
@@ -239,14 +234,15 @@
                 [manager downloadWithURL:[NSURL URLWithString:page.imageURL] delegate:self];
             }
         }
+        
+        pageDidFinishLoad = YES;
     }
 }
 
 - (void)pageInfoFailed:(NSError *)error
 {
     [UUProgressHUD hideProgressHUDForView:self.view];
-    
-    
+        
     //notify user
     [AJNotificationView showNoticeInView:self.navigationController.view
                                     type:AJNotificationTypeRed
@@ -254,6 +250,8 @@
                          linedBackground:AJLinedBackgroundTypeStatic
                                hideAfter:1.0f
                                   offset:65.0f];
+    
+    pageDidFinishLoad = NO;
 }
 
 #pragma mark  SDWebImageDownloaderDelegate

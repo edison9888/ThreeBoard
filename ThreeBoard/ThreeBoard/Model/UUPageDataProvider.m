@@ -33,7 +33,7 @@
     void (^successBlock) (AFHTTPRequestOperation *, id ) = ^(AFHTTPRequestOperation *operation, id responseObject){
         NSDictionary *jsonDict = [(NSData *)responseObject objectFromJSONData];
         
-//        DDLogInfo(@"%@",jsonDict);
+        DDLogInfo(@"%@",jsonDict);
         
         UUPage *page = [[UUPage alloc] init];
         page.pageID = [jsonDict objectForKey:@"page_id"];
