@@ -336,12 +336,12 @@
     //hide keyboard
     [_contentTextView resignFirstResponder];
     
-//    [[BWXShareProgress shareProgress] showLoadingWithMessage:@"分享中..."];
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:NO];
-    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
-    hud.labelText = @"分享中...";
-    hud.opacity = 0.6;
-    hud.labelFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
+    [[BWXShareProgress shareProgress] showLoadingWithMessage:@"分享中..."];
+//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:NO];
+//    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+//    hud.labelText = @"分享中...";
+//    hud.opacity = 0.6;
+//    hud.labelFont = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
     
     [self.service shareImage:image withText:_content];
 }

@@ -594,8 +594,8 @@
 				EB056F86167E104900B61F9A /* js */,
 				EB068034168EBBFB00C9A64F /* version.html */,
 				EB068035168EBBFB00C9A64F /* contact.html */,
-				EB056F87167E104900B61F9A /* uu.html */,
 				EB6B64F016874DE000EE05BE /* about.html */,
+				EB056F87167E104900B61F9A /* uu.html */,
 			);
 			path = webview;
 			sourceTree = "<group>";

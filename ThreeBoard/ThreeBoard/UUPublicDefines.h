@@ -68,12 +68,12 @@ typedef enum{
 #define kPageTitleAbout @"关于我们"
 
 
-#define kBWXSinaWeiboAppKey @"2129806721"
-#define kBWXSinaWeiboAppSecret @"f28ffd032c8c4461222b315675128346"
-#define kBWXSinaWeiboRedirectUrl @"http://"
-//#define kBWXSinaWeiboAppKey @"1623815163"
-//#define kBWXSinaWeiboAppSecret @"14ecc37aef18451992187ac3cd49eeda"
+//#define kBWXSinaWeiboAppKey @"2129806721"
+//#define kBWXSinaWeiboAppSecret @"f28ffd032c8c4461222b315675128346"
 //#define kBWXSinaWeiboRedirectUrl @"http://"
+#define kBWXSinaWeiboAppKey @"1623815163"
+#define kBWXSinaWeiboAppSecret @"14ecc37aef18451992187ac3cd49eeda"
+#define kBWXSinaWeiboRedirectUrl @"http://"
 
 
 #define kBWXTencentWeiboAppKey @"801228592"

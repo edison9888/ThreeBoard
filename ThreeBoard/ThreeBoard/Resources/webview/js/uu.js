@@ -6,6 +6,7 @@
 	//var categoryArray = ["entertainment", "fashion", "creativity", "travelling", "beautiful pic"];
 	var categoryArray = ["\u5a31\u4e50","\u65f6\u5c1a", "\u521b\u610f", "\u65c5\u6e38", "\u7f8e\u56fe"];
  
+
  // Javascript语言
  // 通知iPhone UIWebView 加载url对应的资源
  // url的格式为: gap:something
@@ -72,7 +73,6 @@
 				tempImage = imageBoxes[j].firstChild;
 				if (tempImage.getAttribute("data-url") == imageArray[i].imageUrl) {
                     tempImage.setAttribute("src", imageArray[i].localPath);
-//                    tempImage.style.visibility = "visible";
                     tempImage.parentElement.style.background = "none";
 				}
 			}
@@ -209,6 +209,7 @@
                 }
 	
 				paragraph.push('<div class="imgBox" style="width: ' + imageWidth + 'px; height: ' + imageHeight + 'px;"><img width="' + imageWidth + '" height="' + imageHeight + '" data-url="' + url + '" data-action="image" src="" style="border: none; "/></div>');
+
 			}
 		}
 			
@@ -274,7 +275,8 @@
 			removeClass(document.body, "android");
 		}							
 	}
+
 	
 	init();
-		
+	
 })();
