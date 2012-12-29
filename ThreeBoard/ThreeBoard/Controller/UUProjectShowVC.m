@@ -51,7 +51,6 @@
     
     
     self.pullTableView.tableHeaderView = nil;
-//    self.navigationItem.title = @"项目展示";
     
     self.segmentControl = [[SDSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"北京地区",@"长三角",@"珠三角",@"其他地区", nil]];
     self.segmentControl.frame = CGRectMake(0, 0, 320, 44);

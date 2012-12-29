@@ -30,6 +30,8 @@
 		EB056F89167E104900B61F9A /* image in Resources */ = {isa = PBXBuildFile; fileRef = EB056F85167E104900B61F9A /* image */; };
 		EB056F8A167E104900B61F9A /* js in Resources */ = {isa = PBXBuildFile; fileRef = EB056F86167E104900B61F9A /* js */; };
 		EB056F8B167E104900B61F9A /* uu.html in Resources */ = {isa = PBXBuildFile; fileRef = EB056F87167E104900B61F9A /* uu.html */; };
+		EB068036168EBBFB00C9A64F /* version.html in Resources */ = {isa = PBXBuildFile; fileRef = EB068034168EBBFB00C9A64F /* version.html */; };
+		EB068037168EBBFB00C9A64F /* contact.html in Resources */ = {isa = PBXBuildFile; fileRef = EB068035168EBBFB00C9A64F /* contact.html */; };
 		EB10E4441667A0FD00F97814 /* UUGoodPolicyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EB10E4431667A0FD00F97814 /* UUGoodPolicyVC.m */; };
 		EB10E4471667A13000F97814 /* UUNewInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EB10E4461667A13000F97814 /* UUNewInfoVC.m */; };
 		EB10E44A1667A14A00F97814 /* UUActivityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EB10E4491667A14A00F97814 /* UUActivityVC.m */; };
@@ -115,6 +117,14 @@
 		EBD63B601675898600C51C57 /* navigationbar_btn_return_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD63B241675898600C51C57 /* navigationbar_btn_return_press@2x.png */; };
 		EBD63B64167589BB00C51C57 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD63B63167589BB00C51C57 /* logo.png */; };
 		EBD63B66167589C200C51C57 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD63B65167589C200C51C57 /* logo@2x.png */; };
+		EBE620C5168D461C0050AA49 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620B6168D461C0050AA49 /* DDAbstractDatabaseLogger.m */; };
+		EBE620C6168D461C0050AA49 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620B8168D461C0050AA49 /* DDASLLogger.m */; };
+		EBE620C7168D461C0050AA49 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620BA168D461C0050AA49 /* DDFileLogger.m */; };
+		EBE620C8168D461C0050AA49 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620BC168D461C0050AA49 /* DDLog.m */; };
+		EBE620C9168D461C0050AA49 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620BE168D461C0050AA49 /* DDTTYLogger.m */; };
+		EBE620CA168D461C0050AA49 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620C1168D461C0050AA49 /* ContextFilterLogFormatter.m */; };
+		EBE620CB168D461C0050AA49 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE620C3168D461C0050AA49 /* DispatchQueueLogFormatter.m */; };
+		EBE620CC168D461C0050AA49 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = EBE620C4168D461C0050AA49 /* README.txt */; };
 		EBEE55C01685F665007683AD /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEE55741685F665007683AD /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EBEE55C11685F665007683AD /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEE55771685F665007683AD /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EBEE55C21685F665007683AD /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEE55791685F665007683AD /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -171,14 +181,6 @@
 		EBFDFA601660F7BB00317ACB /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA4E1660F7BB00317ACB /* UIImageView+WebCache.m */; };
 		EBFDFA631660F9EF00317ACB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBFDFA621660F9EF00317ACB /* ImageIO.framework */; };
 		EBFDFA741660FA5600317ACB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBFDFA731660FA5600317ACB /* MapKit.framework */; };
-		EBFDFA8F1661051100317ACB /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA801661051100317ACB /* DDAbstractDatabaseLogger.m */; };
-		EBFDFA901661051100317ACB /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA821661051100317ACB /* DDASLLogger.m */; };
-		EBFDFA911661051100317ACB /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA841661051100317ACB /* DDFileLogger.m */; };
-		EBFDFA921661051100317ACB /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA861661051100317ACB /* DDLog.m */; };
-		EBFDFA931661051100317ACB /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA881661051100317ACB /* DDTTYLogger.m */; };
-		EBFDFA941661051100317ACB /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA8B1661051100317ACB /* ContextFilterLogFormatter.m */; };
-		EBFDFA951661051100317ACB /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFA8D1661051100317ACB /* DispatchQueueLogFormatter.m */; };
-		EBFDFA961661051100317ACB /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = EBFDFA8E1661051100317ACB /* README.txt */; };
 		EBFDFAA616610F2600317ACB /* UUMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFAA516610F2600317ACB /* UUMainVC.m */; };
 		EBFDFAF71661103800317ACB /* UUPage.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFAF61661103800317ACB /* UUPage.m */; };
 		EBFDFB0616611D6200317ACB /* UUCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDFB0516611D6200317ACB /* UUCategory.m */; };
@@ -239,6 +241,8 @@
 		EB056F85167E104900B61F9A /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		EB056F86167E104900B61F9A /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		EB056F87167E104900B61F9A /* uu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = uu.html; sourceTree = "<group>"; };
+		EB068034168EBBFB00C9A64F /* version.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = version.html; sourceTree = "<group>"; };
+		EB068035168EBBFB00C9A64F /* contact.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = contact.html; sourceTree = "<group>"; };
 		EB10E4421667A0FD00F97814 /* UUGoodPolicyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUGoodPolicyVC.h; sourceTree = "<group>"; };
 		EB10E4431667A0FD00F97814 /* UUGoodPolicyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUGoodPolicyVC.m; sourceTree = "<group>"; };
 		EB10E4451667A13000F97814 /* UUNewInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUNewInfoVC.h; sourceTree = "<group>"; };
@@ -351,6 +355,21 @@
 		EBD63B63167589BB00C51C57 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		EBD63B65167589C200C51C57 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		EBD63B6716758B4400C51C57 /* UUPublicDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUPublicDefines.h; sourceTree = "<group>"; };
+		EBE620B5168D461C0050AA49 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		EBE620B6168D461C0050AA49 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		EBE620B7168D461C0050AA49 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		EBE620B8168D461C0050AA49 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		EBE620B9168D461C0050AA49 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		EBE620BA168D461C0050AA49 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		EBE620BB168D461C0050AA49 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		EBE620BC168D461C0050AA49 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		EBE620BD168D461C0050AA49 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		EBE620BE168D461C0050AA49 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		EBE620C0168D461C0050AA49 /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		EBE620C1168D461C0050AA49 /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		EBE620C2168D461C0050AA49 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		EBE620C3168D461C0050AA49 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		EBE620C4168D461C0050AA49 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		EBEE556D1685EF6B007683AD /* BWXUIKitShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BWXUIKitShare.framework; sourceTree = "<group>"; };
 		EBEE556F1685F619007683AD /* BWXUIKitBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BWXUIKitBase.framework; sourceTree = "<group>"; };
 		EBEE55731685F665007683AD /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -469,21 +488,6 @@
 		EBFDFA4E1660F7BB00317ACB /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		EBFDFA621660F9EF00317ACB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		EBFDFA731660FA5600317ACB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		EBFDFA7F1661051100317ACB /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		EBFDFA801661051100317ACB /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		EBFDFA811661051100317ACB /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
-		EBFDFA821661051100317ACB /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
-		EBFDFA831661051100317ACB /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
-		EBFDFA841661051100317ACB /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
-		EBFDFA851661051100317ACB /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		EBFDFA861661051100317ACB /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
-		EBFDFA871661051100317ACB /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		EBFDFA881661051100317ACB /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		EBFDFA8A1661051100317ACB /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		EBFDFA8B1661051100317ACB /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		EBFDFA8C1661051100317ACB /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		EBFDFA8D1661051100317ACB /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
-		EBFDFA8E1661051100317ACB /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		EBFDFAA416610F2600317ACB /* UUMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUMainVC.h; sourceTree = "<group>"; };
 		EBFDFAA516610F2600317ACB /* UUMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUMainVC.m; sourceTree = "<group>"; };
 		EBFDFAF51661103800317ACB /* UUPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUPage.h; sourceTree = "<group>"; };
@@ -588,6 +592,8 @@
 				EB056F84167E104900B61F9A /* css */,
 				EB056F85167E104900B61F9A /* image */,
 				EB056F86167E104900B61F9A /* js */,
+				EB068034168EBBFB00C9A64F /* version.html */,
+				EB068035168EBBFB00C9A64F /* contact.html */,
 				EB056F87167E104900B61F9A /* uu.html */,
 				EB6B64F016874DE000EE05BE /* about.html */,
 			);
@@ -812,6 +818,36 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		EBE620B4168D461C0050AA49 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				EBE620B5168D461C0050AA49 /* DDAbstractDatabaseLogger.h */,
+				EBE620B6168D461C0050AA49 /* DDAbstractDatabaseLogger.m */,
+				EBE620B7168D461C0050AA49 /* DDASLLogger.h */,
+				EBE620B8168D461C0050AA49 /* DDASLLogger.m */,
+				EBE620B9168D461C0050AA49 /* DDFileLogger.h */,
+				EBE620BA168D461C0050AA49 /* DDFileLogger.m */,
+				EBE620BB168D461C0050AA49 /* DDLog.h */,
+				EBE620BC168D461C0050AA49 /* DDLog.m */,
+				EBE620BD168D461C0050AA49 /* DDTTYLogger.h */,
+				EBE620BE168D461C0050AA49 /* DDTTYLogger.m */,
+				EBE620BF168D461C0050AA49 /* Extensions */,
+			);
+			path = Lumberjack;
+			sourceTree = "<group>";
+		};
+		EBE620BF168D461C0050AA49 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EBE620C0168D461C0050AA49 /* ContextFilterLogFormatter.h */,
+				EBE620C1168D461C0050AA49 /* ContextFilterLogFormatter.m */,
+				EBE620C2168D461C0050AA49 /* DispatchQueueLogFormatter.h */,
+				EBE620C3168D461C0050AA49 /* DispatchQueueLogFormatter.m */,
+				EBE620C4168D461C0050AA49 /* README.txt */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		EBEE55711685F665007683AD /* BWXUIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -946,6 +982,7 @@
 		EBFDFA221660F7BB00317ACB /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EBE620B4168D461C0050AA49 /* Lumberjack */,
 				EBEE56061685F8B8007683AD /* EGOPullRefresh */,
 				EBEE55711685F665007683AD /* BWXUIKit */,
 				EBFF7257168075B100BC8761 /* BaiduLogSDK */,
@@ -956,7 +993,6 @@
 				EB2B7D5816747716007F4888 /* AJNotificationView */,
 				EBC837291674592E00EFBAEB /* SVPullToRefresh */,
 				EBFDFB271661EEA600317ACB /* MBProgressHUD */,
-				EBFDFA7E1661051100317ACB /* Lumberjack */,
 				EBFDFA231660F7BB00317ACB /* AFNetworking */,
 				EBFDFA371660F7BB00317ACB /* JSONKit */,
 				EBFDFA3A1660F7BB00317ACB /* SDWebImage */,
@@ -1024,36 +1060,6 @@
 				EBFDFA4E1660F7BB00317ACB /* UIImageView+WebCache.m */,
 			);
 			path = SDWebImage;
-			sourceTree = "<group>";
-		};
-		EBFDFA7E1661051100317ACB /* Lumberjack */ = {
-			isa = PBXGroup;
-			children = (
-				EBFDFA7F1661051100317ACB /* DDAbstractDatabaseLogger.h */,
-				EBFDFA801661051100317ACB /* DDAbstractDatabaseLogger.m */,
-				EBFDFA811661051100317ACB /* DDASLLogger.h */,
-				EBFDFA821661051100317ACB /* DDASLLogger.m */,
-				EBFDFA831661051100317ACB /* DDFileLogger.h */,
-				EBFDFA841661051100317ACB /* DDFileLogger.m */,
-				EBFDFA851661051100317ACB /* DDLog.h */,
-				EBFDFA861661051100317ACB /* DDLog.m */,
-				EBFDFA871661051100317ACB /* DDTTYLogger.h */,
-				EBFDFA881661051100317ACB /* DDTTYLogger.m */,
-				EBFDFA891661051100317ACB /* Extensions */,
-			);
-			path = Lumberjack;
-			sourceTree = "<group>";
-		};
-		EBFDFA891661051100317ACB /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				EBFDFA8A1661051100317ACB /* ContextFilterLogFormatter.h */,
-				EBFDFA8B1661051100317ACB /* ContextFilterLogFormatter.m */,
-				EBFDFA8C1661051100317ACB /* DispatchQueueLogFormatter.h */,
-				EBFDFA8D1661051100317ACB /* DispatchQueueLogFormatter.m */,
-				EBFDFA8E1661051100317ACB /* README.txt */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		EBFDFA9716610D8A00317ACB /* Utils */ = {
@@ -1272,7 +1278,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB68CC8A1660F31A00083770 /* InfoPlist.strings in Resources */,
-				EBFDFA961661051100317ACB /* README.txt in Resources */,
 				EBD63B281675898600C51C57 /* FZLTHJW.TTF in Resources */,
 				EBD63B351675898600C51C57 /* common_title_bgk.png in Resources */,
 				EBD63B361675898600C51C57 /* Default-568h@2x.png in Resources */,
@@ -1345,6 +1350,9 @@
 				EBEE55CD1685F665007683AD /* BWXBase.bundle in Resources */,
 				EBEE55DE1685F665007683AD /* BWXShare.bundle in Resources */,
 				EB6B64F116874DE000EE05BE /* about.html in Resources */,
+				EBE620CC168D461C0050AA49 /* README.txt in Resources */,
+				EB068036168EBBFB00C9A64F /* version.html in Resources */,
+				EB068037168EBBFB00C9A64F /* contact.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1375,13 +1383,6 @@
 				EBFDFA5E1660F7BB00317ACB /* SDWebImagePrefetcher.m in Sources */,
 				EBFDFA5F1660F7BB00317ACB /* UIButton+WebCache.m in Sources */,
 				EBFDFA601660F7BB00317ACB /* UIImageView+WebCache.m in Sources */,
-				EBFDFA8F1661051100317ACB /* DDAbstractDatabaseLogger.m in Sources */,
-				EBFDFA901661051100317ACB /* DDASLLogger.m in Sources */,
-				EBFDFA911661051100317ACB /* DDFileLogger.m in Sources */,
-				EBFDFA921661051100317ACB /* DDLog.m in Sources */,
-				EBFDFA931661051100317ACB /* DDTTYLogger.m in Sources */,
-				EBFDFA941661051100317ACB /* ContextFilterLogFormatter.m in Sources */,
-				EBFDFA951661051100317ACB /* DispatchQueueLogFormatter.m in Sources */,
 				EBFDFAA616610F2600317ACB /* UUMainVC.m in Sources */,
 				EBFDFAF71661103800317ACB /* UUPage.m in Sources */,
 				EBFDFB0616611D6200317ACB /* UUCategory.m in Sources */,
@@ -1461,6 +1462,13 @@
 				EBEE564B1685F9EE007683AD /* BWXShareWeixinService.m in Sources */,
 				EBEE564C1685F9EE007683AD /* UITableView+BWXShare.m in Sources */,
 				EBEE564D1685F9EE007683AD /* BWXUIKit.m in Sources */,
+				EBE620C5168D461C0050AA49 /* DDAbstractDatabaseLogger.m in Sources */,
+				EBE620C6168D461C0050AA49 /* DDASLLogger.m in Sources */,
+				EBE620C7168D461C0050AA49 /* DDFileLogger.m in Sources */,
+				EBE620C8168D461C0050AA49 /* DDLog.m in Sources */,
+				EBE620C9168D461C0050AA49 /* DDTTYLogger.m in Sources */,
+				EBE620CA168D461C0050AA49 /* ContextFilterLogFormatter.m in Sources */,
+				EBE620CB168D461C0050AA49 /* DispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1502,6 +1510,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1523,7 +1532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1548,6 +1557,7 @@
 					"\"$(SRCROOT)/Libraries/BaiduLogSDK/Release-iphoneos\"",
 					"\"$(SRCROOT)/Libraries/BWXUIKit/Weixin\"",
 				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-lstdc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -1575,6 +1585,7 @@
 					"\"$(SRCROOT)/Libraries/BaiduLogSDK/Release-iphoneos\"",
 					"\"$(SRCROOT)/Libraries/BWXUIKit/Weixin\"",
 				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-lstdc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;

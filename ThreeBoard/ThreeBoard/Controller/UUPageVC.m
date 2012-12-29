@@ -68,9 +68,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
-//    [UUPageDataProvider sharedInstance].delegate = self;
-//    [[UUPageDataProvider sharedInstance] fetchPageInfoWithID:self.pageID];
     
     [UUProgressHUD showProgressHUDForView:self.view];
     
@@ -123,7 +120,6 @@
 -(UIImage *)imageFromText:(NSString *)text
 {
     // set the font type and size
-//    UIFont *font = [UIFont systemFontOfSize:10.0];
     UIFont *font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:11];
     CGSize size  = [text sizeWithFont:font constrainedToSize:CGSizeMake(320, 5000) lineBreakMode:NSLineBreakByTruncatingTail];
     
@@ -136,10 +132,6 @@
     
     CGContextSetFillColor(UIGraphicsGetCurrentContext(), CGColorGetComponents([UIColor colorWithHexString:@"f1f1f1"].CGColor));
     CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, size.width,size.height));
-    // optional: add a shadow, to avoid clipping the shadow you should make the context size bigger
-    //
-    // CGContextRef ctx = UIGraphicsGetCurrentContext();
-    // CGContextSetShadowWithColor(ctx, CGSizeMake(1.0, 1.0), 5.0, [[UIColor redColor] CGColor]);
     CGContextSetFillColor(UIGraphicsGetCurrentContext(), CGColorGetComponents([UIColor blackColor].CGColor));
     [text drawInRect:CGRectMake(0, 0, size.width, size.height) withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:NSTextAlignmentLeft];
     
@@ -188,13 +180,8 @@
         [jsonDict setObject:page.publishTime forKey:@"ts"];
         [jsonDict setObject:page.pageTitle forKey:@"title"];
         self.sharedContent = [NSString stringWithFormat:@"    %@\n",page.pageTitle];
-        [jsonDict setObject:@"www.baidu.com" forKey:@"url"];
+//        [jsonDict setObject:@"www.baidu.com" forKey:@"url"];
         [jsonDict setObject:page.pageID forKey:@"nid"];
-//        [jsonDict setObject:@"这里是摘要" forKey:@"abs"];
-//        [jsonDict setObject:@"来源：" forKey:@"site"];
-//        [jsonDict setObject:@"发布者：" forKey:@"category"];
-//        [jsonDict setObject:@"" forKey:@"type"];
-//        [jsonDict setObject:[NSArray arrayWithObjects:page.imageURL, nil] forKey:@"imageurls"];
         NSMutableArray *arrContent = [NSMutableArray array];
         
         //add images if there are any

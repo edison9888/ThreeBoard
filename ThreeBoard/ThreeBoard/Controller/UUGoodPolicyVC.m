@@ -35,12 +35,8 @@
 {
     [super viewDidLoad];
 
-//    self.navigationItem.title = @"利好政策";
-    
     //fetch data when loading view
     self.currentPageIndex = 0;
-//    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
-//    [MBProgressHUD HUDForView:self.view].labelText = @"载入中...";
     [UUProgressHUD showProgressHUDForView:self.view];
     [self loadCategoryInfo];
     
@@ -145,7 +141,6 @@
     DDLogInfo(@"page is loaded with index %d",currentPageIndex);
     
     //stop loading animating and notify user
-//    [MBProgressHUD hideHUDForView:self.view animated:NO];
     [UUProgressHUD hideProgressHUDForView:self.view];
     self.categoryInfo.hasmore = category.hasmore;
     if(self.currentPageIndex == 0){
@@ -230,7 +225,6 @@
     }
     
     //stop loading animating
-//    [MBProgressHUD hideHUDForView:self.view animated:NO];
     [UUProgressHUD hideProgressHUDForView:self.view];
     
     if(self.currentPageIndex == 0){
@@ -253,15 +247,7 @@
 - (void)focusViewClicked:(id)sender
 {
     
-    [self focusViewClickedWithData:self.categoryInfo.focusPages title:kPageTitleGoodPolicy];
-//    int currenFocusIndex = self.focusPageControl.currentPage;
-//    NSArray *focusPages = self.categoryInfo.focusPages;
-//    if(focusPages && [focusPages count] > 0 && currenFocusIndex < [focusPages count]){
-//        UUPage *page = [focusPages objectAtIndex:currenFocusIndex];
-//        UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
-//        [self.navigationController pushViewController:pageVC animated:YES];
-//        pageVC.navigationItem.title = @"利好政策";
-//    }    
+    [self focusViewClickedWithData:self.categoryInfo.focusPages title:kPageTitleGoodPolicy];   
 }
 
 #pragma mark - private methods

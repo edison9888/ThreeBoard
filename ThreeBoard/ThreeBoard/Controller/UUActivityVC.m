@@ -44,9 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
-//    self.navigationItem.title = @"活动日历";
-    
+            
     //fetch data when loading view
     self.currentPageIndex = 0;
     [UUProgressHUD showProgressHUDForView:self.view];
@@ -267,11 +265,6 @@
 - (void)focusViewClicked:(id)sender
 {
     [self focusViewClickedWithData:self.categoryInfo.focusPages title:kPageTitleActivity];
-//    int currenFocusIndex = self.focusPageControl.currentPage;
-//    UUPage *page = [self.categoryInfo.focusPages objectAtIndex:currenFocusIndex];
-//    UUPageVC *pageVC = [[UUPageVC alloc] initWithPageID:page.pageID];
-//    [self.navigationController pushViewController:pageVC animated:YES];
-//    pageVC.navigationItem.title = @"活动日历";
 }
 
 #pragma mark - private methods

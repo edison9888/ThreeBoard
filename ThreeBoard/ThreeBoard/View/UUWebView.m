@@ -52,7 +52,6 @@
 
 - (void)notifyNews:(NSString*)jsonNews
 {
-    DDLogInfo(@"notifynews %f",[[NSDate date] timeIntervalSince1970]);
     
     NSString* strFormat = [NSString stringWithFormat:@"setViewMode(%d)", 1];
     [self.webView stringByEvaluatingJavaScriptFromString:strFormat];
@@ -137,7 +136,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)_webView
 {
-    DDLogInfo(@"webViewDidFinishLoad %f",[[NSDate date] timeIntervalSince1970]);
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)]){
         [self.delegate webViewDidFinishLoad:self];
     }
@@ -145,8 +143,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    DDLogInfo(@"didFailLoadWithError %f",[[NSDate date] timeIntervalSince1970]);
-    DDLogInfo(@"%@\n%@",[error localizedDescription], [error localizedFailureReason]);
+    
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;

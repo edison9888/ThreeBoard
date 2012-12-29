@@ -41,7 +41,6 @@
 - (void)loadView
 {
     [super loadView];
-//    self.navigationItem.title = @"关于我们";
     self.tableView.backgroundColor = UU_BG_WHITE;
     self.tableView.backgroundView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -91,12 +90,6 @@
 }
 
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 15)];
-//    headerView.backgroundColor = [UIColor clearColor];
-//    return headerView;
-//}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
