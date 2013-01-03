@@ -100,7 +100,7 @@
     [super loadView];
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view.backgroundColor = UU_BG_SLATE_GRAY;
-    self.navigationItem.title = @"首页";
+    self.navigationItem.title = @"淘金新三板";
     
     for(int i=0; i<6; i++){
         NSDictionary *dic = [buttonInfos objectAtIndex:i];
