@@ -49,6 +49,7 @@
 		EB68CC8C1660F31A00083770 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB68CC8B1660F31A00083770 /* main.m */; };
 		EB68CC901660F31A00083770 /* UUAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB68CC8F1660F31A00083770 /* UUAppDelegate.m */; };
 		EB6B64F116874DE000EE05BE /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EB6B64F016874DE000EE05BE /* about.html */; };
+		EB9545D11699659F002188DF /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9545D01699659F002188DF /* SDURLCache.m */; };
 		EBC7D2DD1679FC9000A9BF92 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC7D2CC1679FC9000A9BF92 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EBC7D2DE1679FC9000A9BF92 /* LoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC7D2CE1679FC9000A9BF92 /* LoadMoreTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EBC7D2DF1679FC9000A9BF92 /* MessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC7D2D01679FC9000A9BF92 /* MessageInterceptor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -274,6 +275,8 @@
 		EB68CC8E1660F31A00083770 /* UUAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUAppDelegate.h; sourceTree = "<group>"; };
 		EB68CC8F1660F31A00083770 /* UUAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUAppDelegate.m; sourceTree = "<group>"; };
 		EB6B64F016874DE000EE05BE /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		EB9545CF1699659F002188DF /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDURLCache.h; sourceTree = "<group>"; };
+		EB9545D01699659F002188DF /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDURLCache.m; sourceTree = "<group>"; };
 		EBC7D2CB1679FC9000A9BF92 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		EBC7D2CC1679FC9000A9BF92 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		EBC7D2CD1679FC9000A9BF92 /* LoadMoreTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreTableFooterView.h; sourceTree = "<group>"; };
@@ -680,6 +683,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EB9545CE1699659F002188DF /* SDURLCache */ = {
+			isa = PBXGroup;
+			children = (
+				EB9545CF1699659F002188DF /* SDURLCache.h */,
+				EB9545D01699659F002188DF /* SDURLCache.m */,
+			);
+			path = SDURLCache;
+			sourceTree = "<group>";
+		};
 		EBC7D2C91679FC9000A9BF92 /* PullRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -982,6 +994,7 @@
 		EBFDFA221660F7BB00317ACB /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EB9545CE1699659F002188DF /* SDURLCache */,
 				EBE620B4168D461C0050AA49 /* Lumberjack */,
 				EBEE56061685F8B8007683AD /* EGOPullRefresh */,
 				EBEE55711685F665007683AD /* BWXUIKit */,
@@ -1469,6 +1482,7 @@
 				EBE620C9168D461C0050AA49 /* DDTTYLogger.m in Sources */,
 				EBE620CA168D461C0050AA49 /* ContextFilterLogFormatter.m in Sources */,
 				EBE620CB168D461C0050AA49 /* DispatchQueueLogFormatter.m in Sources */,
+				EB9545D11699659F002188DF /* SDURLCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

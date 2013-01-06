@@ -7,6 +7,7 @@
 //
 
 #import "UUCategoryDataProvider.h"
+#import "SDURLCache.h"
 
 #define FETCH_CATEGORY_DETAIL @"http://www.gouqi001.com/jinyuan/app_main.php?category=%@&area=%@&pn=%d"
 #define FETCH_PARTNER_DETAIL @"http://www.gouqi001.com/jinyuan/app_main.php?category=%@&partnertype=%@&pn=%d"
@@ -31,6 +32,18 @@
     return provider;
 }
 
+- (id)init
+{
+    self = [super init];
+    if(self){
+        SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
+                                                             diskCapacity:1024*1024*5 // 5MB disk cache
+                                                                 diskPath:[SDURLCache defaultCachePath]];
+        urlCache.ignoreMemoryOnlyStoragePolicy = YES;
+        [NSURLCache setSharedURLCache:urlCache];
+    }
+    return self;
+}
 
 
 - (void)fetchBeijingAreaDetailWithPageIndex:(NSInteger)index
@@ -251,7 +264,7 @@
         
         NSDictionary *jsonDict = [(NSData *)responseObject objectFromJSONData];
         
-        DDLogInfo(@"%@",jsonDict);
+        DDLogInfo(@"%@",[operation.response allHeaderFields]);
         
         UUCategory *category = [self getCategoryFromJson:jsonDict];
         
