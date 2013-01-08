@@ -119,7 +119,7 @@
     
     if(indexPath.row == AboutSectionJinyuan){
 //        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"about" ofType:@"html"]isDirectory:NO];
-        NSURL *url = [NSURL URLWithString:@"http://www.tjxsb.com/jinyuan/about.html"];
+        NSURL *url = [NSURL URLWithString:@"http://www.tjxsb.com/about.html"];
         SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:url];
         webViewController.availableActions = SVWebViewControllerAvailableActionsNone;
         webViewController.view.backgroundColor = UU_BG_WHITE;
