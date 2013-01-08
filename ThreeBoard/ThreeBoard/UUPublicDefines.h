@@ -68,7 +68,7 @@ typedef enum{
 #define kPageTitleAbout @"关于我们"
 
 
-#define kBaseURL @"http://www.tjxsb.com.com/"
+#define kBaseURL @"http://www.tjxsb.com/"
 
 //#define kBWXSinaWeiboAppKey @"2129806721"
 //#define kBWXSinaWeiboAppSecret @"f28ffd032c8c4461222b315675128346"
