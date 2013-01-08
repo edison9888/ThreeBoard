@@ -17,7 +17,7 @@
     {
         self.textLabel.backgroundColor = [UIColor clearColor];
 		self.textLabel.textColor = [UIColor colorWithHexString:@"333333"];;
-        self.textLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:16];
+        self.textLabel.font = [UIFont fontWithName:UU_CUSTOM_BODY_FONT size:15];
         self.textLabel.lineBreakMode=UILineBreakModeTailTruncation;
         
         UIImageView* next = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"into_next_normal.png"] highlightedImage:[UIImage imageNamed:@"into_next_press.png"]];
@@ -35,7 +35,7 @@
     
     CGRect tmpFrame = self.textLabel.frame;
     tmpFrame.origin.x = self.imageView.frame.origin.x + self.imageView.frame.size.width + 10;
-    tmpFrame.size.width = 160;
+    tmpFrame.size.width = 190;
     self.textLabel.frame = tmpFrame;
     
     CGRect rect = self.accessoryView.frame;

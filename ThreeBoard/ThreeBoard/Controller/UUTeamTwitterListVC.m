@@ -26,8 +26,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.arrTitle = [NSArray arrayWithObjects:@"金元证券新三板-华东部",@"新三板观察",@"欧阳昌", nil];
-        self.arrTwitterURLStr = [NSArray arrayWithObjects:@"http://weibo.com/jyzqotc",@"http://weibo.com/u/2422133154",@"http://weibo.com/ouyangchang", nil];
+        self.arrTitle = [NSArray arrayWithObjects:@"金元证券新三板北京部",@"金元证券新三板长三角部",@"金元证券新三板珠三角部", @"场外市场总部总经理陈永飞",nil];
+        self.arrTwitterURLStr = [NSArray arrayWithObjects:@"http://weibo.com/u/2547012491",@"http://weibo.com/jyzqotc",@"http://weibo.com/u/3203692897",@"http://weibo.com/chenjeffrey", nil];
     }
     return self;
 }

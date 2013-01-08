@@ -48,7 +48,8 @@
     
     self.pullTableView.tableHeaderView = nil;
     
-    self.segmentControl = [[SDSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"企业伙伴",@"投资公司",@"专家会员",@"战略伙伴", nil]];
+//    self.segmentControl = [[SDSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"企业伙伴",@"投资公司",@"专家会员",@"战略伙伴", nil]];
+    self.segmentControl = [[SDSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"投资公司",@"战略伙伴",@"企业客户",@"专家顾问", nil]];
     
     self.segmentControl.frame = CGRectMake(0, 0, 320, 44);
     self.segmentControl.interItemSpace = 10;
