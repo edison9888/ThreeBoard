@@ -40,10 +40,10 @@ typedef enum{
 }ProjectShowArea;
 
 typedef enum{
-    PartnersTypePartnerEnterprise,//企业伙伴
     PartnersTypeInvestmentCompany,//投资公司
-    PartnersTypeMembers,//专家会员
-    PartnersTypeStrategicPartner//战略伙伴
+    PartnersTypeStrategicPartner,//战略伙伴
+    PartnersTypePartnerEnterprise,//企业客户
+    PartnersTypeMembers//专家顾问
 }PartnersType;
 
 #define kPartnersTypePartnerEnterprise @"qiyehuoban"

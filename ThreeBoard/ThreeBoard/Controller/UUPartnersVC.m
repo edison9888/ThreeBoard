@@ -64,8 +64,8 @@
     
     //fetch data when loading view
     self.currentPageIndex = 0;
-    self.currentArea = PartnersTypePartnerEnterprise;
-    self.segmentControl.selectedSegmentIndex = PartnersTypePartnerEnterprise;
+    self.currentArea = PartnersTypeInvestmentCompany;
+    self.segmentControl.selectedSegmentIndex = PartnersTypeInvestmentCompany;
     [self loadCategoryInfo];
     
     [UUProgressHUD showProgressHUDForView:self.view];
