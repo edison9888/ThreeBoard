@@ -62,10 +62,10 @@ static NSUInteger kNumberOfPages = 6;
     [self.emptyView addSubview:emptyTitleLabel];
     
     //header focus pages
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 148)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
     headerView.backgroundColor = [UIColor clearColor];
     
-    self.focusScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 148)];
+    self.focusScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
     focusScrollView.pagingEnabled = YES;
     focusScrollView.contentSize = CGSizeMake(focusScrollView.frame.size.width * kNumberOfPages, focusScrollView.frame.size.height);
     focusScrollView.showsHorizontalScrollIndicator = NO;
@@ -77,14 +77,14 @@ static NSUInteger kNumberOfPages = 6;
     
     self.focusViews = [NSMutableArray array];
     for(int i=0; i<kNumberOfPages; i++){
-        UUFocusView *focusView = [[UUFocusView alloc] initWithFrame:CGRectMake(i*320, 0, 320, 148)];
+        UUFocusView *focusView = [[UUFocusView alloc] initWithFrame:CGRectMake(i*320, 0, 320, 160)];
         focusView.focusButton.tag = i;
         [focusView.focusButton addTarget:self action:@selector(focusViewClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.focusViews addObject:focusView];
         [focusScrollView addSubview:focusView];
     }
     
-    self.focusPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(200, 112, 120, 36)];
+    self.focusPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(200, 124, 120, 36)];
     [focusPageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     focusPageControl.numberOfPages = kNumberOfPages;
     focusPageControl.currentPage = 0;

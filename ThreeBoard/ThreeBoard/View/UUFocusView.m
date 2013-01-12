@@ -21,8 +21,8 @@
         self.backgroundColor = [UIColor clearColor];
         
         self.focusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, self.frame.size.height)];
-        self.focusImageView.contentMode = UIViewContentModeScaleAspectFit;
-//        self.focusImageView.clipsToBounds = YES;
+        self.focusImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.focusImageView.clipsToBounds = YES;
         self.focusImageView.backgroundColor = [UIColor whiteColor];
         [self addSubview:focusImageView];
         
