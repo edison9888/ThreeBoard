@@ -11,7 +11,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "SDURLCache.h"
 
-#define FETCH_PAGE_DETAIL @"http://www.tjxsb.com/app_page.php?page_id=%@"
+#define FETCH_PAGE_DETAIL @"http://www.yiluan.info/app_page.php?page_id=%@"
 
 @implementation UUPageDataProvider
 

@@ -9,8 +9,8 @@
 #import "UUCategoryDataProvider.h"
 #import "SDURLCache.h"
 
-#define FETCH_CATEGORY_DETAIL @"http://www.tjxsb.com/app_main.php?category=%@&area=%@&pn=%d"
-#define FETCH_PARTNER_DETAIL @"http://www.tjxsb.com/app_main.php?category=%@&partnertype=%@&pn=%d"
+#define FETCH_CATEGORY_DETAIL @"http://www.yiluan.info/app_main.php?category=%@&area=%@&pn=%d"
+#define FETCH_PARTNER_DETAIL @"http://www.yiluan.info/app_main.php?category=%@&partnertype=%@&pn=%d"
 
 @interface UUCategoryDataProvider()
 
