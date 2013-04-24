@@ -12,7 +12,7 @@
 
 @interface UUAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow *window; 
 
 @property (strong, nonatomic) UINavigationController *viewController;
 
